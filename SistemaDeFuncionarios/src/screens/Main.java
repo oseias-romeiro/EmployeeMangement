@@ -39,7 +39,6 @@ public class Main extends javax.swing.JFrame {
         setTitle("SGF");
         setBackground(new java.awt.Color(0, 0, 0));
         setForeground(java.awt.Color.black);
-        setPreferredSize(new java.awt.Dimension(830, 504));
         setResizable(false);
 
         painelMain.setBackground(new java.awt.Color(195, 221, 246));
