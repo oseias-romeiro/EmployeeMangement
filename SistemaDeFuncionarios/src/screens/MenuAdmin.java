@@ -15,6 +15,16 @@ public class MenuAdmin extends javax.swing.JFrame {
      */
     public MenuAdmin() {
         initComponents();
+        setLocationRelativeTo(null);
+        
+        btMenu_Editar.setEnabled(false);
+        btMenu_Relatorio.setEnabled(false);
+        btMenu_Salvar.setEnabled(false);
+        btMenu_Remover.setEnabled(false);
+        btMenu_Cancelar.setEnabled(false);                                      
+        btMenu_Pesquisar.setEnabled(true);                                      
+        btMenu_Novo.setEnabled(true);                                      
+        
     }
 
     /**
@@ -27,35 +37,149 @@ public class MenuAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         painelMain = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btMenu_Novo = new javax.swing.JButton();
+        btMenu_Relatorio = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMenu_Func = new javax.swing.JTable();
+        btMenu_Remover = new javax.swing.JToggleButton();
+        btMenu_Editar = new javax.swing.JToggleButton();
+        jTextField1 = new javax.swing.JTextField();
+        btMenu_Pesquisar = new javax.swing.JToggleButton();
+        btMenu_Salvar = new javax.swing.JToggleButton();
+        btMenu_Cancelar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Gerenciar funcrionarios");
+        btMenu_Novo.setText("Novo");
+        btMenu_Novo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btMenu_Novo.setDoubleBuffered(true);
+        btMenu_Novo.setFocusPainted(false);
+        btMenu_Novo.setFocusable(false);
+        btMenu_Novo.setHideActionText(true);
+        btMenu_Novo.setInheritsPopupMenu(true);
+        btMenu_Novo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_NovoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Relatorio");
+        btMenu_Relatorio.setText("Relatorio");
+
+        tblMenu_Func.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null}
+            },
+            new String [] {
+                "Codigo", "Nome", "Email"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblMenu_Func);
+        if (tblMenu_Func.getColumnModel().getColumnCount() > 0) {
+            tblMenu_Func.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tblMenu_Func.getColumnModel().getColumn(1).setResizable(false);
+            tblMenu_Func.getColumnModel().getColumn(1).setPreferredWidth(250);
+            tblMenu_Func.getColumnModel().getColumn(2).setResizable(false);
+            tblMenu_Func.getColumnModel().getColumn(2).setPreferredWidth(200);
+        }
+
+        btMenu_Remover.setText("Remover");
+        btMenu_Remover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_RemoverActionPerformed(evt);
+            }
+        });
+
+        btMenu_Editar.setText("Editar");
+
+        jTextField1.setToolTipText("Nome ou código do funcionário");
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        btMenu_Pesquisar.setText("Pesquisar");
+        btMenu_Pesquisar.setFocusCycleRoot(true);
+        btMenu_Pesquisar.setRolloverEnabled(false);
+
+        btMenu_Salvar.setText("Salvar");
+
+        btMenu_Cancelar.setText("Cancelar");
+        btMenu_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_CancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelMainLayout = new javax.swing.GroupLayout(painelMain);
         painelMain.setLayout(painelMainLayout);
         painelMainLayout.setHorizontalGroup(
             painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMainLayout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(jButton1)
-                .addGap(35, 35, 35)
-                .addComponent(jButton2)
-                .addContainerGap(197, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelMainLayout.createSequentialGroup()
+                        .addComponent(btMenu_Pesquisar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelMainLayout.createSequentialGroup()
+                        .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelMainLayout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(btMenu_Novo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btMenu_Editar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btMenu_Remover)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btMenu_Cancelar)
+                                .addGap(179, 179, 179)
+                                .addComponent(btMenu_Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btMenu_Relatorio))
+                        .addGap(51, 51, 51)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         painelMainLayout.setVerticalGroup(
             painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMainLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelMainLayout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelMainLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btMenu_Pesquisar))
+                        .addGap(51, 51, 51)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btMenu_Novo)
+                            .addComponent(btMenu_Editar)
+                            .addComponent(btMenu_Remover)
+                            .addComponent(btMenu_Cancelar)
+                            .addComponent(btMenu_Salvar))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(btMenu_Relatorio)
+                .addGap(24, 24, 24))
         );
+
+        jTextField1.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,11 +189,31 @@ public class MenuAdmin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(painelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btMenu_RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_RemoverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btMenu_RemoverActionPerformed
+
+    private void btMenu_NovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_NovoActionPerformed
+        btMenu_Editar.setEnabled(false);
+        btMenu_Relatorio.setEnabled(false);
+        btMenu_Salvar.setEnabled(true);
+        btMenu_Remover.setEnabled(false);
+        btMenu_Cancelar.setEnabled(true);
+    }//GEN-LAST:event_btMenu_NovoActionPerformed
+
+    private void btMenu_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_CancelarActionPerformed
+       btMenu_Salvar.setEnabled(false);
+       btMenu_Cancelar.setEnabled(false);
+    }//GEN-LAST:event_btMenu_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -82,7 +226,7 @@ public class MenuAdmin extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -100,6 +244,8 @@ public class MenuAdmin extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -110,8 +256,17 @@ public class MenuAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JToggleButton btMenu_Cancelar;
+    private javax.swing.JToggleButton btMenu_Editar;
+    private javax.swing.JButton btMenu_Novo;
+    private javax.swing.JToggleButton btMenu_Pesquisar;
+    private javax.swing.JButton btMenu_Relatorio;
+    private javax.swing.JToggleButton btMenu_Remover;
+    private javax.swing.JToggleButton btMenu_Salvar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel painelMain;
+    private javax.swing.JTable tblMenu_Func;
     // End of variables declaration//GEN-END:variables
 }
