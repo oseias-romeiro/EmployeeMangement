@@ -133,6 +133,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Pesquisar.setText("Pesquisar");
         btMenu_Pesquisar.setFocusCycleRoot(true);
         btMenu_Pesquisar.setRolloverEnabled(false);
+        btMenu_Pesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_PesquisarActionPerformed(evt);
+            }
+        });
 
         btMenu_Salvar.setText("Salvar");
 
@@ -243,9 +248,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btMenu_CancelarActionPerformed
 
     private void btMenu_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_EditarActionPerformed
-       EditarDados editDados = new EditarDados();
-       btMenu_Editar.add(editDados);
-       editDados.setVisible(true);
+       new EditarDados().setVisible(true);
     }//GEN-LAST:event_btMenu_EditarActionPerformed
 
     private void tblMenu_FuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMenu_FuncMouseClicked
@@ -255,6 +258,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Remover.setEnabled(true);
         btMenu_Cancelar.setEnabled(true);
     }//GEN-LAST:event_tblMenu_FuncMouseClicked
+
+    private void btMenu_PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_PesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btMenu_PesquisarActionPerformed
 
     /**
      * @param args the command line arguments
