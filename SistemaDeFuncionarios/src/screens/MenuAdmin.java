@@ -89,6 +89,21 @@ public class MenuAdmin extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblMenu_Func.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        tblMenu_Func.setAutoscrolls(false);
+        tblMenu_Func.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblMenu_Func.setFocusTraversalPolicyProvider(true);
+        tblMenu_Func.setFocusable(false);
+        tblMenu_Func.setInheritsPopupMenu(true);
+        tblMenu_Func.setOpaque(false);
+        tblMenu_Func.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblMenu_Func.setShowGrid(false);
+        tblMenu_Func.getTableHeader().setResizingAllowed(false);
+        tblMenu_Func.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMenu_FuncMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMenu_Func);
         if (tblMenu_Func.getColumnModel().getColumnCount() > 0) {
             tblMenu_Func.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -106,6 +121,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         });
 
         btMenu_Editar.setText("Editar");
+        btMenu_Editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_EditarActionPerformed(evt);
+            }
+        });
 
         jTextField1.setToolTipText("Nome ou código do funcionário");
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -128,30 +148,35 @@ public class MenuAdmin extends javax.swing.JFrame {
         painelMainLayout.setHorizontalGroup(
             painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMainLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
                 .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMainLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addComponent(btMenu_Pesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelMainLayout.createSequentialGroup()
                         .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelMainLayout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(btMenu_Novo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btMenu_Editar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btMenu_Remover)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btMenu_Cancelar)
-                                .addGap(179, 179, 179)
-                                .addComponent(btMenu_Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btMenu_Relatorio))
-                        .addGap(51, 51, 51)
+                                .addGap(27, 27, 27)
+                                .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(painelMainLayout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(btMenu_Novo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btMenu_Editar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btMenu_Remover)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btMenu_Cancelar)
+                                        .addGap(179, 179, 179)
+                                        .addComponent(btMenu_Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btMenu_Relatorio)))
+                            .addGroup(painelMainLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(95, 95, 95)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMainLayout.setVerticalGroup(
             painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +199,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                             .addComponent(btMenu_Remover)
                             .addComponent(btMenu_Cancelar)
                             .addComponent(btMenu_Salvar))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(btMenu_Relatorio)
                 .addGap(24, 24, 24))
         );
@@ -185,12 +210,14 @@ public class MenuAdmin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(painelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(painelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -214,6 +241,20 @@ public class MenuAdmin extends javax.swing.JFrame {
        btMenu_Salvar.setEnabled(false);
        btMenu_Cancelar.setEnabled(false);
     }//GEN-LAST:event_btMenu_CancelarActionPerformed
+
+    private void btMenu_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_EditarActionPerformed
+       EditarDados editDados = new EditarDados();
+       btMenu_Editar.add(editDados);
+       editDados.setVisible(true);
+    }//GEN-LAST:event_btMenu_EditarActionPerformed
+
+    private void tblMenu_FuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMenu_FuncMouseClicked
+        btMenu_Editar.setEnabled(true);
+        btMenu_Relatorio.setEnabled(true);
+        btMenu_Salvar.setEnabled(false);
+        btMenu_Remover.setEnabled(true);
+        btMenu_Cancelar.setEnabled(true);
+    }//GEN-LAST:event_tblMenu_FuncMouseClicked
 
     /**
      * @param args the command line arguments
