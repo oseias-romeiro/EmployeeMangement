@@ -235,6 +235,9 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btMenu_RemoverActionPerformed
 
     private void btMenu_NovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_NovoActionPerformed
+        
+        new GerenciaFuncionario("").setVisible(true);
+        
         btMenu_Editar.setEnabled(false);
         btMenu_Relatorio.setEnabled(false);
         btMenu_Salvar.setEnabled(true);
@@ -248,7 +251,10 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btMenu_CancelarActionPerformed
 
     private void btMenu_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_EditarActionPerformed
-       new EditarDados().setVisible(true);
+       // new EditarDados().setVisible(true);
+       
+       // passa o id do usuario a ser editado
+       new GerenciaFuncionario("1").setVisible(true);
     }//GEN-LAST:event_btMenu_EditarActionPerformed
 
     private void tblMenu_FuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMenu_FuncMouseClicked
