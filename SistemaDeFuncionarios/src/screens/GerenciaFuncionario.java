@@ -244,10 +244,10 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         Random random = new Random();
         codigo = random.nextInt(10000);
         if(Integer.toString(codigo).length() < 2){
-            codigo = Integer.parseInt("000"+Integer.toString(codigo));
+            codigo = Integer.parseInt(Integer.toString(codigo)+"000");
         }
         if(Integer.toString(codigo).length() < 3){
-            codigo = Integer.parseInt("00"+Integer.toString(codigo));
+            codigo = Integer.parseInt(Integer.toString(codigo)+"00");
         }
         return (int) codigo;
     }

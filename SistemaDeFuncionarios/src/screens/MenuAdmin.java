@@ -64,12 +64,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMenu_Func = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        btMenu_Pesquisar = new javax.swing.JToggleButton();
+        fieldNome = new javax.swing.JTextField();
         btAtualizar = new javax.swing.JButton();
         btMenu_Editar = new javax.swing.JButton();
         btMenu_Remover = new javax.swing.JButton();
         btMenu_Cancelar = new javax.swing.JButton();
+        btMenu_Pesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,17 +135,8 @@ public class MenuAdmin extends javax.swing.JFrame {
             tblMenu_Func.getColumnModel().getColumn(2).setPreferredWidth(200);
         }
 
-        jTextField1.setToolTipText("Nome ou código do funcionário");
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-
-        btMenu_Pesquisar.setText("Pesquisar");
-        btMenu_Pesquisar.setFocusCycleRoot(true);
-        btMenu_Pesquisar.setRolloverEnabled(false);
-        btMenu_Pesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMenu_PesquisarActionPerformed(evt);
-            }
-        });
+        fieldNome.setToolTipText("Nome ou código do funcionário");
+        fieldNome.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         btAtualizar.setText("Atualizar");
         btAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -175,17 +166,19 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btMenu_Pesquisar.setText("Pesquisar");
+        btMenu_Pesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_PesquisarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelMainLayout = new javax.swing.GroupLayout(painelMain);
         painelMain.setLayout(painelMainLayout);
         painelMainLayout.setHorizontalGroup(
             painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMainLayout.createSequentialGroup()
                 .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelMainLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(btMenu_Pesquisar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelMainLayout.createSequentialGroup()
                         .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(painelMainLayout.createSequentialGroup()
@@ -209,7 +202,12 @@ public class MenuAdmin extends javax.swing.JFrame {
                                 .addGap(15, 15, 15)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(95, 95, 95)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelMainLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(btMenu_Pesquisar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMainLayout.setVerticalGroup(
@@ -222,9 +220,9 @@ public class MenuAdmin extends javax.swing.JFrame {
                     .addGroup(painelMainLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btMenu_Pesquisar))
-                        .addGap(51, 51, 51)
+                        .addGap(49, 49, 49)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -233,12 +231,12 @@ public class MenuAdmin extends javax.swing.JFrame {
                             .addComponent(btMenu_Editar)
                             .addComponent(btMenu_Remover)
                             .addComponent(btMenu_Cancelar))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(btMenu_Relatorio)
                 .addGap(24, 24, 24))
         );
 
-        jTextField1.getAccessibleContext().setAccessibleDescription("");
+        fieldNome.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,10 +273,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         // desativa
         btMenu_Novo.setEnabled(false);
     }//GEN-LAST:event_tblMenu_FuncMouseClicked
-
-    private void btMenu_PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_PesquisarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btMenu_PesquisarActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
         
@@ -348,6 +342,71 @@ public class MenuAdmin extends javax.swing.JFrame {
         tblMenu_Func.clearSelection();
     }//GEN-LAST:event_btMenu_CancelarActionPerformed
 
+    private void btMenu_PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_PesquisarActionPerformed
+        String nome = fieldNome.getText();
+        int codigo = 0;
+        boolean achou = false;
+        boolean porNome;
+        
+        // verifica se o campo esta vazio
+        if(!nome.isEmpty()){
+            // verifica se foi passado o código ou o nome
+            try {
+                codigo = Integer.parseInt(nome);
+                porNome = false;
+            }catch(Exception e) {
+                porNome = true;
+            }
+
+            // pesquisa pelo nome
+            if(porNome){
+                if(nome.length() < 3){
+                    JOptionPane.showMessageDialog(null, "O nome pesquisado deve ter no minimo 3 caracteres!", "Não encontrado", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
+                        if(Main.gestor.getFuncionarios().get(i).getNome().contains(nome)){
+                            
+                            // limpa o campo
+                            fieldNome.setText("");
+
+                            // passa o id encontrado para ser editado
+                            new GerenciaFuncionario(i+"").setVisible(true);
+                            
+                            // achou
+                            achou = true;
+                        }
+                    }
+                    if(!achou){
+                        JOptionPane.showMessageDialog(null, ("O funcionario não foi encontrado!"), "Não encontrado", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }else { // pesquisa por codigo
+                // verifica se o código é valido (4 digitos)
+                if(codigo < 1000){
+                    JOptionPane.showMessageDialog(null, "O codigo deve conter 4 digitos!", "Não encontrado", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    // pesuisa pelo código
+                    for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
+                        if(Main.gestor.getFuncionarios().get(i).getCodigo() == codigo){
+                            
+                            // limpa o campo
+                            fieldNome.setText("");
+                            
+                            // passa o id encontrado para ser editado
+                            new GerenciaFuncionario(i+"").setVisible(true);
+                            
+                            // achou
+                            achou = true;
+                        }
+                    }
+                    if(!achou){
+                        JOptionPane.showMessageDialog(null, ("O funcionario não foi encontrado!"), "Não encontrado", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btMenu_PesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -393,12 +452,12 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btMenu_Cancelar;
     private javax.swing.JButton btMenu_Editar;
     private javax.swing.JButton btMenu_Novo;
-    private javax.swing.JToggleButton btMenu_Pesquisar;
+    private javax.swing.JButton btMenu_Pesquisar;
     private javax.swing.JButton btMenu_Relatorio;
     private javax.swing.JButton btMenu_Remover;
+    private javax.swing.JTextField fieldNome;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel painelMain;
     private javax.swing.JTable tblMenu_Func;
     // End of variables declaration//GEN-END:variables
