@@ -4,13 +4,18 @@
  */
 package screens;
 
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
+import sistema.Funcionario;
+import java.util.Random;
 
 /**
  *
  * @author oseia
  */
 public class GerenciaFuncionario extends javax.swing.JFrame {
+    
+    private Funcionario func = new Funcionario();
 
     /**
      * Creates new form cadastraFuncionario
@@ -21,14 +26,27 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         if(!id.isEmpty()){
+            
             // editar usuario
             btnAdiciona.setEnabled(false);
             
             // pesquisa usario
-            // ...
+            int id2 = Integer.parseInt(id);
+            
+            for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
+                if(i == id2){
+                    func = Main.gestor.getFuncionarios().get(i);
+                }
+            }
             
             // seta os dados do usuario encontrado nos campos
-            // ...
+            fieldNome.setText(func.getNome());
+            fieldCPF.setText(func.getCpf());
+            fieldNascimento.setText(func.getDataNascimento().toString());
+            fieldTelefone.setText(func.getTelefone());
+            fieldSexo.setText(func.getSexo());
+            fieldEmail.setText(func.getEmail());
+            fieldEndereco.setText(func.getEnderço());
             
         }else{
             // adicionar usuario
@@ -214,6 +232,20 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public int geraCodigo(){
+        int codigo;
+        Random random = new Random();
+        codigo = random.nextInt(10000);
+        if(Integer.toString(codigo).length() < 2){
+            codigo = Integer.parseInt("000"+Integer.toString(codigo));
+        }
+        if(Integer.toString(codigo).length() < 3){
+            codigo = Integer.parseInt("00"+Integer.toString(codigo));
+        }
+        return (int) codigo;
+    }
+    
+    
     private void btnAdicionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionaActionPerformed
         
         // entrada de dados
@@ -227,7 +259,37 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         
         if(!nome.isEmpty() && !CPF.isEmpty() && !nascimento.isEmpty() && !telefone.isEmpty() && !sexo.isEmpty() && !email.isEmpty() && !endereco.isEmpty()){
             // salva dados
-            // ...
+            Funcionario funcionario = new Funcionario();
+            funcionario.setNome(nome);
+            funcionario.setCpf(CPF);
+            funcionario.setDataNascimento(LocalDate.MIN);
+            funcionario.setTelefone(telefone);
+            funcionario.setSexo(sexo);
+            funcionario.setEmail(email);
+            funcionario.setEnderço(endereco);
+            
+            // gerandor de codigo unico
+            int codigo;
+            while(true){
+                boolean jaExiste = false;
+                // gera codigo
+                codigo = this.geraCodigo();
+                
+                // verificando se o código já existe
+                for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
+                    if(Main.gestor.getFuncionarios().get(i).getCodigo() == codigo){
+                        jaExiste = true;
+                    }
+                }
+                // se não existe para o loop
+                if(!jaExiste){
+                    break;
+                }
+            }
+            funcionario.setCodigo(codigo);
+            
+            // adciona funcionario ao gestor
+            Main.gestor.addFuncionario(funcionario);
             
             // fecha tela
             dispose();
@@ -248,8 +310,14 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         String endereco = fieldEndereco.getText();
         
         if(!nome.isEmpty() && !CPF.isEmpty() && !nascimento.isEmpty() && !telefone.isEmpty() && !sexo.isEmpty() && !email.isEmpty() && !endereco.isEmpty()){
-            // salva os dados editados
-            // ...
+            // salva os dados editados do usuario
+            this.func.setNome(nome);
+            this.func.setCpf(CPF);
+            this.func.setDataNascimento(LocalDate.MIN);
+            this.func.setTelefone(telefone);
+            this.func.setSexo(sexo);
+            this.func.setEmail(email);
+            this.func.setEnderço(endereco);
             
             // fecha tela
             dispose();

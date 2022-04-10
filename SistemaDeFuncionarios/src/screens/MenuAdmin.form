@@ -68,7 +68,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btMenu_Cancelar" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
-                                          <Component id="btMenu_Salvar" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <Component id="btMenu_Atualizar" min="-2" pref="82" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="btMenu_Relatorio" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -108,7 +108,7 @@
                               <Component id="btMenu_Editar" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btMenu_Remover" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btMenu_Cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btMenu_Salvar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btMenu_Atualizar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -238,10 +238,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMenu_PesquisarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="btMenu_Salvar">
+        <Component class="javax.swing.JToggleButton" name="btMenu_Atualizar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Salvar"/>
+            <Property name="text" type="java.lang.String" value="Atualizar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMenu_AtualizarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="btMenu_Cancelar">
           <Properties>

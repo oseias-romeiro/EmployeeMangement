@@ -7,7 +7,6 @@ public class Funcionario extends Pessoa{
    private float salario;
    private String senha;
    private int codigo;
-   private boolean admin = false;
 
    public Funcionario(){
        

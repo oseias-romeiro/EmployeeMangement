@@ -6,12 +6,16 @@ package screens;
 
 import javax.swing.JOptionPane;
 import java.util.Arrays;
+import sistema.Gestor;
 
 /**
  *
  * @author oseia
  */
 public class Main extends javax.swing.JFrame {
+    
+    // gestor
+    public static Gestor gestor;
 
     /**
      * Creates new form Main
@@ -20,6 +24,11 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         
         setLocationRelativeTo(null);
+        
+        // inicializando gestor
+        this.gestor = new Gestor();
+        gestor.setEmail("admin@email.com");
+        gestor.setSenha("admin");
     }
 
     /**
@@ -39,6 +48,7 @@ public class Main extends javax.swing.JFrame {
         fieldSenha = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
+        checkBoxGestor = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SGF");
@@ -66,6 +76,8 @@ public class Main extends javax.swing.JFrame {
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelTitulo.setText("Sistema de Gerenciamento de Funcionarios");
 
+        checkBoxGestor.setText("Gestor");
+
         javax.swing.GroupLayout painelLoginLayout = new javax.swing.GroupLayout(painelLogin);
         painelLogin.setLayout(painelLoginLayout);
         painelLoginLayout.setHorizontalGroup(
@@ -73,6 +85,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(painelLoginLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkBoxGestor)
                     .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(painelLoginLayout.createSequentialGroup()
@@ -99,9 +112,11 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelSenha)
                     .addComponent(fieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(24, 24, 24)
+                .addComponent(checkBoxGestor)
+                .addGap(18, 18, 18)
                 .addComponent(btnLogin)
-                .addGap(49, 49, 49))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout painelMainLayout = new javax.swing.GroupLayout(painelMain);
@@ -138,15 +153,21 @@ public class Main extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String email = fieldEmail.getText();
         char[] senha = fieldSenha.getPassword();
-        char[] senha2 = {'a','d','m','i','n'};
-        
-        if(email.equals("admin@mail.com") && Arrays.equals(senha2, senha)){
+
+        // verifica se é Gestor
+        if(checkBoxGestor.isSelected()){
+            if(email.equals(this.gestor.getEmail()) && Arrays.equals((this.gestor.getSenha()).toCharArray(), senha)){
             new MenuAdmin().setVisible(true);
             setVisible(false);
+            }else {
+                // menssage de erro
+                JOptionPane.showMessageDialog(null, "Email ou senha invalido!", "Falha no login", JOptionPane.ERROR_MESSAGE);
+            }
         }else {
-            // menssage de erro
-            JOptionPane.showMessageDialog(null, "Email ou senha invalido!", "Falha no login", JOptionPane.ERROR_MESSAGE);
+            // usuario comum
+            // ...
         }
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -186,6 +207,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JCheckBox checkBoxGestor;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JPasswordField fieldSenha;
     private javax.swing.JLabel labelEmail;

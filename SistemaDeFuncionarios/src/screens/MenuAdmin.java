@@ -4,11 +4,15 @@
  */
 package screens;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author oseia
  */
 public class MenuAdmin extends javax.swing.JFrame {
+    
+    
 
     /**
      * Creates new form Controle
@@ -19,12 +23,32 @@ public class MenuAdmin extends javax.swing.JFrame {
         
         btMenu_Editar.setEnabled(false);
         btMenu_Relatorio.setEnabled(false);
-        btMenu_Salvar.setEnabled(false);
+        btMenu_Atualizar.setEnabled(false);
         btMenu_Remover.setEnabled(false);
         btMenu_Cancelar.setEnabled(false);                                      
         btMenu_Pesquisar.setEnabled(true);                                      
-        btMenu_Novo.setEnabled(true);                                      
+        btMenu_Novo.setEnabled(true);
         
+        // carrega os funcionarios do gestor
+        this.carregarTabela();
+    }
+    
+    // carrega tabela de funcionarios
+    public void carregarTabela(){
+        
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Codigo", "Nome", "Email"}, 0);
+
+        for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
+            Object linha[] = new Object[]{
+                Main.gestor.getFuncionarios().get(i).getCodigo(),
+                Main.gestor.getFuncionarios().get(i).getNome(),
+                Main.gestor.getFuncionarios().get(i).getEmail(),
+            };
+            modelo.addRow(linha);
+        }
+
+        // tabela recebe modelo
+        tblMenu_Func.setModel(modelo);
     }
 
     /**
@@ -46,7 +70,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Editar = new javax.swing.JToggleButton();
         jTextField1 = new javax.swing.JTextField();
         btMenu_Pesquisar = new javax.swing.JToggleButton();
-        btMenu_Salvar = new javax.swing.JToggleButton();
+        btMenu_Atualizar = new javax.swing.JToggleButton();
         btMenu_Cancelar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -139,7 +163,12 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        btMenu_Salvar.setText("Salvar");
+        btMenu_Atualizar.setText("Atualizar");
+        btMenu_Atualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_AtualizarActionPerformed(evt);
+            }
+        });
 
         btMenu_Cancelar.setText("Cancelar");
         btMenu_Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +203,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btMenu_Cancelar)
                                         .addGap(179, 179, 179)
-                                        .addComponent(btMenu_Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(btMenu_Atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(btMenu_Relatorio)))
                             .addGroup(painelMainLayout.createSequentialGroup()
                                 .addGap(15, 15, 15)
@@ -203,7 +232,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                             .addComponent(btMenu_Editar)
                             .addComponent(btMenu_Remover)
                             .addComponent(btMenu_Cancelar)
-                            .addComponent(btMenu_Salvar))))
+                            .addComponent(btMenu_Atualizar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(btMenu_Relatorio)
                 .addGap(24, 24, 24))
@@ -240,34 +269,42 @@ public class MenuAdmin extends javax.swing.JFrame {
         
         btMenu_Editar.setEnabled(false);
         btMenu_Relatorio.setEnabled(false);
-        btMenu_Salvar.setEnabled(true);
+        btMenu_Atualizar.setEnabled(true);
         btMenu_Remover.setEnabled(false);
         btMenu_Cancelar.setEnabled(true);
     }//GEN-LAST:event_btMenu_NovoActionPerformed
 
     private void btMenu_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_CancelarActionPerformed
-       btMenu_Salvar.setEnabled(false);
+       btMenu_Atualizar.setEnabled(false);
        btMenu_Cancelar.setEnabled(false);
     }//GEN-LAST:event_btMenu_CancelarActionPerformed
 
     private void btMenu_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_EditarActionPerformed
-       // new EditarDados().setVisible(true);
        
-       // passa o id do usuario a ser editado
-       new GerenciaFuncionario("1").setVisible(true);
+        // pega o id do usario selecionado
+        int id = tblMenu_Func.getSelectedRow();
+        
+        // passa o id do usuario a ser editado
+        new GerenciaFuncionario(id+"").setVisible(true);
     }//GEN-LAST:event_btMenu_EditarActionPerformed
 
     private void tblMenu_FuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMenu_FuncMouseClicked
         btMenu_Editar.setEnabled(true);
         btMenu_Relatorio.setEnabled(true);
-        btMenu_Salvar.setEnabled(false);
+        btMenu_Atualizar.setEnabled(false);
         btMenu_Remover.setEnabled(true);
         btMenu_Cancelar.setEnabled(true);
+        
+        
     }//GEN-LAST:event_tblMenu_FuncMouseClicked
 
     private void btMenu_PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_PesquisarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btMenu_PesquisarActionPerformed
+
+    private void btMenu_AtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_AtualizarActionPerformed
+        this.carregarTabela();
+    }//GEN-LAST:event_btMenu_AtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,13 +347,13 @@ public class MenuAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btMenu_Atualizar;
     private javax.swing.JToggleButton btMenu_Cancelar;
     private javax.swing.JToggleButton btMenu_Editar;
     private javax.swing.JButton btMenu_Novo;
     private javax.swing.JToggleButton btMenu_Pesquisar;
     private javax.swing.JButton btMenu_Relatorio;
     private javax.swing.JToggleButton btMenu_Remover;
-    private javax.swing.JToggleButton btMenu_Salvar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
