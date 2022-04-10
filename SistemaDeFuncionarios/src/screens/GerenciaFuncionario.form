@@ -217,6 +217,12 @@
             <Component class="javax.swing.JTextField" name="fieldSexo">
             </Component>
             <Component class="javax.swing.JTextField" name="fieldNascimento">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="2000-03-31"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldNascimentoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnAdiciona">
               <Properties>

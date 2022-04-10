@@ -102,6 +102,13 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
 
         labelData.setText("Nascimento");
 
+        fieldNascimento.setText("2000-03-31");
+        fieldNascimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNascimentoActionPerformed(evt);
+            }
+        });
+
         btnAdiciona.setText("Adicionar");
         btnAdiciona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,18 +258,18 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         // entrada de dados
         String nome = fieldNome.getText();
         String CPF = fieldCPF.getText();
-        String nascimento = fieldNascimento.getText();
+        LocalDate nascimento = LocalDate.parse(fieldNascimento.getText());
         String telefone = fieldTelefone.getText();
         String sexo = fieldSexo.getText();
         String email = fieldEmail.getText();
         String endereco = fieldEndereco.getText();
         
-        if(!nome.isEmpty() && !CPF.isEmpty() && !nascimento.isEmpty() && !telefone.isEmpty() && !sexo.isEmpty() && !email.isEmpty() && !endereco.isEmpty()){
+        if(!nome.isEmpty() && !CPF.isEmpty() && !telefone.isEmpty() && !sexo.isEmpty() && !email.isEmpty() && !endereco.isEmpty()){
             // salva dados
             Funcionario funcionario = new Funcionario();
             funcionario.setNome(nome);
             funcionario.setCpf(CPF);
-            funcionario.setDataNascimento(LocalDate.MIN);
+            funcionario.setDataNascimento(nascimento);
             funcionario.setTelefone(telefone);
             funcionario.setSexo(sexo);
             funcionario.setEmail(email);
@@ -326,6 +333,10 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Dados invalidos!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditaActionPerformed
+
+    private void fieldNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNascimentoActionPerformed
 
     /**
      * @param args the command line arguments

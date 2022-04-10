@@ -54,10 +54,14 @@
                           <Component id="jTextField1" min="-2" pref="265" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btMenu_Relatorio" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="261" max="-2" attributes="0"/>
+                                      </Group>
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                                           <Component id="btMenu_Novo" min="-2" pref="75" max="-2" attributes="0"/>
@@ -67,10 +71,9 @@
                                           <Component id="btMenu_Remover" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btMenu_Cancelar" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
-                                          <Component id="btMenu_Atualizar" min="-2" pref="82" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="btAtualizar" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="btMenu_Relatorio" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
@@ -108,7 +111,7 @@
                               <Component id="btMenu_Editar" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btMenu_Remover" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btMenu_Cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btMenu_Atualizar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btAtualizar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -238,20 +241,20 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMenu_PesquisarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="btMenu_Atualizar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Atualizar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMenu_AtualizarActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JToggleButton" name="btMenu_Cancelar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMenu_CancelarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btAtualizar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Atualizar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAtualizarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

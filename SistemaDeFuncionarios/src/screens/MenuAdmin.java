@@ -4,6 +4,7 @@
  */
 package screens;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,7 +24,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         
         btMenu_Editar.setEnabled(false);
         btMenu_Relatorio.setEnabled(false);
-        btMenu_Atualizar.setEnabled(false);
         btMenu_Remover.setEnabled(false);
         btMenu_Cancelar.setEnabled(false);                                      
         btMenu_Pesquisar.setEnabled(true);                                      
@@ -70,8 +70,8 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Editar = new javax.swing.JToggleButton();
         jTextField1 = new javax.swing.JTextField();
         btMenu_Pesquisar = new javax.swing.JToggleButton();
-        btMenu_Atualizar = new javax.swing.JToggleButton();
         btMenu_Cancelar = new javax.swing.JToggleButton();
+        btAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,17 +163,17 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        btMenu_Atualizar.setText("Atualizar");
-        btMenu_Atualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMenu_AtualizarActionPerformed(evt);
-            }
-        });
-
         btMenu_Cancelar.setText("Cancelar");
         btMenu_Cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btMenu_CancelarActionPerformed(evt);
+            }
+        });
+
+        btAtualizar.setText("Atualizar");
+        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarActionPerformed(evt);
             }
         });
 
@@ -189,10 +189,13 @@ public class MenuAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelMainLayout.createSequentialGroup()
-                        .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(painelMainLayout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(painelMainLayout.createSequentialGroup()
+                                        .addComponent(btMenu_Relatorio)
+                                        .addGap(261, 261, 261))
                                     .addGroup(painelMainLayout.createSequentialGroup()
                                         .addGap(8, 8, 8)
                                         .addComponent(btMenu_Novo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,9 +205,8 @@ public class MenuAdmin extends javax.swing.JFrame {
                                         .addComponent(btMenu_Remover)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btMenu_Cancelar)
-                                        .addGap(179, 179, 179)
-                                        .addComponent(btMenu_Atualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(btMenu_Relatorio)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btAtualizar))))
                             .addGroup(painelMainLayout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -232,7 +234,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                             .addComponent(btMenu_Editar)
                             .addComponent(btMenu_Remover)
                             .addComponent(btMenu_Cancelar)
-                            .addComponent(btMenu_Atualizar))))
+                            .addComponent(btAtualizar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(btMenu_Relatorio)
                 .addGap(24, 24, 24))
@@ -260,7 +262,17 @@ public class MenuAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btMenu_RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_RemoverActionPerformed
-        // TODO add your handling code here:
+        
+        int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este funcionario?", "Deletar", JOptionPane.YES_NO_OPTION);
+
+        
+        if(escolha == JOptionPane.YES_OPTION){
+            // pega o id do usario selecionado
+            int id = tblMenu_Func.getSelectedRow();
+
+            // deleta funcionario
+            Main.gestor.getFuncionarios().remove(id);
+        }
     }//GEN-LAST:event_btMenu_RemoverActionPerformed
 
     private void btMenu_NovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_NovoActionPerformed
@@ -269,14 +281,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         
         btMenu_Editar.setEnabled(false);
         btMenu_Relatorio.setEnabled(false);
-        btMenu_Atualizar.setEnabled(true);
         btMenu_Remover.setEnabled(false);
         btMenu_Cancelar.setEnabled(true);
     }//GEN-LAST:event_btMenu_NovoActionPerformed
 
     private void btMenu_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_CancelarActionPerformed
-       btMenu_Atualizar.setEnabled(false);
-       btMenu_Cancelar.setEnabled(false);
+        btMenu_Cancelar.setEnabled(false);
     }//GEN-LAST:event_btMenu_CancelarActionPerformed
 
     private void btMenu_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_EditarActionPerformed
@@ -291,7 +301,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     private void tblMenu_FuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMenu_FuncMouseClicked
         btMenu_Editar.setEnabled(true);
         btMenu_Relatorio.setEnabled(true);
-        btMenu_Atualizar.setEnabled(false);
         btMenu_Remover.setEnabled(true);
         btMenu_Cancelar.setEnabled(true);
         
@@ -302,9 +311,9 @@ public class MenuAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btMenu_PesquisarActionPerformed
 
-    private void btMenu_AtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_AtualizarActionPerformed
+    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
         this.carregarTabela();
-    }//GEN-LAST:event_btMenu_AtualizarActionPerformed
+    }//GEN-LAST:event_btAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -347,7 +356,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btMenu_Atualizar;
+    private javax.swing.JButton btAtualizar;
     private javax.swing.JToggleButton btMenu_Cancelar;
     private javax.swing.JToggleButton btMenu_Editar;
     private javax.swing.JButton btMenu_Novo;
