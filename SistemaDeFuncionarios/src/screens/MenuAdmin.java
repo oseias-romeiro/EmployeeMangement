@@ -22,12 +22,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
+        // destiva botões
         btMenu_Editar.setEnabled(false);
-        btMenu_Relatorio.setEnabled(false);
         btMenu_Remover.setEnabled(false);
-        btMenu_Cancelar.setEnabled(false);                                      
-        btMenu_Pesquisar.setEnabled(true);                                      
-        btMenu_Novo.setEnabled(true);
+        btMenu_Cancelar.setEnabled(false);
         
         // carrega os funcionarios do gestor
         this.carregarTabela();
@@ -66,12 +64,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMenu_Func = new javax.swing.JTable();
-        btMenu_Remover = new javax.swing.JToggleButton();
-        btMenu_Editar = new javax.swing.JToggleButton();
         jTextField1 = new javax.swing.JTextField();
         btMenu_Pesquisar = new javax.swing.JToggleButton();
-        btMenu_Cancelar = new javax.swing.JToggleButton();
         btAtualizar = new javax.swing.JButton();
+        btMenu_Editar = new javax.swing.JButton();
+        btMenu_Remover = new javax.swing.JButton();
+        btMenu_Cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,20 +135,6 @@ public class MenuAdmin extends javax.swing.JFrame {
             tblMenu_Func.getColumnModel().getColumn(2).setPreferredWidth(200);
         }
 
-        btMenu_Remover.setText("Remover");
-        btMenu_Remover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMenu_RemoverActionPerformed(evt);
-            }
-        });
-
-        btMenu_Editar.setText("Editar");
-        btMenu_Editar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMenu_EditarActionPerformed(evt);
-            }
-        });
-
         jTextField1.setToolTipText("Nome ou código do funcionário");
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
@@ -163,17 +147,31 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        btMenu_Cancelar.setText("Cancelar");
-        btMenu_Cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btMenu_CancelarActionPerformed(evt);
-            }
-        });
-
         btAtualizar.setText("Atualizar");
         btAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAtualizarActionPerformed(evt);
+            }
+        });
+
+        btMenu_Editar.setText("Editar");
+        btMenu_Editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_EditarActionPerformed(evt);
+            }
+        });
+
+        btMenu_Remover.setText("Remover");
+        btMenu_Remover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_RemoverActionPerformed(evt);
+            }
+        });
+
+        btMenu_Cancelar.setText("Cancelar");
+        btMenu_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_CancelarActionPerformed(evt);
             }
         });
 
@@ -231,10 +229,10 @@ public class MenuAdmin extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btMenu_Novo)
+                            .addComponent(btAtualizar)
                             .addComponent(btMenu_Editar)
                             .addComponent(btMenu_Remover)
-                            .addComponent(btMenu_Cancelar)
-                            .addComponent(btAtualizar))))
+                            .addComponent(btMenu_Cancelar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(btMenu_Relatorio)
                 .addGap(24, 24, 24))
@@ -261,50 +259,21 @@ public class MenuAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btMenu_RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_RemoverActionPerformed
-        
-        int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este funcionario?", "Deletar", JOptionPane.YES_NO_OPTION);
-
-        
-        if(escolha == JOptionPane.YES_OPTION){
-            // pega o id do usario selecionado
-            int id = tblMenu_Func.getSelectedRow();
-
-            // deleta funcionario
-            Main.gestor.getFuncionarios().remove(id);
-        }
-    }//GEN-LAST:event_btMenu_RemoverActionPerformed
-
     private void btMenu_NovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_NovoActionPerformed
         
+        // abre o gerenciador
         new GerenciaFuncionario("").setVisible(true);
-        
-        btMenu_Editar.setEnabled(false);
-        btMenu_Relatorio.setEnabled(false);
-        btMenu_Remover.setEnabled(false);
-        btMenu_Cancelar.setEnabled(true);
     }//GEN-LAST:event_btMenu_NovoActionPerformed
 
-    private void btMenu_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_CancelarActionPerformed
-        btMenu_Cancelar.setEnabled(false);
-    }//GEN-LAST:event_btMenu_CancelarActionPerformed
-
-    private void btMenu_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_EditarActionPerformed
-       
-        // pega o id do usario selecionado
-        int id = tblMenu_Func.getSelectedRow();
-        
-        // passa o id do usuario a ser editado
-        new GerenciaFuncionario(id+"").setVisible(true);
-    }//GEN-LAST:event_btMenu_EditarActionPerformed
-
     private void tblMenu_FuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMenu_FuncMouseClicked
+        
+        // ativa botoes
         btMenu_Editar.setEnabled(true);
-        btMenu_Relatorio.setEnabled(true);
         btMenu_Remover.setEnabled(true);
         btMenu_Cancelar.setEnabled(true);
         
-        
+        // desativa
+        btMenu_Novo.setEnabled(false);
     }//GEN-LAST:event_tblMenu_FuncMouseClicked
 
     private void btMenu_PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_PesquisarActionPerformed
@@ -312,8 +281,72 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btMenu_PesquisarActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        
+        // descelecionar tabela
+        tblMenu_Func.clearSelection();
+        
+        // desativar botoes
+        btMenu_Cancelar.setEnabled(false);
+        btMenu_Editar.setEnabled(false);
+        btMenu_Remover.setEnabled(false);
+
+        // ativa o botão novo
+        btMenu_Novo.setEnabled(true);
+        
+        // atualiza tabela
         this.carregarTabela();
+        
     }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void btMenu_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_EditarActionPerformed
+        // pega o id do usario selecionado
+        int id = tblMenu_Func.getSelectedRow();
+        
+        // passa o id do usuario a ser editado
+        new GerenciaFuncionario(id+"").setVisible(true);
+        
+    }//GEN-LAST:event_btMenu_EditarActionPerformed
+
+    private void btMenu_RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_RemoverActionPerformed
+        // pega o id do usario selecionado
+        int id = tblMenu_Func.getSelectedRow();
+        
+        String nome = Main.gestor.getFuncionarios().get(id).getNome();
+        
+        int escolha = JOptionPane.showConfirmDialog(null, ("Tem certeza que deseja remover o funcionario '"+nome+"'?"), "Deletar", JOptionPane.YES_NO_OPTION);
+
+        if(escolha == JOptionPane.YES_OPTION){
+            // deleta funcionario
+            Main.gestor.getFuncionarios().remove(id);
+            
+            // desativa botoes
+            btMenu_Cancelar.setEnabled(false);
+            btMenu_Editar.setEnabled(false);
+            btMenu_Remover.setEnabled(false);
+            
+            // descelecionar tabela
+            tblMenu_Func.clearSelection();
+            
+            // ativa o botão novo
+            btMenu_Novo.setEnabled(true);
+            
+            // atualiza tabela
+            this.carregarTabela();
+        }
+    }//GEN-LAST:event_btMenu_RemoverActionPerformed
+
+    private void btMenu_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_CancelarActionPerformed
+        // desativa botoes
+        btMenu_Cancelar.setEnabled(false);
+        btMenu_Editar.setEnabled(false);
+        btMenu_Remover.setEnabled(false);
+        
+        // ativa o botão novo
+        btMenu_Novo.setEnabled(true);
+        
+        // descelecionar tabela
+        tblMenu_Func.clearSelection();
+    }//GEN-LAST:event_btMenu_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,12 +390,12 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAtualizar;
-    private javax.swing.JToggleButton btMenu_Cancelar;
-    private javax.swing.JToggleButton btMenu_Editar;
+    private javax.swing.JButton btMenu_Cancelar;
+    private javax.swing.JButton btMenu_Editar;
     private javax.swing.JButton btMenu_Novo;
     private javax.swing.JToggleButton btMenu_Pesquisar;
     private javax.swing.JButton btMenu_Relatorio;
-    private javax.swing.JToggleButton btMenu_Remover;
+    private javax.swing.JButton btMenu_Remover;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
