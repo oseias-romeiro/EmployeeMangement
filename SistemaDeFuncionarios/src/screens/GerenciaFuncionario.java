@@ -328,8 +328,8 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         String email = fieldEmail.getText();
         String endereco = fieldEndereco.getText();
         String senha = fieldSenha.getText();
-        String cargo = fieldSenha.getText();
-        String salario = fieldSenha.getText();
+        String cargo = fieldCargo.getText();
+        String salario = fieldSalario.getText();
         
         if(!nome.isEmpty() && !CPF.isEmpty() && !telefone.isEmpty()
                 && !sexo.isEmpty() && !email.isEmpty() && !endereco.isEmpty() && !senha.isEmpty()
@@ -343,6 +343,10 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             funcionario.setSexo(sexo);
             funcionario.setEmail(email);
             funcionario.setEnderço(endereco);
+            funcionario.setSenha(senha);
+            funcionario.setCargo(cargo);
+            funcionario.setSalario(Float.parseFloat(salario));
+            
             
             // gerandor de codigo unico
             int codigo;
@@ -385,8 +389,8 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         String email = fieldEmail.getText();
         String endereco = fieldEndereco.getText();
         String senha = fieldSenha.getText();
-        String cargo = fieldSenha.getText();
-        String salario = fieldSenha.getText();
+        String cargo = fieldCargo.getText();
+        String salario = fieldSalario.getText();
         
         if(!nome.isEmpty() && !CPF.isEmpty() && !telefone.isEmpty() && !sexo.isEmpty() 
                 && !email.isEmpty() && !endereco.isEmpty() && !senha.isEmpty()

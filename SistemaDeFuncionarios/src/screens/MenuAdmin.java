@@ -87,6 +87,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         });
 
         btMenu_Relatorio.setText("Relatorio");
+        btMenu_Relatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenu_RelatorioActionPerformed(evt);
+            }
+        });
 
         tblMenu_Func.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -406,6 +411,10 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btMenu_PesquisarActionPerformed
+
+    private void btMenu_RelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_RelatorioActionPerformed
+        new Relatorio().setVisible(true);
+    }//GEN-LAST:event_btMenu_RelatorioActionPerformed
 
     /**
      * @param args the command line arguments

@@ -20,7 +20,7 @@ public class Funcionario extends Pessoa{
     }
 
     public float getSalario() {
-        return salario;
+        return this.salario;
     }
 
     public void setSalario(float salario) {
