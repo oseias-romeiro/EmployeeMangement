@@ -1,12 +1,16 @@
 
 package sistema;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
-public class Ponto {
+
+public class Ponto extends Funcionario{
     private LocalDateTime logedIn;
     private LocalDateTime logedOut;
+    private LocalDate date;
+    
 
     public Ponto(){
         
@@ -26,6 +30,15 @@ public class Ponto {
     public void setLogedOut(LocalDateTime logedOut) {
         this.logedOut = logedOut;
     }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+    
     
     
 }

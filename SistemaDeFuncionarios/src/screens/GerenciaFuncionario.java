@@ -110,6 +110,12 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
 
         labelData.setText("Nascimento");
 
+        fieldNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNomeActionPerformed(evt);
+            }
+        });
+
         fieldNascimento.setText("2000-03-31");
         fieldNascimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -427,6 +433,10 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         String senha = uuid.toString();
         fieldSenha.setText(senha.substring(0, 10));
     }//GEN-LAST:event_btnGerarActionPerformed
+
+    private void fieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNomeActionPerformed
 
     /**
      * @param args the command line arguments
