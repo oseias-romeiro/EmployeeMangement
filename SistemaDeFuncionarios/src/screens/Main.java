@@ -153,21 +153,36 @@ public class Main extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String email = fieldEmail.getText();
         char[] senha = fieldSenha.getPassword();
+        
+        System.out.println(this.gestor.getFuncionarios().size());
 
         // verifica se é Gestor
         if(checkBoxGestor.isSelected()){
             if(email.equals(this.gestor.getEmail()) && Arrays.equals((this.gestor.getSenha()).toCharArray(), senha)){
             new MenuAdmin().setVisible(true);
-            setVisible(false);
             }else {
                 // menssage de erro
                 JOptionPane.showMessageDialog(null, "Email ou senha invalido!", "Falha no login", JOptionPane.ERROR_MESSAGE);
             }
         }else {
             // usuario comum
-            // ...
+            for(int i=0; i<this.gestor.getFuncionarios().size(); i++){
+                if(this.gestor.getFuncionarios().get(i).getEmail().equals(email) && 
+                    Arrays.equals((this.gestor.getFuncionarios().get(i).getSenha()).toCharArray(), senha)
+                ){
+                    // usuario encontrado
+                    new MenuFuncionario().setVisible(true);
+                }else {
+                    // menssage de erro
+                    JOptionPane.showMessageDialog(null, "Email ou senha invalido!", "Falha no login", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
         
+        // limpa os campos
+        fieldEmail.setText("");
+        fieldSenha.setText("");
+        checkBoxGestor.setSelected(false);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
