@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 public class PerfilFuncionario extends javax.swing.JFrame {
 
     private String id;
+    private Funcionario func = new Funcionario();
     /**
      * Creates new form PerfilFuncionario
      */
@@ -23,18 +24,19 @@ public class PerfilFuncionario extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         
-        this.id = id;
+        // pega funcionario
+        int id2 = Integer.parseInt(id);
+        func = Main.gestor.getFuncionarios().get(id2);
         
         // coloca os dados do funcionario no campo
-        Funcionario func = Main.gestor.getFuncionarios().get(Integer.parseInt(id));
-        fieldNome.setText(func.getNome());
-        fieldCPF.setText(func.getCpf());
-        fieldNascimento.setText(func.getDataNascimento().toString());
-        fieldTelefone.setText(func.getTelefone());
-        fieldSexo.setText(func.getSexo());
-        fieldEmail.setText(func.getEmail());
+        fieldNome.setText(this.func.getNome());
+        fieldCPF.setText(this.func.getCpf());
+        fieldNascimento.setText(this.func.getDataNascimento().toString());
+        fieldTelefone.setText(this.func.getTelefone());
+        fieldSexo.setText(this.func.getSexo());
+        fieldEmail.setText(this.func.getEmail());
         fieldEndereco.setText(func.getEnderço());
-        fieldSenha.setText(func.getSenha());
+        fieldSenha.setText(this.func.getSenha());
     }
 
     /**
@@ -66,7 +68,7 @@ public class PerfilFuncionario extends javax.swing.JFrame {
         labelSenha = new javax.swing.JLabel();
         fieldSenha = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelTitulo.setText("Perfil de Funcionario");
@@ -258,15 +260,14 @@ public class PerfilFuncionario extends javax.swing.JFrame {
             && !email.isEmpty() && !endereco.isEmpty() && !senha.isEmpty()){
 
             // salva os dados editados do usuario
-            Funcionario func = Main.gestor.getFuncionarios().get(Integer.parseInt(id));
-            func.setNome(nome);
-            func.setCpf(CPF);
-            func.setDataNascimento(nascimento);
-            func.setTelefone(telefone);
-            func.setSexo(sexo);
-            func.setEmail(email);
-            func.setEnderço(endereco);
-            func.setSenha(endereco);
+            this.func.setNome(nome);
+            this.func.setCpf(CPF);
+            this.func.setDataNascimento(nascimento);
+            this.func.setTelefone(telefone);
+            this.func.setSexo(sexo);
+            this.func.setEmail(email);
+            this.func.setEnderço(endereco);
+            this.func.setSenha(senha);
 
             // fecha tela
             dispose();

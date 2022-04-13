@@ -157,10 +157,10 @@ public class Main extends javax.swing.JFrame {
         // verifica se é Gestor
         if(checkBoxGestor.isSelected()){
             if(email.equals(this.gestor.getEmail()) && Arrays.equals((this.gestor.getSenha()).toCharArray(), senha)){
-            new MenuAdmin().setVisible(true);
+                new MenuAdmin().setVisible(true);
             }else {
                 // menssage de erro
-                JOptionPane.showMessageDialog(null, "Email ou senha invalido!", "Falha no login", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Gestor não encontrado!", "Falha no login", JOptionPane.ERROR_MESSAGE);
             }
         }else {
             // usuario comum
@@ -172,7 +172,7 @@ public class Main extends javax.swing.JFrame {
                     new MenuFuncionario(i+"").setVisible(true);
                 }else {
                     // menssage de erro
-                    JOptionPane.showMessageDialog(null, "Email ou senha invalido!", "Falha no login", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Funcionario não encontrado!", "Falha no login", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

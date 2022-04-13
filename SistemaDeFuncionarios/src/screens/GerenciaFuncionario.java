@@ -31,14 +31,9 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             // editar usuario
             btnAdiciona.setEnabled(false);
             
-            // pesquisa usario
+            // pega funcionario
             int id2 = Integer.parseInt(id);
-            
-            for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
-                if(i == id2){
-                    func = Main.gestor.getFuncionarios().get(i);
-                }
-            }
+            func = Main.gestor.getFuncionarios().get(id2);
             
             // seta os dados do usuario encontrado nos campos
             fieldNome.setText(func.getNome());
