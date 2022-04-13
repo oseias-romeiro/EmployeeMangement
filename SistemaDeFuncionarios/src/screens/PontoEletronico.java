@@ -23,6 +23,8 @@ public class PontoEletronico extends javax.swing.JFrame {
      */
     public PontoEletronico() {
         initComponents();
+        
+        setLocationRelativeTo(null);
     }
 
     /**

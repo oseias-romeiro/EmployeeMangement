@@ -153,8 +153,6 @@ public class Main extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String email = fieldEmail.getText();
         char[] senha = fieldSenha.getPassword();
-        
-        System.out.println(this.gestor.getFuncionarios().size());
 
         // verifica se é Gestor
         if(checkBoxGestor.isSelected()){
