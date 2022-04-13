@@ -171,7 +171,7 @@ public class Main extends javax.swing.JFrame {
                     Arrays.equals((this.gestor.getFuncionarios().get(i).getSenha()).toCharArray(), senha)
                 ){
                     // usuario encontrado
-                    new MenuFuncionario().setVisible(true);
+                    new MenuFuncionario(i+"").setVisible(true);
                 }else {
                     // menssage de erro
                     JOptionPane.showMessageDialog(null, "Email ou senha invalido!", "Falha no login", JOptionPane.ERROR_MESSAGE);

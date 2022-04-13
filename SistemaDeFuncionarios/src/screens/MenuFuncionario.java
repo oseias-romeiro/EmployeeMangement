@@ -10,13 +10,16 @@ package screens;
  */
 public class MenuFuncionario extends javax.swing.JFrame {
 
+    private String id;
     /**
      * Creates new form MenuFuncionario
      */
-    public MenuFuncionario() {
+    public MenuFuncionario(String id) {
         initComponents();
         
         setLocationRelativeTo(null);
+        
+        this.id = id;
     }
 
     /**
@@ -34,8 +37,18 @@ public class MenuFuncionario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnPerfil.setText("Perfil");
+        btnPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPerfilActionPerformed(evt);
+            }
+        });
 
         btnPonto.setText("Ponto");
+        btnPonto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPontoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -60,6 +73,16 @@ public class MenuFuncionario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPontoActionPerformed
+        // abre o ponto eletronico
+        new PontoEletronico().setVisible(true);
+    }//GEN-LAST:event_btnPontoActionPerformed
+
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+        // tela de edição de dados do usuario
+        new PerfilFuncionario(id).setVisible(true);
+    }//GEN-LAST:event_btnPerfilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -91,7 +114,7 @@ public class MenuFuncionario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuFuncionario().setVisible(true);
+                new MenuFuncionario("").setVisible(true);
             }
         });
     }
