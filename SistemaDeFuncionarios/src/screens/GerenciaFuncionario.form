@@ -114,19 +114,21 @@
                                                           <Component id="fieldCPF" max="32767" attributes="0"/>
                                                       </Group>
                                                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="labelSexo" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
+                                                          <Component id="labelData" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
                                                           <Group type="102" attributes="0">
-                                                              <Component id="labelSexo" min="-2" pref="37" max="-2" attributes="0"/>
-                                                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                                              <Component id="fieldSexo" max="32767" attributes="0"/>
+                                                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                              <Component id="fieldSexo" min="-2" pref="134" max="-2" attributes="0"/>
+                                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                           </Group>
                                                           <Group type="102" attributes="0">
-                                                              <Component id="labelData" min="-2" pref="71" max="-2" attributes="0"/>
                                                               <EmptySpace max="-2" attributes="0"/>
-                                                              <Component id="fieldNascimento" min="-2" pref="133" max="-2" attributes="0"/>
+                                                              <Component id="fieldNascimento" max="32767" attributes="0"/>
                                                           </Group>
                                                       </Group>
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
@@ -279,14 +281,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="fieldSexo">
             </Component>
-            <Component class="javax.swing.JTextField" name="fieldNascimento">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="2000-03-31"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldNascimentoActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="btnAdiciona">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adicionar"/>
@@ -331,6 +325,16 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="fieldCargo">
+            </Component>
+            <Component class="javax.swing.JFormattedTextField" name="fieldNascimento">
+              <Properties>
+                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+                  <Format format="   ## / ## / ####" subtype="-1" type="5"/>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Text Cursor"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

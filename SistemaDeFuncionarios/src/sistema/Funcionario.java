@@ -1,12 +1,15 @@
 
 package sistema;
 
+import java.util.ArrayList;
+
 
 public class Funcionario extends Pessoa{
    private String cargo;
    private float salario;
    private String senha;
    private int codigo;
+   private ArrayList<Ponto> pontos = new ArrayList<Ponto>();
 
    public Funcionario(){
        
@@ -42,6 +45,16 @@ public class Funcionario extends Pessoa{
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-   
+    
+    
+    public ArrayList<Ponto> getPontos() {
+        return pontos;
+    }
+    public void setPontos(ArrayList<Ponto> pontos) {
+        this.pontos = pontos;
+    }
+    public void addPonto(Ponto ponto) {
+        this.pontos.add(ponto);
+    }
    
 }

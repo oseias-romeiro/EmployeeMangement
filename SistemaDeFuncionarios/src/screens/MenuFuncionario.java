@@ -76,7 +76,7 @@ public class MenuFuncionario extends javax.swing.JFrame {
 
     private void btnPontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPontoActionPerformed
         // abre o ponto eletronico
-        new PontoEletronico().setVisible(true);
+        new PontoEletronico(id).setVisible(true);
     }//GEN-LAST:event_btnPontoActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed

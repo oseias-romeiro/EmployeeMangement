@@ -38,11 +38,13 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             // seta os dados do usuario encontrado nos campos
             fieldNome.setText(func.getNome());
             fieldCPF.setText(func.getCpf());
-            fieldNascimento.setText(func.getDataNascimento().toString());
             fieldTelefone.setText(func.getTelefone());
             fieldSexo.setText(func.getSexo());
             fieldEmail.setText(func.getEmail());
             fieldEndereco.setText(func.getEnderço());
+            
+            String[] nascimento = func.getDataNascimento().toString().split("-");
+            fieldNascimento.setText(nascimento[2]+nascimento[1]+nascimento[0]);
             
         }else{
             // adicionar usuario
@@ -75,7 +77,6 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         fieldTelefone = new javax.swing.JTextField();
         fieldCPF = new javax.swing.JTextField();
         fieldSexo = new javax.swing.JTextField();
-        fieldNascimento = new javax.swing.JTextField();
         btnAdiciona = new javax.swing.JButton();
         btnEdita = new javax.swing.JButton();
         labelSalario = new javax.swing.JLabel();
@@ -85,6 +86,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         btnGerar = new javax.swing.JButton();
         labelCargo = new javax.swing.JLabel();
         fieldCargo = new javax.swing.JTextField();
+        fieldNascimento = new javax.swing.JFormattedTextField();
         labelTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -108,13 +110,6 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         fieldNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldNomeActionPerformed(evt);
-            }
-        });
-
-        fieldNascimento.setText("2000-03-31");
-        fieldNascimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldNascimentoActionPerformed(evt);
             }
         });
 
@@ -144,6 +139,13 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         });
 
         labelCargo.setText("Cargo");
+
+        try {
+            fieldNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("   ## / ## / ####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fieldNascimento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -180,16 +182,17 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                                                     .addComponent(fieldTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                                                     .addComponent(fieldCPF))
                                                 .addGap(19, 19, 19)
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(labelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                                        .addComponent(labelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(38, 38, 38)
-                                                        .addComponent(fieldSexo))
+                                                        .addGap(4, 4, 4)
+                                                        .addComponent(fieldSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(0, 0, Short.MAX_VALUE))
                                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                                        .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(fieldNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(0, 0, Short.MAX_VALUE))))
+                                                        .addComponent(fieldNascimento))))))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -323,7 +326,10 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         // entrada de dados
         String nome = fieldNome.getText();
         String CPF = fieldCPF.getText();
-        LocalDate nascimento = LocalDate.parse(fieldNascimento.getText());
+        
+        String[] dataNasc = (fieldNascimento.getText().replace(" ", "")).split("/");
+        LocalDate nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
+        
         String telefone = fieldTelefone.getText();
         String sexo = fieldSexo.getText();
         String email = fieldEmail.getText();
@@ -384,7 +390,10 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         // entrada de dados
         String nome = fieldNome.getText();
         String CPF = fieldCPF.getText();
-        LocalDate nascimento = LocalDate.parse(fieldNascimento.getText());
+        
+        String[] dataNasc = (fieldNascimento.getText().replace(" ", "")).split("/");
+        LocalDate nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
+        
         String telefone = fieldTelefone.getText();
         String sexo = fieldSexo.getText();
         String email = fieldEmail.getText();
@@ -416,10 +425,6 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Dados invalidos!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditaActionPerformed
-
-    private void fieldNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNascimentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldNascimentoActionPerformed
 
     private void btnGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarActionPerformed
         
@@ -477,7 +482,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
     private javax.swing.JTextField fieldCargo;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldEndereco;
-    private javax.swing.JTextField fieldNascimento;
+    private javax.swing.JFormattedTextField fieldNascimento;
     private javax.swing.JTextField fieldNome;
     private javax.swing.JTextField fieldSalario;
     private javax.swing.JTextField fieldSenha;

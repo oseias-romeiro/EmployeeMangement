@@ -26,6 +26,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Editar.setEnabled(false);
         btMenu_Remover.setEnabled(false);
         btMenu_Cancelar.setEnabled(false);
+        btMenu_Relatorio.setEnabled(false);
         
         // carrega os funcionarios do gestor
         this.carregarTabela();
@@ -70,7 +71,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Remover = new javax.swing.JButton();
         btMenu_Cancelar = new javax.swing.JButton();
         btMenu_Pesquisar = new javax.swing.JButton();
-        btSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -179,13 +179,6 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        btSair.setText("Sair");
-        btSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSairActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout painelMainLayout = new javax.swing.GroupLayout(painelMain);
         painelMain.setLayout(painelMainLayout);
         painelMainLayout.setHorizontalGroup(
@@ -210,9 +203,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                                         .addComponent(btAtualizar))
                                     .addGroup(painelMainLayout.createSequentialGroup()
                                         .addComponent(btMenu_Relatorio)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btSair)
-                                        .addGap(20, 20, 20))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(painelMainLayout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -247,9 +238,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                             .addComponent(btMenu_Remover)
                             .addComponent(btMenu_Cancelar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btMenu_Relatorio)
-                    .addComponent(btSair))
+                .addComponent(btMenu_Relatorio)
                 .addGap(24, 24, 24))
         );
 
@@ -286,6 +275,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Editar.setEnabled(true);
         btMenu_Remover.setEnabled(true);
         btMenu_Cancelar.setEnabled(true);
+        btMenu_Relatorio.setEnabled(true);
         
         // desativa
         btMenu_Novo.setEnabled(false);
@@ -300,6 +290,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Cancelar.setEnabled(false);
         btMenu_Editar.setEnabled(false);
         btMenu_Remover.setEnabled(false);
+        btMenu_Relatorio.setEnabled(false);
 
         // ativa o botão novo
         btMenu_Novo.setEnabled(true);
@@ -334,6 +325,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             btMenu_Cancelar.setEnabled(false);
             btMenu_Editar.setEnabled(false);
             btMenu_Remover.setEnabled(false);
+            btMenu_Relatorio.setEnabled(false);
             
             // descelecionar tabela
             tblMenu_Func.clearSelection();
@@ -351,6 +343,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Cancelar.setEnabled(false);
         btMenu_Editar.setEnabled(false);
         btMenu_Remover.setEnabled(false);
+        btMenu_Relatorio.setEnabled(false);
         
         // ativa o botão novo
         btMenu_Novo.setEnabled(true);
@@ -428,12 +421,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         new Relatorio().setVisible(true);
     }//GEN-LAST:event_btMenu_RelatorioActionPerformed
 
-    private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        
-        // sair
-        dispose();
-    }//GEN-LAST:event_btSairActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -482,7 +469,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btMenu_Pesquisar;
     private javax.swing.JButton btMenu_Relatorio;
     private javax.swing.JButton btMenu_Remover;
-    private javax.swing.JButton btSair;
     private javax.swing.JTextField fieldNome;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
