@@ -2,32 +2,32 @@
 package sistema;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 
 public class Ponto extends Funcionario{
-    private LocalDateTime logedIn;
-    private LocalDateTime logedOut;
+    private LocalTime logedIn;
+    private LocalTime logedOut;
     private LocalDate date;
     
 
     public Ponto(){
         
     }
-    public LocalDateTime getLogedIn() {
+    public LocalTime getLogedIn() {
         return logedIn;
     }
 
-    public void setLogedIn(LocalDateTime logedIn) {
+    public void setLogedIn(LocalTime logedIn) {
         this.logedIn = logedIn;
     }
 
-    public LocalDateTime getLogedOut() {
+    public LocalTime getLogedOut() {
         return logedOut;
     }
 
-    public void setLogedOut(LocalDateTime logedOut) {
+    public void setLogedOut(LocalTime logedOut) {
         this.logedOut = logedOut;
     }
 

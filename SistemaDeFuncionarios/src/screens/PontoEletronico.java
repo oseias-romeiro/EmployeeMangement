@@ -21,7 +21,8 @@ import javax.swing.JOptionPane;
 public class PontoEletronico extends javax.swing.JFrame {
 
     private String id;
-    Funcionario func = new Funcionario();
+    private Funcionario func = new Funcionario();
+    private ZoneId zona = ZoneId.of("America/Sao_Paulo");
     /**
      * Creates new form PontoEletronico
      */
@@ -36,10 +37,9 @@ public class PontoEletronico extends javax.swing.JFrame {
         }
         
         // coloca a data
-        ZoneId zona = ZoneId.of("America/Sao_Paulo");
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("ddMMyyyy");
-        campoData.setText(LocalDate.now(zona).format(formato));
-        System.out.println(LocalDate.now(zona).format(formato));
+        campoData.setText(LocalDate.now(this.zona).format(formato));
+        System.out.println(LocalDate.now(this.zona).format(formato));
     }
 
     /**
@@ -120,24 +120,24 @@ public class PontoEletronico extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRegistrar)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(18, 18, 18)
-                            .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel4)
                             .addGap(29, 29, 29)
-                            .addComponent(campoHoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(58, 58, 58)
+                            .addComponent(campoHoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(29, 29, 29)
                             .addComponent(jLabel5)
-                            .addGap(43, 43, 43)
-                            .addComponent(campoHoraSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(35, 35, 35)
+                            .addComponent(campoHoraSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRegistrar)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -200,9 +200,15 @@ public class PontoEletronico extends javax.swing.JFrame {
     }//GEN-LAST:event_campoHoraSaidaActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        LocalDate data = LocalDate.parse(campoData.getText());
-        LocalDateTime entrada = LocalDateTime.parse(campoHoraEntrada.getText());
-        LocalDateTime saida = LocalDateTime.parse(campoHoraSaida.getText());
+        
+        String[] data1 = (campoData.getText().replace(" ", "")).split("/");
+        LocalDate data = LocalDate.parse(data1[2]+"-"+data1[1]+"-"+data1[0]);
+        
+        String in = (campoHoraEntrada.getText().replace(" ", ""))+":00.000000";
+        LocalTime entrada = LocalTime.parse(in);
+        String out = (campoHoraEntrada.getText().replace(" ", ""))+":00.000000";
+        LocalTime saida = LocalTime.parse(out);
+        
         char[] senha = campoSenha.getPassword();
         
         // verifica senha
@@ -215,6 +221,9 @@ public class PontoEletronico extends javax.swing.JFrame {
             
             // registra ponto
             this.func.addPonto(ponto);
+            
+            // sai
+            dispose();
         }
         else {
             // menssage de erro
