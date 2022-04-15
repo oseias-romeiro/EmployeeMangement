@@ -418,7 +418,8 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btMenu_PesquisarActionPerformed
 
     private void btMenu_RelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_RelatorioActionPerformed
-        new Relatorio().setVisible(true);
+        int id = tblMenu_Func.getSelectedRow();
+        new Relatorio(id+"").setVisible(true);
     }//GEN-LAST:event_btMenu_RelatorioActionPerformed
 
     /**
