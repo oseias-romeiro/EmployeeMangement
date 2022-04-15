@@ -206,7 +206,7 @@ public class PontoEletronico extends javax.swing.JFrame {
         
         String in = (campoHoraEntrada.getText().replace(" ", ""))+":00.000000";
         LocalTime entrada = LocalTime.parse(in);
-        String out = (campoHoraEntrada.getText().replace(" ", ""))+":00.000000";
+        String out = (campoHoraSaida.getText().replace(" ", ""))+":00.000000";
         LocalTime saida = LocalTime.parse(out);
         
         char[] senha = campoSenha.getPassword();

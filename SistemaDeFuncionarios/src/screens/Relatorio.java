@@ -60,8 +60,9 @@ public class Relatorio extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Data", "Entrada", "Saida"}, 0);
 
         for(int i=0; i<Main.gestor.getFuncionarios().get(this.id).getPontos().size(); i++){
+            String[] data = (Main.gestor.getFuncionarios().get(this.id).getPontos().get(i).getDate().toString()).split("-");
             Object linha[] = new Object[]{
-                Main.gestor.getFuncionarios().get(this.id).getPontos().get(i).getDate(),
+                (data[2]+"/"+data[1]+"/"+data[0]),
                 Main.gestor.getFuncionarios().get(this.id).getPontos().get(i).getLogedIn(),
                 Main.gestor.getFuncionarios().get(this.id).getPontos().get(i).getLogedOut(),
             };
