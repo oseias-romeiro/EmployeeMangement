@@ -80,12 +80,12 @@ public class MenuFuncionario extends javax.swing.JFrame {
 
     private void btnPontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPontoActionPerformed
         // abre o ponto eletronico
-        new PontoEletronico(id).setVisible(true);
+        new PontoEletronico(this.id).setVisible(true);
     }//GEN-LAST:event_btnPontoActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         // tela de edição de dados do usuario
-        new PerfilFuncionario(id).setVisible(true);
+        new PerfilFuncionario(this.id).setVisible(true);
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     /**

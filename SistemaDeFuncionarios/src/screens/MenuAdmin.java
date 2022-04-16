@@ -190,6 +190,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btGestor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
         btGestor.setText("Gestor");
         btGestor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
