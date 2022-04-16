@@ -44,10 +44,10 @@ public class Main extends javax.swing.JFrame {
                 gestor.setEmail(gestorInfo[0]);
                 gestor.setSenha(gestorInfo[1]);
             }
-            
         }
         catch (FileNotFoundException ex){
-            System.out.println("arquivo nao encontrado");
+            // menssage de erro
+            JOptionPane.showMessageDialog(null, "Falha ao carregar dados do gestor!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
