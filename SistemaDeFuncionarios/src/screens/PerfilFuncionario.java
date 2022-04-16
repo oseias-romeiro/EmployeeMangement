@@ -252,7 +252,7 @@ public class PerfilFuncionario extends javax.swing.JFrame {
         String nome = fieldNome.getText();
         String CPF = fieldCPF.getText();
         
-        String[] data = (this.func.getDataNascimento().toString().replace(" ", "")).split("/");
+        String[] data = (fieldNascimento.getText().replace(" ", "")).split("/");
         LocalDate nascimento = LocalDate.parse(data[2]+"-"+data[1]+"-"+data[0]);
         
         String telefone = fieldTelefone.getText();
