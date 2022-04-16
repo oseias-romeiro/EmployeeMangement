@@ -35,7 +35,10 @@ public class MenuFuncionario extends javax.swing.JFrame {
         btnPonto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("SGF");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
 
+        btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         btnPerfil.setText("Perfil");
         btnPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -43,6 +46,7 @@ public class MenuFuncionario extends javax.swing.JFrame {
             }
         });
 
+        btnPonto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ponto.png"))); // NOI18N
         btnPonto.setText("Ponto");
         btnPonto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,7 +61,7 @@ public class MenuFuncionario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(173, 173, 173)
                 .addComponent(btnPonto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(btnPerfil)
                 .addGap(140, 140, 140))
         );
@@ -68,7 +72,7 @@ public class MenuFuncionario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPonto)
                     .addComponent(btnPerfil))
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         pack();

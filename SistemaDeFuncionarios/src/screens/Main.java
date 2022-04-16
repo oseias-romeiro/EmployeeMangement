@@ -54,6 +54,7 @@ public class Main extends javax.swing.JFrame {
         setTitle("SGF");
         setBackground(new java.awt.Color(0, 0, 0));
         setForeground(java.awt.Color.black);
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
         setResizable(false);
 
         painelMain.setBackground(new java.awt.Color(195, 221, 246));
@@ -66,6 +67,7 @@ public class Main extends javax.swing.JFrame {
         labelSenha.setText("Senha");
 
         btnLogin.setBackground(new java.awt.Color(0, 102, 255));
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.png"))); // NOI18N
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,7 +106,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(painelLoginLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelEmail)
                     .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,14 +155,16 @@ public class Main extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String email = fieldEmail.getText();
         char[] senha = fieldSenha.getPassword();
+        
+        boolean achou = false;
 
         // verifica se é Gestor
         if(checkBoxGestor.isSelected()){
             if(email.equals(this.gestor.getEmail()) && Arrays.equals((this.gestor.getSenha()).toCharArray(), senha)){
+                // gestor correto
                 new MenuAdmin().setVisible(true);
-            }else {
-                // menssage de erro
-                JOptionPane.showMessageDialog(null, "Gestor não encontrado!", "Falha no login", JOptionPane.ERROR_MESSAGE);
+                
+                achou = true;
             }
         }else {
             // usuario comum
@@ -170,11 +174,14 @@ public class Main extends javax.swing.JFrame {
                 ){
                     // usuario encontrado
                     new MenuFuncionario(i+"").setVisible(true);
-                }else {
-                    // menssage de erro
-                    JOptionPane.showMessageDialog(null, "Funcionario não encontrado!", "Falha no login", JOptionPane.ERROR_MESSAGE);
+                    achou = true;
                 }
             }
+        }
+        
+        if(!achou) {
+            // menssage de erro
+            JOptionPane.showMessageDialog(null, "Usuario não encontrado!", "Falha no login", JOptionPane.ERROR_MESSAGE);
         }
         
         // limpa os campos

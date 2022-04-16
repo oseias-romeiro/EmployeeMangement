@@ -73,7 +73,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Pesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("SGF");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
 
+        btMenu_Novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new.png"))); // NOI18N
         btMenu_Novo.setText("Novo");
         btMenu_Novo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btMenu_Novo.setDoubleBuffered(true);
@@ -87,6 +90,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btMenu_Relatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatorio.png"))); // NOI18N
         btMenu_Relatorio.setText("Relatorio");
         btMenu_Relatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +148,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         fieldNome.setToolTipText("Nome ou código do funcionário");
         fieldNome.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
+        btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
         btAtualizar.setText("Atualizar");
         btAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +156,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btMenu_Editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         btMenu_Editar.setText("Editar");
         btMenu_Editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,6 +164,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btMenu_Remover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         btMenu_Remover.setText("Remover");
         btMenu_Remover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,6 +172,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btMenu_Cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelar.png"))); // NOI18N
         btMenu_Cancelar.setText("Cancelar");
         btMenu_Cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,6 +180,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btMenu_Pesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pesquisa.png"))); // NOI18N
         btMenu_Pesquisar.setText("Pesquisar");
         btMenu_Pesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,32 +197,29 @@ public class MenuAdmin extends javax.swing.JFrame {
                     .addGroup(painelMainLayout.createSequentialGroup()
                         .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(painelMainLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(painelMainLayout.createSequentialGroup()
-                                        .addGap(8, 8, 8)
-                                        .addComponent(btMenu_Novo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btMenu_Editar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btMenu_Remover)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btMenu_Cancelar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btAtualizar))
-                                    .addGroup(painelMainLayout.createSequentialGroup()
-                                        .addComponent(btMenu_Relatorio)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                            .addGroup(painelMainLayout.createSequentialGroup()
                                 .addGap(15, 15, 15)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelMainLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btMenu_Novo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btMenu_Editar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btMenu_Remover)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btMenu_Cancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btAtualizar)))
                         .addGap(95, 95, 95)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelMainLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(btMenu_Pesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelMainLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btMenu_Relatorio)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMainLayout.setVerticalGroup(
@@ -226,7 +232,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                     .addGroup(painelMainLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btMenu_Pesquisar))
                         .addGap(49, 49, 49)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,7 +243,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                             .addComponent(btMenu_Editar)
                             .addComponent(btMenu_Remover)
                             .addComponent(btMenu_Cancelar))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(btMenu_Relatorio)
                 .addGap(24, 24, 24))
         );
