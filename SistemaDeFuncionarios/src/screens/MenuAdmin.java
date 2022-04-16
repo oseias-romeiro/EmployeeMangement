@@ -37,6 +37,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         
         DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Codigo", "Nome", "Email"}, 0);
 
+        // adiciona os funcionarios na tabela
         for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
             Object linha[] = new Object[]{
                 Main.gestor.getFuncionarios().get(i).getCodigo(),
@@ -71,6 +72,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Remover = new javax.swing.JButton();
         btMenu_Cancelar = new javax.swing.JButton();
         btMenu_Pesquisar = new javax.swing.JButton();
+        btGestor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGF");
@@ -188,6 +190,13 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
 
+        btGestor.setText("Gestor");
+        btGestor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGestorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelMainLayout = new javax.swing.GroupLayout(painelMain);
         painelMain.setLayout(painelMainLayout);
         painelMainLayout.setHorizontalGroup(
@@ -195,11 +204,21 @@ public class MenuAdmin extends javax.swing.JFrame {
             .addGroup(painelMainLayout.createSequentialGroup()
                 .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMainLayout.createSequentialGroup()
-                        .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(22, 22, 22)
+                        .addComponent(btMenu_Pesquisar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelMainLayout.createSequentialGroup()
+                        .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(painelMainLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btMenu_Relatorio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btGestor))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelMainLayout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelMainLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelMainLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(btMenu_Novo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -211,15 +230,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btAtualizar)))
                         .addGap(95, 95, 95)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelMainLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btMenu_Pesquisar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelMainLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btMenu_Relatorio)))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMainLayout.setVerticalGroup(
@@ -244,7 +255,9 @@ public class MenuAdmin extends javax.swing.JFrame {
                             .addComponent(btMenu_Remover)
                             .addComponent(btMenu_Cancelar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(btMenu_Relatorio)
+                .addGroup(painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btMenu_Relatorio)
+                    .addComponent(btGestor))
                 .addGap(24, 24, 24))
         );
 
@@ -428,6 +441,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         new Relatorio(id+"").setVisible(true);
     }//GEN-LAST:event_btMenu_RelatorioActionPerformed
 
+    private void btGestorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGestorActionPerformed
+        // abre a tela de config do gestor
+        new PerfilGestor().setVisible(true);
+    }//GEN-LAST:event_btGestorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -470,6 +488,7 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAtualizar;
+    private javax.swing.JButton btGestor;
     private javax.swing.JButton btMenu_Cancelar;
     private javax.swing.JButton btMenu_Editar;
     private javax.swing.JButton btMenu_Novo;

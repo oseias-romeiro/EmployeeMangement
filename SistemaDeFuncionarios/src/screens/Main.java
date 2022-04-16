@@ -8,6 +8,10 @@ import javax.swing.JOptionPane;
 import java.util.Arrays;
 import sistema.Gestor;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  *
  * @author oseia
@@ -25,10 +29,26 @@ public class Main extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         
-        // inicializando gestor
-        this.gestor = new Gestor();
-        gestor.setEmail("admin@email.com");
-        gestor.setSenha("admin");
+        try {
+            // pega o caminho do diretorio
+            String path = new File("").getAbsolutePath();
+            
+            // ler arquivo de email e senha de gestores
+            File gestores = new File(path+"/src/data/gestores.txt");
+            Scanner dados = new Scanner(gestores);
+            while(dados.hasNextLine()){
+                String[] gestorInfo = dados.nextLine().split(",");
+                
+                // inicializando os gestores cadastrados
+                this.gestor = new Gestor();
+                gestor.setEmail(gestorInfo[0]);
+                gestor.setSenha(gestorInfo[1]);
+            }
+            
+        }
+        catch (FileNotFoundException ex){
+            System.out.println("arquivo nao encontrado");
+        }
     }
 
     /**
