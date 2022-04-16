@@ -10,6 +10,7 @@ import sistema.Gestor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
@@ -36,13 +37,21 @@ public class Main extends javax.swing.JFrame {
             // ler arquivo de email e senha de gestores
             File gestores = new File(path+"/src/data/gestores.txt");
             Scanner dados = new Scanner(gestores);
+            
+            // cada linha segue: email,senha,nome,CPF,nascimento,telefone,sexo,endereco
             while(dados.hasNextLine()){
                 String[] gestorInfo = dados.nextLine().split(",");
                 
                 // inicializando os gestores cadastrados
                 this.gestor = new Gestor();
-                gestor.setEmail(gestorInfo[0]);
-                gestor.setSenha(gestorInfo[1]);
+                this.gestor.setEmail(gestorInfo[0]);
+                this.gestor.setSenha(gestorInfo[1]);
+                this.gestor.setNome(gestorInfo[2]);
+                this.gestor.setCpf(gestorInfo[3]);
+                this.gestor.setDataNascimento(LocalDate.parse(gestorInfo[4]));
+                this.gestor.setTelefone(gestorInfo[5]);
+                this.gestor.setSexo(gestorInfo[6]);
+                this.gestor.setEnderço(gestorInfo[7]);
             }
         }
         catch (FileNotFoundException ex){

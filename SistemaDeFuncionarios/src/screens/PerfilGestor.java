@@ -5,11 +5,11 @@
 package screens;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+
+import java.time.LocalDate;
 
 /**
  *
@@ -33,6 +33,15 @@ public class PerfilGestor extends javax.swing.JFrame {
         // passa os dados do gestor para os campos
         fieldEmail.setText(Main.gestor.getEmail());
         fieldSenha.setText(Main.gestor.getSenha());
+        fieldNome.setText(Main.gestor.getNome());
+        fieldCPF.setText(Main.gestor.getCpf());
+        
+        String[] nascimento = Main.gestor.getDataNascimento().toString().split("-");
+        fieldNascimento.setText(nascimento[2]+"/"+nascimento[1]+"/"+nascimento[0]);
+        
+        fieldTelefone.setText(Main.gestor.getTelefone());
+        fieldSexo.setText(Main.gestor.getSexo());
+        fieldEndereco.setText(Main.gestor.getEnderço());
     }
 
     /**
@@ -55,13 +64,13 @@ public class PerfilGestor extends javax.swing.JFrame {
         fieldNome = new javax.swing.JTextField();
         fieldCPF = new javax.swing.JTextField();
         labelNascimento = new javax.swing.JLabel();
-        fieldNascimento = new javax.swing.JTextField();
         labelTelefone = new javax.swing.JLabel();
-        telefoneSexo = new javax.swing.JTextField();
+        fieldTelefone = new javax.swing.JTextField();
         labelSexo = new javax.swing.JLabel();
         fieldSexo = new javax.swing.JTextField();
         labelEndereco = new javax.swing.JLabel();
         fieldEndereco = new javax.swing.JTextField();
+        fieldNascimento = new javax.swing.JFormattedTextField();
         labelTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -112,6 +121,13 @@ public class PerfilGestor extends javax.swing.JFrame {
             }
         });
 
+        try {
+            fieldNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("   ## / ## / ####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fieldNascimento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,32 +155,33 @@ public class PerfilGestor extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(298, 298, 298)
-                                .addComponent(fieldSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(labelTelefone)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(labelTelefone)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(labelEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(labelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                    .addComponent(labelEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(labelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(fieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(telefoneSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(19, 19, 19)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(labelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(labelNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(fieldNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(fieldEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(31, 31, 31))))
+                                        .addComponent(labelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(fieldSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(labelNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(fieldNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 3, Short.MAX_VALUE)
+                                .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(fieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fieldEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(34, 34, 34))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,15 +196,15 @@ public class PerfilGestor extends javax.swing.JFrame {
                         .addComponent(labelCPF)
                         .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(fieldNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelNascimento)))
+                        .addComponent(labelNascimento)
+                        .addComponent(fieldNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelTelefone)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(fieldSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelSexo)
-                        .addComponent(telefoneSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(fieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelEmail)
@@ -243,12 +260,30 @@ public class PerfilGestor extends javax.swing.JFrame {
         // pega os dados dos campos
         String email = fieldEmail.getText();
         String senha = fieldSenha.getText();
+        String nome = fieldNome.getText();
+        String CPF = fieldCPF.getText();
+        
+        
+        String[] data = (fieldNascimento.getText().replace(" ", "")).split("/");
+        LocalDate nascimento = LocalDate.parse(data[2]+"-"+data[1]+"-"+data[0]);
+        
+        String telefone = fieldTelefone.getText();
+        String sexo = fieldSexo.getText();
+        String endereco = fieldEndereco.getText();
 
         // verificação
-        if(!email.isEmpty() && !senha.isEmpty()){
+        if(!email.isEmpty() && !senha.isEmpty() && !nome.isEmpty() && !CPF.isEmpty() && !nascimento.toString().isEmpty()
+                && !telefone.isEmpty() && !sexo.isEmpty() && !endereco.isEmpty()
+            ){
             // edita o gestor
             Main.gestor.setEmail(email);
             Main.gestor.setSenha(senha);
+            Main.gestor.setNome(nome);
+            Main.gestor.setCpf(CPF);
+            Main.gestor.setDataNascimento(nascimento);
+            Main.gestor.setTelefone(telefone);
+            Main.gestor.setSexo(sexo);
+            Main.gestor.setEnderço(endereco);
             
             // edita o arquivo "gestores"
             try {
@@ -314,10 +349,11 @@ public class PerfilGestor extends javax.swing.JFrame {
     private javax.swing.JTextField fieldCPF;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldEndereco;
-    private javax.swing.JTextField fieldNascimento;
+    private javax.swing.JFormattedTextField fieldNascimento;
     private javax.swing.JTextField fieldNome;
     private javax.swing.JTextField fieldSenha;
     private javax.swing.JTextField fieldSexo;
+    private javax.swing.JTextField fieldTelefone;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelCPF;
     private javax.swing.JLabel labelEmail;
@@ -328,6 +364,5 @@ public class PerfilGestor extends javax.swing.JFrame {
     private javax.swing.JLabel labelSexo;
     private javax.swing.JLabel labelTelefone;
     private javax.swing.JLabel labelTitulo;
-    private javax.swing.JTextField telefoneSexo;
     // End of variables declaration//GEN-END:variables
 }
