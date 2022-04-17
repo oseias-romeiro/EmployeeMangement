@@ -39,7 +39,6 @@ public class PontoEletronico extends javax.swing.JFrame {
         // coloca a data
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("ddMMyyyy");
         campoData.setText(LocalDate.now(this.zona).format(formato));
-        System.out.println(LocalDate.now(this.zona).format(formato));
     }
 
     /**
@@ -222,12 +221,16 @@ public class PontoEletronico extends javax.swing.JFrame {
             ponto.setLogedIn(entrada);
             ponto.setLogedOut(saida);
             
-            // registra ponto
-            this.func.addPonto(ponto);
-            calculaHora(in, out);
+            // calcula hora trabalhada
+            boolean correto = calculaHora(in, out);
             
-            // sai
-            dispose();
+            if(correto){
+                // registra ponto
+                this.func.addPonto(ponto);
+
+                // sai
+                dispose();
+            }
         }
         else {
             // menssage de erro
@@ -236,9 +239,11 @@ public class PontoEletronico extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
     
    //calcula o total de horas trabalhadas
-    public void calculaHora(String horaInic, String horaFinal){
+    public boolean calculaHora(String horaInic, String horaFinal){
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         long resultadoFinal;
+        
+        boolean correto = true;
 
         try{
             Date horaIni = sdf.parse(horaInic);
@@ -255,15 +260,15 @@ public class PontoEletronico extends javax.swing.JFrame {
             
             //muda pra numero positivo
             if(resultadoFinal < 0){
-                resultadoFinal *= -1;
+                throw new Exception("Valor calculado foi negativo!");
+                //resultadoFinal *= -1;
             }
             JOptionPane.showMessageDialog(null, ("Total de horas: "+resultadoFinal+" horas" ),"Jornada de trablho salva" ,JOptionPane.INFORMATION_MESSAGE);
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro ao calcular as Horas Trabalhadas!", "Atenção", JOptionPane.ERROR_MESSAGE);
-            
+            correto = false;
         }
-            
-
+        return correto;
     }
     /**
      * @param args the command line arguments
