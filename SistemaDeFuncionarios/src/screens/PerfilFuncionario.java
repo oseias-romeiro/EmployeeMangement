@@ -36,7 +36,12 @@ public class PerfilFuncionario extends javax.swing.JFrame {
         fieldNascimento.setText(data[2]+data[1]+data[0]);
         
         fieldTelefone.setText(this.func.getTelefone());
-        fieldSexo.setText(this.func.getSexo());
+        // ativa o radio button do sexo
+        if(this.func.getSexo().equals("M")){
+            btnMasculino.setSelected(true);
+        }else if(this.func.getSexo().equals("F")){
+            btnFeminino.setSelected(true);
+        }
         fieldEmail.setText(this.func.getEmail());
         fieldEndereco.setText(func.getEnderço());
         fieldSenha.setText(this.func.getSenha());
@@ -51,6 +56,7 @@ public class PerfilFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         labelTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         labelNome = new javax.swing.JLabel();
@@ -65,11 +71,12 @@ public class PerfilFuncionario extends javax.swing.JFrame {
         fieldEmail = new javax.swing.JTextField();
         fieldTelefone = new javax.swing.JTextField();
         fieldCPF = new javax.swing.JTextField();
-        fieldSexo = new javax.swing.JTextField();
         btnEdita = new javax.swing.JButton();
         labelSenha = new javax.swing.JLabel();
         fieldSenha = new javax.swing.JTextField();
         fieldNascimento = new javax.swing.JFormattedTextField();
+        btnMasculino = new javax.swing.JRadioButton();
+        btnFeminino = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGF");
@@ -86,7 +93,7 @@ public class PerfilFuncionario extends javax.swing.JFrame {
 
         labelTelefone.setText("Telefone");
 
-        labelSexo.setText("Sexo");
+        labelSexo.setText("Sexo (opcional)");
 
         labelEmail.setText("Email");
 
@@ -123,6 +130,12 @@ public class PerfilFuncionario extends javax.swing.JFrame {
         }
         fieldNascimento.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
+        buttonGroup1.add(btnMasculino);
+        btnMasculino.setText("M");
+
+        buttonGroup1.add(btnFeminino);
+        btnFeminino.setText("F");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -147,24 +160,24 @@ public class PerfilFuncionario extends javax.swing.JFrame {
                                             .addComponent(fieldCPF))
                                         .addGap(19, 19, 19)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelSexo))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(labelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(38, 38, 38)
-                                                .addComponent(fieldSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnMasculino)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btnFeminino)
                                                 .addGap(0, 0, Short.MAX_VALUE))
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(fieldNascimento))))))
+                                            .addComponent(fieldNascimento)))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(fieldEndereco)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(fieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                                    .addComponent(fieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE))
+                                .addGap(0, 7, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnEdita, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +207,8 @@ public class PerfilFuncionario extends javax.swing.JFrame {
                     .addComponent(labelTelefone)
                     .addComponent(labelSexo)
                     .addComponent(fieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMasculino)
+                    .addComponent(btnFeminino))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -228,7 +242,7 @@ public class PerfilFuncionario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(207, 207, 207)
                         .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +251,7 @@ public class PerfilFuncionario extends javax.swing.JFrame {
                 .addComponent(labelTitulo)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -256,7 +270,15 @@ public class PerfilFuncionario extends javax.swing.JFrame {
         LocalDate nascimento = LocalDate.parse(data[2]+"-"+data[1]+"-"+data[0]);
         
         String telefone = fieldTelefone.getText();
-        String sexo = fieldSexo.getText();
+        // verifica qual radio button referente ao sexo esta ativo
+        String sexo;
+        if(btnMasculino.isSelected()){
+            sexo = "M";
+        }else if(btnFeminino.isSelected()){
+            sexo = "F";
+        }else {
+            sexo = " ";
+        }
         String email = fieldEmail.getText();
         String endereco = fieldEndereco.getText();
         String senha = fieldSenha.getText();
@@ -323,13 +345,15 @@ public class PerfilFuncionario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEdita;
+    private javax.swing.JRadioButton btnFeminino;
+    private javax.swing.JRadioButton btnMasculino;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField fieldCPF;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldEndereco;
     private javax.swing.JFormattedTextField fieldNascimento;
     private javax.swing.JTextField fieldNome;
     private javax.swing.JTextField fieldSenha;
-    private javax.swing.JTextField fieldSexo;
     private javax.swing.JTextField fieldTelefone;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelCPF;
