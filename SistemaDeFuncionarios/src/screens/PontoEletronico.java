@@ -224,6 +224,7 @@ public class PontoEletronico extends javax.swing.JFrame {
             
             // registra ponto
             this.func.addPonto(ponto);
+            calculaHora(in, out);
             
             // sai
             dispose();
@@ -234,21 +235,34 @@ public class PontoEletronico extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
     
-    //calcula o total de horas trabalhadas
-    public long calculaHora(String horaInic, String horaFinal) throws ParseException{
+   //calcula o total de horas trabalhadas
+    public void calculaHora(String horaInic, String horaFinal){
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        long resultadoFinal;
 
-        Date horaIni = sdf.parse(horaInic);
-        Date horaFim = sdf.parse(horaFinal);
+        try{
+            Date horaIni = sdf.parse(horaInic);
+        
+            Date horaFim = sdf.parse(horaFinal);
 
 
-        long horaI = horaIni.getTime();
-        long horaF = horaFim.getTime(); 
+            long horaI = horaIni.getTime();
+            long horaF = horaFim.getTime(); 
 
-        long diferencaHoras = horaF - horaI;
-        long resultadoFinal = diferencaHoras/100/60/60;//converte milisedundos em horas
-
-        return resultadoFinal;
+            long diferencaHoras = horaF - horaI;
+            
+            resultadoFinal = diferencaHoras/100/10/60/60;//converte milisedundos em horas
+            
+            //muda pra numero positivo
+            if(resultadoFinal < 0){
+                resultadoFinal *= -1;
+            }
+            JOptionPane.showMessageDialog(null, ("Total de horas: "+resultadoFinal+" horas" ),"Jornada de trablho salva" ,JOptionPane.INFORMATION_MESSAGE);
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro ao calcular as Horas Trabalhadas!", "Atenção", JOptionPane.ERROR_MESSAGE);
+            
+        }
+            
 
     }
     /**
