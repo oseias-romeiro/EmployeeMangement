@@ -36,9 +36,27 @@ public class PontoEletronico extends javax.swing.JFrame {
             this.func = Main.gestor.getFuncionarios().get(Integer.parseInt(id));
         }
         
-        // coloca a data
+        /* preenche os campos */
+        
+        //data
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("ddMMyyyy");
         campoData.setText(LocalDate.now(this.zona).format(formato));
+        
+        // verifica se tem um ponto pendente
+        if(MenuFuncionario.pendente){
+            // preenche o horario de entrada do ultimo ponto
+            String entrada = (this.func.getPontos().get(this.func.getPontos().size()-1)).getLogedIn().toString();
+            String[] entrada2 = entrada.split(":");
+            campoHoraEntrada.setText(entrada2[0]+entrada2[1]);
+            
+            // coloca o horario da saida
+            String[] horario = LocalTime.now(this.zona).toString().split(":");
+            campoHoraSaida.setText(horario[0]+horario[1]);
+        }else {
+            // coloca o horario de entrada
+            String[] horario = LocalTime.now(this.zona).toString().split(":");
+            campoHoraEntrada.setText(horario[0]+horario[1]);
+        }
     }
 
     /**
@@ -76,6 +94,7 @@ public class PontoEletronico extends javax.swing.JFrame {
             }
         });
 
+        campoData.setEditable(false);
         try {
             campoData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("   ## / ## / ####")));
         } catch (java.text.ParseException ex) {
@@ -90,12 +109,14 @@ public class PontoEletronico extends javax.swing.JFrame {
 
         jLabel5.setText("Horáro de Saída :");
 
+        campoHoraEntrada.setEditable(false);
         try {
             campoHoraEntrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("   ## : ##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
+        campoHoraSaida.setEditable(false);
         try {
             campoHoraSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("   ## : ##")));
         } catch (java.text.ParseException ex) {
@@ -202,39 +223,68 @@ public class PontoEletronico extends javax.swing.JFrame {
     }//GEN-LAST:event_campoHoraSaidaActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        
+        // entrada da data
         String[] data1 = (campoData.getText().replace(" ", "")).split("/");
         LocalDate data = LocalDate.parse(data1[2]+"-"+data1[1]+"-"+data1[0]);
-        
+        // horario de entrada
         String in = (campoHoraEntrada.getText().replace(" ", ""))+":00.000000";
         LocalTime entrada = LocalTime.parse(in);
-        String out = (campoHoraSaida.getText().replace(" ", ""))+":00.000000";
-        LocalTime saida = LocalTime.parse(out);
-        
+        // entrada da senha
         char[] senha = campoSenha.getPassword();
         
         // verifica senha
         if(Arrays.equals((this.func.getSenha()).toCharArray(), senha)){
-            Ponto ponto = new Ponto();
             
-            ponto.setDate(data);
-            ponto.setLogedIn(entrada);
-            ponto.setLogedOut(saida);
+            // verificação
+            boolean correto = true;
             
-            // calcula hora trabalhada
-            boolean correto = calculaHora(in, out);
-            
-            if(correto){
-                // registra ponto
-                this.func.addPonto(ponto);
+            // inicializando variaveis
+            LocalTime saida = LocalTime.now(this.zona);
+            String out = "";
 
+            // caso haja um registro pendente
+            if(MenuFuncionario.pendente){
+                // pegando saida
+                out = (campoHoraSaida.getText().replace(" ", ""))+":00.000000";
+                saida = LocalTime.parse(out);
+                
+                // calcula hora trabalhada
+                correto = calculaHora(in, out);
+                
+                // verificação de horario
+                if(correto){
+                    // edita o ultimo registro
+                    this.func.getPontos().get(this.func.getPontos().size()-1).setLogedIn(entrada);
+                    this.func.getPontos().get(this.func.getPontos().size()-1).setLogedOut(saida);
+                    
+                    // sai
+                    dispose();
+                }else {
+                    // menssage de erro
+                    JOptionPane.showMessageDialog(null, "Dados invalidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }else { // não é um registro pendente
+                
+                // incializa o objeto ponto
+                Ponto ponto = new Ponto();
+                
+                // atribui a entrada e a data
+                ponto.setDate(data);
+                ponto.setLogedIn(entrada);
+                
+                // salva o registro
+                this.func.addPonto(ponto);
+                
+                // alerta para o MenuFuncionario que agora ha um ponto pendente
+                MenuFuncionario.pendente = true;
+                
                 // sai
                 dispose();
             }
         }
         else {
             // menssage de erro
-            JOptionPane.showMessageDialog(null, "Dados invalidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Senha incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
     

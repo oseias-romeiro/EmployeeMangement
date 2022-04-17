@@ -11,6 +11,8 @@ package screens;
 public class MenuFuncionario extends javax.swing.JFrame {
 
     private String id;
+    
+    public static boolean pendente = false;
     /**
      * Creates new form MenuFuncionario
      */
