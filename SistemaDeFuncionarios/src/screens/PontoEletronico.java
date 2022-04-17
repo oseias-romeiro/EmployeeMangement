@@ -257,6 +257,9 @@ public class PontoEletronico extends javax.swing.JFrame {
                     this.func.getPontos().get(this.func.getPontos().size()-1).setLogedIn(entrada);
                     this.func.getPontos().get(this.func.getPontos().size()-1).setLogedOut(saida);
                     
+                    // alerta para o MenuFuncionario que não tem ponto pendente
+                    MenuFuncionario.pendente = false;
+                
                     // sai
                     dispose();
                 }else {
