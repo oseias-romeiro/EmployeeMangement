@@ -3,8 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package screens;
+import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import sistema.Funcionario;
+
+import java.time.*;
+import java.util.Date;
 
 /**
  *
@@ -39,9 +43,25 @@ public class Relatorio extends javax.swing.JFrame {
         fieldMediaSalarial.setText(mediaSalarial());
         // quantidade de funcionarios
         fieldNumFunc.setText(Main.gestor.getFuncionarios().size()+"");
-        //
+        // porcentagem de funcionarios
+        fieldMasculino.setText(MascFemin("M"));
+        // porcentagem de funcionarias
+        fieldFeminino.setText(MascFemin("F"));
+        // pontos registrados
+        fieldPontos.setText(diasTrabalhados());
+        // media de horas por pontos
+        fieldMediaHorasF.setText(mediaHorasFunc());
     }
-    
+    public String MascFemin(String sexo){
+        int qtd = 0;
+        int total = Main.gestor.getFuncionarios().size();// quantidade total de funcionarios
+        for(int i=0; i<total; i++){
+            if(Main.gestor.getFuncionarios().get(i).getSexo().equals(sexo)){ // conta de acordo com o sexo passado pelo parametro (M ou F)
+                qtd++;
+            }
+        }
+        return ((qtd*100)/total)+"%";//porcentagem de funcionarios ou funcionarias
+    }
     public String mediaSalarial(){
         int n = 0;
         float soma = 0;
@@ -56,7 +76,39 @@ public class Relatorio extends javax.swing.JFrame {
             return (soma/(n+1))+""; // media
         }
     }
-    
+    public String diasTrabalhados(){
+        return this.func.getPontos().size()+"";// retorna a quantidade de pontos registrados
+    }
+    public String mediaHorasFunc(){
+        int qtd = this.func.getPontos().size();
+        
+        // caso não haja pontos registrados ainda
+        if(qtd == 0){
+            return "0";
+        }
+        
+        long somaHoras = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        
+        for(int i=0; i<qtd; i++){
+            String entrada = this.func.getPontos().get(i).getLogedIn().toString();
+            String saida = this.func.getPontos().get(i).getLogedOut().toString();
+            
+            try {
+                Date horaI = sdf.parse(entrada);
+                Date horaF = sdf.parse(saida);
+                
+                long diferenca = horaF.getTime() - horaI.getTime();
+                
+                somaHoras += diferenca/100/10/60/60; //converte de milisegundos para horas
+                
+            }catch (Exception e){
+                System.out.println("erro ao calcular horas por pontos: "+e);
+            }
+        }
+        
+        return somaHoras/qtd+""; // media de horas por ponto
+    }
     // carrega tabela de pontosa
     public void carregarTabela(){
         
@@ -95,14 +147,14 @@ public class Relatorio extends javax.swing.JFrame {
         fieldNumFunc = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         fieldNumFunc1 = new javax.swing.JTextField();
-        fieldMediaSalarial1 = new javax.swing.JTextField();
-        fieldMediaSalarial2 = new javax.swing.JTextField();
+        fieldMasculino = new javax.swing.JTextField();
+        fieldFeminino = new javax.swing.JTextField();
         fieldMediaSalarial3 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        fieldMediaSalarial4 = new javax.swing.JTextField();
+        fieldPontos = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
-        fieldMediaSalarial5 = new javax.swing.JTextField();
+        fieldMediaHorasF = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnCalcula = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -141,7 +193,7 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Media de horas trabalhadas");
+        jLabel8.setText("Media de horas trabalhadas (geral)");
 
         fieldNumFunc1.setEditable(false);
         fieldNumFunc1.addActionListener(new java.awt.event.ActionListener() {
@@ -150,17 +202,17 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        fieldMediaSalarial1.setEditable(false);
-        fieldMediaSalarial1.addActionListener(new java.awt.event.ActionListener() {
+        fieldMasculino.setEditable(false);
+        fieldMasculino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldMediaSalarial1ActionPerformed(evt);
+                fieldMasculinoActionPerformed(evt);
             }
         });
 
-        fieldMediaSalarial2.setEditable(false);
-        fieldMediaSalarial2.addActionListener(new java.awt.event.ActionListener() {
+        fieldFeminino.setEditable(false);
+        fieldFeminino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldMediaSalarial2ActionPerformed(evt);
+                fieldFemininoActionPerformed(evt);
             }
         });
 
@@ -171,21 +223,21 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("Media de horas trabalhadas do funcionario");
+        jLabel9.setText("Media de horas por ponto do funcionario");
 
-        fieldMediaSalarial4.setEditable(false);
-        fieldMediaSalarial4.addActionListener(new java.awt.event.ActionListener() {
+        fieldPontos.setEditable(false);
+        fieldPontos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldMediaSalarial4ActionPerformed(evt);
+                fieldPontosActionPerformed(evt);
             }
         });
 
-        jLabel10.setText("Dias trabalhados");
+        jLabel10.setText("Pontos registrados");
 
-        fieldMediaSalarial5.setEditable(false);
-        fieldMediaSalarial5.addActionListener(new java.awt.event.ActionListener() {
+        fieldMediaHorasF.setEditable(false);
+        fieldMediaHorasF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldMediaSalarial5ActionPerformed(evt);
+                fieldMediaHorasFActionPerformed(evt);
             }
         });
 
@@ -205,8 +257,8 @@ public class Relatorio extends javax.swing.JFrame {
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(fieldMediaSalarial2, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                                    .addComponent(fieldMediaSalarial1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldFeminino, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                                    .addComponent(fieldMasculino, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(fieldMediaSalarial, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,21 +275,18 @@ public class Relatorio extends javax.swing.JFrame {
                                             .addComponent(fieldNumFunc1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                                             .addComponent(fieldMediaSalarial3)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(fieldMediaHorasF, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(150, 150, 150)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldMediaSalarial4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldPontos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 104, Short.MAX_VALUE))))
+                                .addGap(0, 113, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator1)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(31, 31, 31)
-                    .addComponent(fieldMediaSalarial5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(496, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,11 +302,11 @@ public class Relatorio extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel8)
                     .addComponent(fieldNumFunc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldMediaSalarial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fieldMasculino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(fieldMediaSalarial2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldFeminino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(fieldMediaSalarial3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -267,13 +316,10 @@ public class Relatorio extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldMediaSalarial4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldPontos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldMediaHorasF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(149, Short.MAX_VALUE)
-                    .addComponent(fieldMediaSalarial5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(23, 23, 23)))
         );
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -350,22 +396,21 @@ public class Relatorio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(245, 245, 245)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(444, 444, 444)
-                        .addComponent(btnCalcula))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnCalcula)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(245, 245, 245)
+                            .addComponent(jLabel2))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,7 +438,16 @@ public class Relatorio extends javax.swing.JFrame {
         fieldMediaSalarial.setText(mediaSalarial());
         // quantidade de funcionarios
         fieldNumFunc.setText(Main.gestor.getFuncionarios().size()+"");
+        // porcentagem de funcionarios masculino
+        fieldMasculino.setText(MascFemin("M"));
+        // porcentagem de funcionarios femininos
+        fieldFeminino.setText(MascFemin("F"));
+        // pontos registrados
+        fieldPontos.setText(diasTrabalhados());
+        // media de horas por pontos
+        fieldMediaHorasF.setText(mediaHorasFunc());
         
+        // atualiza tabela
         this.carregarTabela();
     }//GEN-LAST:event_btnCalculaActionPerformed
 
@@ -405,25 +459,25 @@ public class Relatorio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldNumFunc1ActionPerformed
 
-    private void fieldMediaSalarial1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMediaSalarial1ActionPerformed
+    private void fieldMasculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMasculinoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fieldMediaSalarial1ActionPerformed
+    }//GEN-LAST:event_fieldMasculinoActionPerformed
 
-    private void fieldMediaSalarial2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMediaSalarial2ActionPerformed
+    private void fieldFemininoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldFemininoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fieldMediaSalarial2ActionPerformed
+    }//GEN-LAST:event_fieldFemininoActionPerformed
 
     private void fieldMediaSalarial3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMediaSalarial3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldMediaSalarial3ActionPerformed
 
-    private void fieldMediaSalarial4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMediaSalarial4ActionPerformed
+    private void fieldPontosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldPontosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fieldMediaSalarial4ActionPerformed
+    }//GEN-LAST:event_fieldPontosActionPerformed
 
-    private void fieldMediaSalarial5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMediaSalarial5ActionPerformed
+    private void fieldMediaHorasFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMediaHorasFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fieldMediaSalarial5ActionPerformed
+    }//GEN-LAST:event_fieldMediaHorasFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -462,14 +516,14 @@ public class Relatorio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalcula;
+    private javax.swing.JTextField fieldFeminino;
+    private javax.swing.JTextField fieldMasculino;
+    private javax.swing.JTextField fieldMediaHorasF;
     private javax.swing.JTextField fieldMediaSalarial;
-    private javax.swing.JTextField fieldMediaSalarial1;
-    private javax.swing.JTextField fieldMediaSalarial2;
     private javax.swing.JTextField fieldMediaSalarial3;
-    private javax.swing.JTextField fieldMediaSalarial4;
-    private javax.swing.JTextField fieldMediaSalarial5;
     private javax.swing.JTextField fieldNumFunc;
     private javax.swing.JTextField fieldNumFunc1;
+    private javax.swing.JTextField fieldPontos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

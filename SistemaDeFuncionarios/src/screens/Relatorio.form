@@ -27,27 +27,26 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="444" max="-2" attributes="0"/>
-                      <Component id="btnCalcula" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="btnCalcula" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -93,8 +92,8 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="fieldMediaSalarial2" pref="105" max="32767" attributes="0"/>
-                                      <Component id="fieldMediaSalarial1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="fieldFeminino" pref="105" max="32767" attributes="0"/>
+                                      <Component id="fieldMasculino" alignment="0" max="32767" attributes="0"/>
                                       <Component id="fieldMediaSalarial" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -118,13 +117,16 @@
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                      <Component id="fieldMediaHorasF" min="-2" pref="88" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="fieldMediaSalarial4" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Component id="fieldPontos" min="-2" pref="88" max="-2" attributes="0"/>
                                       <Component id="jLabel10" min="-2" pref="99" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="104" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="113" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -134,13 +136,6 @@
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="fieldMediaSalarial5" min="-2" pref="88" max="-2" attributes="0"/>
-                      <EmptySpace pref="496" max="32767" attributes="0"/>
-                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -159,12 +154,12 @@
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="fieldNumFunc1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldMediaSalarial1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fieldMasculino" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldMediaSalarial2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fieldFeminino" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="fieldMediaSalarial3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -176,15 +171,11 @@
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="fieldMediaSalarial4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="149" max="32767" attributes="0"/>
-                      <Component id="fieldMediaSalarial5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="fieldPontos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fieldMediaHorasF" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace pref="18" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -233,7 +224,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Media de horas trabalhadas"/>
+            <Property name="text" type="java.lang.String" value="Media de horas trabalhadas (geral)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldNumFunc1">
@@ -244,20 +235,20 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldNumFunc1ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="fieldMediaSalarial1">
+        <Component class="javax.swing.JTextField" name="fieldMasculino">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldMediaSalarial1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldMasculinoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="fieldMediaSalarial2">
+        <Component class="javax.swing.JTextField" name="fieldFeminino">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldMediaSalarial2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldFemininoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldMediaSalarial3">
@@ -270,30 +261,30 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Media de horas trabalhadas do funcionario"/>
+            <Property name="text" type="java.lang.String" value="Media de horas por ponto do funcionario"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="fieldMediaSalarial4">
+        <Component class="javax.swing.JTextField" name="fieldPontos">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldMediaSalarial4ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldPontosActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Dias trabalhados"/>
+            <Property name="text" type="java.lang.String" value="Pontos registrados"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="fieldMediaSalarial5">
+        <Component class="javax.swing.JTextField" name="fieldMediaHorasF">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldMediaSalarial5ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldMediaHorasFActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
