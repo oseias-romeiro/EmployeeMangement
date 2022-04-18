@@ -50,7 +50,11 @@ public class Relatorio extends javax.swing.JFrame {
         // pontos registrados
         fieldPontos.setText(diasTrabalhados());
         // media de horas por pontos
-        fieldMediaHorasF.setText(mediaHorasFunc());
+        fieldMediaHorasF.setText(mediaHorasFunc(this.func));
+        //media de idades dos funcionarios
+        fieldMediaSalarial3.setText(mediaIdades());
+        // media de horas trabalhadas (baseada na media de horas por ponto)
+        fieldMediaHG.setText(mediaHorasGeral());
     }
     public String MascFemin(String sexo){
         int qtd = 0;
@@ -63,24 +67,23 @@ public class Relatorio extends javax.swing.JFrame {
         return ((qtd*100)/total)+"%";//porcentagem de funcionarios ou funcionarias
     }
     public String mediaSalarial(){
-        int n = 0;
+        int qtd = Main.gestor.getFuncionarios().size(); // quantidade de funcionarios
         float soma = 0;
         
-        if(Main.gestor.getFuncionarios().size() == 0){
+        if(qtd == 0){
             return "0";
         }else {
-            for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
+            for(int i=0; i<qtd; i++){
                 soma += Main.gestor.getFuncionarios().get(i).getSalario();
-                n = i;
             }
-            return (soma/(n+1))+""; // media
+            return (soma/(qtd+1))+""; // media
         }
     }
     public String diasTrabalhados(){
         return this.func.getPontos().size()+"";// retorna a quantidade de pontos registrados
     }
-    public String mediaHorasFunc(){
-        int qtd = this.func.getPontos().size();
+    public String mediaHorasFunc(Funcionario func2){
+        int qtd = func2.getPontos().size();
         
         // caso não haja pontos registrados ainda
         if(qtd == 0){
@@ -91,8 +94,8 @@ public class Relatorio extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         
         for(int i=0; i<qtd; i++){
-            String entrada = this.func.getPontos().get(i).getLogedIn().toString();
-            String saida = this.func.getPontos().get(i).getLogedOut().toString();
+            String entrada = func2.getPontos().get(i).getLogedIn().toString();
+            String saida = func2.getPontos().get(i).getLogedOut().toString();
             
             try {
                 Date horaI = sdf.parse(entrada);
@@ -109,7 +112,29 @@ public class Relatorio extends javax.swing.JFrame {
         
         return somaHoras/qtd+""; // media de horas por ponto
     }
-    // carrega tabela de pontosa
+    public String mediaIdades(){
+        int qtd = Main.gestor.getFuncionarios().size(); // quantidade de funcionarios
+        int soma = 0;
+        
+        for(int i=0; i<qtd; i++){
+            // soma as idades dos funcionarios (forma simples)
+            soma += LocalDate.now().getYear() - Main.gestor.getFuncionarios().get(i).getDataNascimento().getYear();
+        }
+        // retorna a meida de idades
+        return (soma/qtd)+"";
+    }
+    public String mediaHorasGeral(){
+        int qtd = Main.gestor.getFuncionarios().size();
+        float soma = 0;
+        
+        for(int i=0; i<qtd; i++){
+            // soma as medias de horas de cada funcionario
+            soma += Float.parseFloat(mediaHorasFunc(Main.gestor.getFuncionarios().get(i)));
+        }
+        // retorna a media
+        return (soma/qtd)+"";
+    }
+    // carrega tabela de pontos
     public void carregarTabela(){
         
         DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Data", "Entrada", "Saida"}, 0);
@@ -137,39 +162,44 @@ public class Relatorio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        painelRelatorio = new javax.swing.JPanel();
+        labelMediaIdade = new javax.swing.JLabel();
         fieldMediaSalarial = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        labelMasculino = new javax.swing.JLabel();
+        labelFeminino = new javax.swing.JLabel();
+        labelMediaSalarial = new javax.swing.JLabel();
+        labelNumFunc = new javax.swing.JLabel();
         fieldNumFunc = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        fieldNumFunc1 = new javax.swing.JTextField();
+        labelMediaHG = new javax.swing.JLabel();
+        fieldMediaHG = new javax.swing.JTextField();
         fieldMasculino = new javax.swing.JTextField();
         fieldFeminino = new javax.swing.JTextField();
         fieldMediaSalarial3 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        labelMediaHF = new javax.swing.JLabel();
         fieldPontos = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel10 = new javax.swing.JLabel();
+        labelPontos = new javax.swing.JLabel();
         fieldMediaHorasF = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        labelGeral = new javax.swing.JLabel();
+        labelFunc = new javax.swing.JLabel();
+        labelTitulo = new javax.swing.JLabel();
         btnCalcula = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        painelPontos = new javax.swing.JPanel();
         labelNomeFunc = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPontos = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
 
+        jLabel12.setText("jLabel12");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGF");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        painelRelatorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setText("Media de idade");
+        labelMediaIdade.setText("Media de idade");
 
         fieldMediaSalarial.setEditable(false);
         fieldMediaSalarial.addActionListener(new java.awt.event.ActionListener() {
@@ -178,13 +208,13 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Masculino");
+        labelMasculino.setText("Masculino");
 
-        jLabel5.setText("Feminino");
+        labelFeminino.setText("Feminino");
 
-        jLabel7.setText("Media salarial");
+        labelMediaSalarial.setText("Media salarial");
 
-        jLabel6.setText("Numero de funcionarios");
+        labelNumFunc.setText("Numero de funcionarios");
 
         fieldNumFunc.setEditable(false);
         fieldNumFunc.addActionListener(new java.awt.event.ActionListener() {
@@ -193,12 +223,12 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Media de horas trabalhadas (geral)");
+        labelMediaHG.setText("Media de horas trabalhadas");
 
-        fieldNumFunc1.setEditable(false);
-        fieldNumFunc1.addActionListener(new java.awt.event.ActionListener() {
+        fieldMediaHG.setEditable(false);
+        fieldMediaHG.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldNumFunc1ActionPerformed(evt);
+                fieldMediaHGActionPerformed(evt);
             }
         });
 
@@ -223,7 +253,7 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("Media de horas por ponto do funcionario");
+        labelMediaHF.setText("Media de horas por ponto");
 
         fieldPontos.setEditable(false);
         fieldPontos.addActionListener(new java.awt.event.ActionListener() {
@@ -232,7 +262,7 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Pontos registrados");
+        labelPontos.setText("Pontos registrados");
 
         fieldMediaHorasF.setEditable(false);
         fieldMediaHorasF.addActionListener(new java.awt.event.ActionListener() {
@@ -241,89 +271,115 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(fieldFeminino, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                                    .addComponent(fieldMasculino, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldMediaSalarial, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(fieldNumFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel8)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(fieldNumFunc1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                                            .addComponent(fieldMediaSalarial3)))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(fieldMediaHorasF, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(150, 150, 150)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldPontos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 113, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        labelGeral.setText("GERAL");
+
+        labelFunc.setText("FUNCIONARIO");
+
+        javax.swing.GroupLayout painelRelatorioLayout = new javax.swing.GroupLayout(painelRelatorio);
+        painelRelatorio.setLayout(painelRelatorioLayout);
+        painelRelatorioLayout.setHorizontalGroup(
+            painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelRelatorioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldMediaSalarial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6)
-                    .addComponent(fieldNumFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel8)
-                    .addComponent(fieldNumFunc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldMasculino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(fieldFeminino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(fieldMediaSalarial3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelRelatorioLayout.createSequentialGroup()
+                        .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(painelRelatorioLayout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldMediaHorasF, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelMediaHF))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldPontos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelPontos, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(136, 136, 136))
+                            .addGroup(painelRelatorioLayout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(labelFunc)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(painelRelatorioLayout.createSequentialGroup()
+                        .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelRelatorioLayout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(labelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(213, 213, 213))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRelatorioLayout.createSequentialGroup()
+                                .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelMediaSalarial, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelMasculino, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelFeminino, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(fieldFeminino)
+                                    .addComponent(fieldMasculino, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldMediaSalarial, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)))
+                        .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelRelatorioLayout.createSequentialGroup()
+                                .addComponent(labelNumFunc)
+                                .addGap(20, 20, 20))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelMediaHG)
+                                .addComponent(labelMediaIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fieldNumFunc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(fieldMediaHG)
+                                .addComponent(fieldMediaSalarial3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(22, 22, 22))))
+        );
+        painelRelatorioLayout.setVerticalGroup(
+            painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRelatorioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelGeral)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelRelatorioLayout.createSequentialGroup()
+                            .addComponent(fieldNumFunc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(fieldMediaHG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelMediaHG))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(fieldMediaSalarial3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelMediaIdade)))
+                        .addComponent(labelNumFunc))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRelatorioLayout.createSequentialGroup()
+                        .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fieldMediaSalarial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelMediaSalarial))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelMasculino)
+                            .addComponent(fieldMasculino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelFeminino)
+                            .addComponent(fieldFeminino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                .addGap(4, 4, 4)
+                .addComponent(labelFunc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelMediaHF)
+                    .addComponent(labelPontos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldPontos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldMediaHorasF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("RELATORIO");
+        labelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelTitulo.setText("RELATORIO");
 
         btnCalcula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
         btnCalcula.setText("Atualizar");
@@ -333,9 +389,10 @@ public class Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        painelPontos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        labelNomeFunc.setText("construtor-colocao-nome-do-funcionario-aqui");
+        labelNomeFunc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelNomeFunc.setText("construtor-coloca-nome-do-funcionario-aqui");
 
         tblPontos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -364,15 +421,15 @@ public class Relatorio extends javax.swing.JFrame {
 
         jLabel3.setText("Registros do funcionario: ");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelPontosLayout = new javax.swing.GroupLayout(painelPontos);
+        painelPontos.setLayout(painelPontosLayout);
+        painelPontosLayout.setHorizontalGroup(
+            painelPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelPontosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(painelPontosLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -380,11 +437,11 @@ public class Relatorio extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        painelPontosLayout.setVerticalGroup(
+            painelPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelPontosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNomeFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -396,34 +453,34 @@ public class Relatorio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCalcula)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(245, 245, 245)
-                            .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnCalcula)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(20, 20, 20)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(painelRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(275, 275, 275)
+                        .addComponent(labelTitulo)))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(painelPontos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel2)
+                .addComponent(labelTitulo)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(painelRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(painelPontos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnCalcula)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -445,7 +502,11 @@ public class Relatorio extends javax.swing.JFrame {
         // pontos registrados
         fieldPontos.setText(diasTrabalhados());
         // media de horas por pontos
-        fieldMediaHorasF.setText(mediaHorasFunc());
+        fieldMediaHorasF.setText(mediaHorasFunc(this.func));
+        //media de idades dos funcionarios
+        fieldMediaSalarial3.setText(mediaIdades());
+        // media de horas trabalhadas (baseada na media de horas por ponto)
+        fieldMediaHG.setText(mediaHorasGeral());
         
         // atualiza tabela
         this.carregarTabela();
@@ -455,9 +516,9 @@ public class Relatorio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldNumFuncActionPerformed
 
-    private void fieldNumFunc1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNumFunc1ActionPerformed
+    private void fieldMediaHGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMediaHGActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fieldNumFunc1ActionPerformed
+    }//GEN-LAST:event_fieldMediaHGActionPerformed
 
     private void fieldMasculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldMasculinoActionPerformed
         // TODO add your handling code here:
@@ -518,27 +579,30 @@ public class Relatorio extends javax.swing.JFrame {
     private javax.swing.JButton btnCalcula;
     private javax.swing.JTextField fieldFeminino;
     private javax.swing.JTextField fieldMasculino;
+    private javax.swing.JTextField fieldMediaHG;
     private javax.swing.JTextField fieldMediaHorasF;
     private javax.swing.JTextField fieldMediaSalarial;
     private javax.swing.JTextField fieldMediaSalarial3;
     private javax.swing.JTextField fieldNumFunc;
-    private javax.swing.JTextField fieldNumFunc1;
     private javax.swing.JTextField fieldPontos;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel labelFeminino;
+    private javax.swing.JLabel labelFunc;
+    private javax.swing.JLabel labelGeral;
+    private javax.swing.JLabel labelMasculino;
+    private javax.swing.JLabel labelMediaHF;
+    private javax.swing.JLabel labelMediaHG;
+    private javax.swing.JLabel labelMediaIdade;
+    private javax.swing.JLabel labelMediaSalarial;
     private javax.swing.JLabel labelNomeFunc;
+    private javax.swing.JLabel labelNumFunc;
+    private javax.swing.JLabel labelPontos;
+    private javax.swing.JLabel labelTitulo;
+    private javax.swing.JPanel painelPontos;
+    private javax.swing.JPanel painelRelatorio;
     private javax.swing.JTable tblPontos;
     // End of variables declaration//GEN-END:variables
 }
