@@ -54,7 +54,7 @@
               <Component id="labelTitulo" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -96,9 +96,10 @@
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="fieldNome" alignment="0" max="32767" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="fieldTelefone" alignment="1" pref="168" max="32767" attributes="0"/>
-                                              <Component id="fieldCPF" alignment="1" max="32767" attributes="0"/>
+                                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="fieldCPF" min="-2" pref="167" max="-2" attributes="0"/>
+                                              <Component id="fieldTelefone" alignment="1" min="-2" pref="167" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -155,20 +156,29 @@
                       <Component id="labelNome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="fieldNome" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelCPF" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelData" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldCPF" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldNascimento" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelCPF" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelData" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="fieldNascimento" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="fieldCPF" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelSexo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fieldTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnMasculino" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnFeminino" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelSexo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMasculino" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnFeminino" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="fieldTelefone" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -246,10 +256,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="fieldEmail">
         </Component>
-        <Component class="javax.swing.JTextField" name="fieldTelefone">
-        </Component>
-        <Component class="javax.swing.JTextField" name="fieldCPF">
-        </Component>
         <Component class="javax.swing.JButton" name="btnEdita">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -292,6 +298,20 @@
               <ComponentRef name="buttonGroup1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="F"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="fieldCPF">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format=" ### . ### . ### - ##" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="fieldTelefone">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="( ## ) ##### - ####" subtype="-1" type="5"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

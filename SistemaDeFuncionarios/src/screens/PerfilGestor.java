@@ -316,7 +316,7 @@ public class PerfilGestor extends javax.swing.JFrame {
         boolean correto = true;
         try {
             this.valida.validaNome(nome);
-            this.valida.validaEmail(email);
+            this.valida.validaEmail(email, MenuFuncionario.id);
             if(dataNasc.length == 3){
                 nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
             }else {
@@ -324,6 +324,9 @@ public class PerfilGestor extends javax.swing.JFrame {
             }
             if(senha.isEmpty()){
                 throw new Exception("Campo senha não pode ficar em branco");
+            }
+            if(endereco.isEmpty()){
+                throw new Exception("Campo endereco não pode ficar em branco");
             }
         }catch(Exception e){
             // menssage de erro
@@ -345,7 +348,7 @@ public class PerfilGestor extends javax.swing.JFrame {
             try {
                 // escrever os dados no arquivo
                 FileWriter escrever = new FileWriter(path+"/src/data/gestores.txt");
-                escrever.write(email+","+senha);
+                escrever.write(email+","+senha+","+nome+","+CPF+","+nascimento+","+telefone+","+sexo+","+endereco);
                 escrever.close();
                 
                 // fecha a tela

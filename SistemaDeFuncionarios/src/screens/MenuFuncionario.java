@@ -13,7 +13,7 @@ import sistema.Funcionario;
  */
 public class MenuFuncionario extends javax.swing.JFrame {
 
-    private String id;
+    public static String id;
     Funcionario func;
     
     public static boolean pendente = false;

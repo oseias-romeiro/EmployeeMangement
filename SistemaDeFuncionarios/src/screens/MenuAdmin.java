@@ -13,8 +13,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MenuAdmin extends javax.swing.JFrame {
     
-    
-
     /**
      * Creates new form Controle
      */

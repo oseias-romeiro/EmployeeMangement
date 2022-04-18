@@ -18,16 +18,26 @@ public class FieldsValidation {
             throw new Exception("Nome muito curto");
         }
     }
-    public void validaEmail(String email) throws Exception{
-        // verifica emmail em branco
+    public void validaEmail(String email, String id) throws Exception{
+        // verifica email em branco
         if(email.isEmpty()){
             throw new Exception("Email não pode ficar em branco!");
         }
         
-        // verifica se o email já foi usado
-        for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
-            if(Main.gestor.getFuncionarios().get(i).getEmail().equals(email)){
-                throw new Exception("Este email ja foi usado");
+        // esta editando ou criando?
+        if(!id.equals("salvando")){
+            // verifica se mais alguem exceto ele usa o email
+            for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
+                if(Main.gestor.getFuncionarios().get(i).getEmail().equals(email) && !(i == Integer.parseInt(id))){
+                    throw new Exception("Este email ja foi usado");
+                }
+            }
+        }else {
+            // verifica se o email já foi usado
+            for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
+                if(Main.gestor.getFuncionarios().get(i).getEmail().equals(email)){
+                    throw new Exception("Este email ja foi usado");
+                }
             }
         }
     }

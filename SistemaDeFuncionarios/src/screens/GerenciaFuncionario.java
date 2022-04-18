@@ -19,7 +19,7 @@ import help.FieldsValidation;
 public class GerenciaFuncionario extends javax.swing.JFrame {
     
     private Funcionario func = new Funcionario();
-    
+    private String id;
     private FieldsValidation valida = new FieldsValidation();
 
     /**
@@ -29,6 +29,8 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         initComponents();
         
         setLocationRelativeTo(null);
+        
+        this.id = id;
         
         if(!id.isEmpty()){
             
@@ -390,7 +392,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         boolean correto = true;
         try {
             this.valida.validaNome(nome);
-            this.valida.validaEmail(email);
+            this.valida.validaEmail(email, "salvando");
             this.valida.validaSalario(salario);
             if(dataNasc.length == 3){
                 nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
@@ -477,7 +479,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         boolean correto = true;
         try {
             this.valida.validaNome(nome);
-            this.valida.validaEmail(email);
+            this.valida.validaEmail(email, this.id);
             this.valida.validaSalario(salario);
             if(dataNasc.length == 3){
                 nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
