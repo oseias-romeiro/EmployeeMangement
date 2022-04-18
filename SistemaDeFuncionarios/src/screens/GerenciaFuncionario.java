@@ -20,7 +20,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
     
     private Funcionario func = new Funcionario();
     
-    FieldsValidation valida = new FieldsValidation();
+    private FieldsValidation valida = new FieldsValidation();
 
     /**
      * Creates new form cadastraFuncionario
@@ -409,9 +409,9 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             // salva dados
             Funcionario funcionario = new Funcionario();
             funcionario.setNome(nome);
-            funcionario.setCpf(CPF);
+            funcionario.setCpf(CPF.replace(" ", ""));
             funcionario.setDataNascimento(nascimento);
-            funcionario.setTelefone(telefone);
+            funcionario.setTelefone(telefone.replace(" ", ""));
             funcionario.setSexo(sexo);
             funcionario.setEmail(email);
             funcionario.setEnderço(endereco);
@@ -496,9 +496,9 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             
             // salva os dados editados do usuario
             this.func.setNome(nome);
-            this.func.setCpf(CPF);
+            this.func.setCpf(CPF.replace(" ", ""));
             this.func.setDataNascimento(nascimento);
-            this.func.setTelefone(telefone);
+            this.func.setTelefone(telefone.replace(" ", ""));
             this.func.setSexo(sexo);
             this.func.setEmail(email);
             this.func.setEnderço(endereco);

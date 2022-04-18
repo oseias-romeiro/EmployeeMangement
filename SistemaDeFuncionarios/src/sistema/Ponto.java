@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 
 
-public class Ponto extends Funcionario{
+public class Ponto{
     private LocalTime logedIn;
     private LocalTime logedOut;
     private LocalDate date;
