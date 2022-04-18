@@ -316,7 +316,7 @@ public class PerfilGestor extends javax.swing.JFrame {
         boolean correto = true;
         try {
             this.valida.validaNome(nome);
-            this.valida.validaEmail(email, MenuFuncionario.id);
+            this.valida.validaEmail(email, "salvando");
             if(dataNasc.length == 3){
                 nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
             }else {
@@ -348,7 +348,7 @@ public class PerfilGestor extends javax.swing.JFrame {
             try {
                 // escrever os dados no arquivo
                 FileWriter escrever = new FileWriter(path+"/src/data/gestores.txt");
-                escrever.write(email+","+senha+","+nome+","+CPF+","+nascimento+","+telefone+","+sexo+","+endereco);
+                escrever.write(email+","+senha+","+nome+","+CPF.replace(" ", "")+","+nascimento+","+telefone.replace(" ", "")+","+sexo+","+endereco);
                 escrever.close();
                 
                 // fecha a tela
