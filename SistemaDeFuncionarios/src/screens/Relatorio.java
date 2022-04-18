@@ -142,7 +142,7 @@ public class Relatorio extends javax.swing.JFrame {
         for(int i=0; i<Main.gestor.getFuncionarios().get(this.id).getPontos().size(); i++){
             String[] data = (Main.gestor.getFuncionarios().get(this.id).getPontos().get(i).getDate().toString()).split("-");
             Object linha[] = new Object[]{
-                (data[2]+"/"+data[1]+"/"+data[0]),
+                (data[2]+"/"+data[1]+"/"+data[0]), // converte formato de data
                 Main.gestor.getFuncionarios().get(this.id).getPontos().get(i).getLogedIn(),
                 Main.gestor.getFuncionarios().get(this.id).getPontos().get(i).getLogedOut(),
             };
@@ -196,6 +196,7 @@ public class Relatorio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGF");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
+        setResizable(false);
 
         painelRelatorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -455,10 +456,10 @@ public class Relatorio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnCalcula)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(20, 20, 20)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCalcula)
                             .addComponent(painelRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(275, 275, 275)

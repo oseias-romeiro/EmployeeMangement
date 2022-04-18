@@ -77,6 +77,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGF");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
+        setResizable(false);
 
         btMenu_Novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new.png"))); // NOI18N
         btMenu_Novo.setText("Novo");

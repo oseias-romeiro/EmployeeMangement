@@ -81,6 +81,7 @@ public class PerfilFuncionario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGF");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
+        setResizable(false);
 
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelTitulo.setText("Perfil de Funcionario");

@@ -4,6 +4,9 @@
  */
 package screens;
 
+import javax.swing.table.DefaultTableModel;
+import sistema.Funcionario;
+
 /**
  *
  * @author oseia
@@ -11,6 +14,7 @@ package screens;
 public class MenuFuncionario extends javax.swing.JFrame {
 
     private String id;
+    Funcionario func;
     
     public static boolean pendente = false;
     /**
@@ -22,6 +26,51 @@ public class MenuFuncionario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         this.id = id;
+        // pega o funcionario
+        if(!id.isEmpty()){
+            this.func = Main.gestor.getFuncionarios().get(Integer.parseInt(id));
+            labelNomeFunc.setText(this.func.getNome());
+        }
+        
+        // carrega tabela
+        this.carregarTabela();
+    }
+    // carrega tabela de pontos
+    public void carregarTabela(){
+        int id2 = Integer.parseInt(this.id);
+        int qtd = Main.gestor.getFuncionarios().get(id2).getPontos().size(); // quantidade de funcionarios
+        int chao = 0; // limite de 5 pontos
+        
+        // caso haja 5 ou mais pontos registrados
+        if(qtd>4){
+            chao = qtd-5;
+        }
+        
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Data", "Entrada", "Saida"}, 0);
+
+        // 5 ultimos pontos
+        for(int i=chao; i<qtd; i++){
+            String[] data = (Main.gestor.getFuncionarios().get(id2).getPontos().get(i).getDate().toString()).split("-");
+            
+            String saida;
+            
+            // aviso de pendente no ultimo ponto
+            if(Main.gestor.getFuncionarios().get(id2).getPontos().get(i).getLogedOut() == null){
+                saida = "PENDENTE";
+            }else {
+                saida = Main.gestor.getFuncionarios().get(id2).getPontos().get(i).getLogedOut().toString();
+            }
+            
+            Object linha[] = new Object[]{
+                (data[2]+"/"+data[1]+"/"+data[0]), // converte formato de data
+                Main.gestor.getFuncionarios().get(id2).getPontos().get(i).getLogedIn().toString(),
+                saida,
+            };
+            modelo.addRow(linha);
+        }
+
+        // tabela recebe modelo
+        tblPontos.setModel(modelo);
     }
 
     /**
@@ -35,10 +84,17 @@ public class MenuFuncionario extends javax.swing.JFrame {
 
         btnPerfil = new javax.swing.JButton();
         btnPonto = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPontos = new javax.swing.JTable();
+        labelNomeFunc = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        btnAtualizar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SGF");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
+        setResizable(false);
 
         btnPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         btnPerfil.setText("Perfil");
@@ -56,25 +112,93 @@ public class MenuFuncionario extends javax.swing.JFrame {
             }
         });
 
+        tblPontos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Data", "Entrada", "Saida"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblPontos);
+
+        labelNomeFunc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelNomeFunc.setText("Nome_Funcionario");
+
+        jLabel1.setText("Bem vindo");
+
+        btnAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Ultimos 5 registros");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(173, 173, 173)
-                .addComponent(btnPonto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-                .addComponent(btnPerfil)
-                .addGap(140, 140, 140))
+                .addContainerGap(46, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelNomeFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnPonto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnPerfil)
+                                .addGap(146, 146, 146))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnAtualizar)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(182, 182, 182)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNomeFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPonto)
                     .addComponent(btnPerfil))
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAtualizar)
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -89,6 +213,10 @@ public class MenuFuncionario extends javax.swing.JFrame {
         // tela de edição de dados do usuario
         new PerfilFuncionario(this.id).setVisible(true);
     }//GEN-LAST:event_btnPerfilActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        this.carregarTabela();
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,7 +254,13 @@ public class MenuFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnPonto;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelNomeFunc;
+    private javax.swing.JTable tblPontos;
     // End of variables declaration//GEN-END:variables
 }
