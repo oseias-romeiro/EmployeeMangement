@@ -10,6 +10,8 @@ import sistema.Funcionario;
 import java.util.Random;
 import java.util.UUID;
 
+import help.FieldsValidation;
+
 /**
  *
  * @author oseia
@@ -17,6 +19,8 @@ import java.util.UUID;
 public class GerenciaFuncionario extends javax.swing.JFrame {
     
     private Funcionario func = new Funcionario();
+    
+    FieldsValidation valida = new FieldsValidation();
 
     /**
      * Creates new form cadastraFuncionario
@@ -83,8 +87,6 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         fieldNome = new javax.swing.JTextField();
         fieldEndereco = new javax.swing.JTextField();
         fieldEmail = new javax.swing.JTextField();
-        fieldTelefone = new javax.swing.JTextField();
-        fieldCPF = new javax.swing.JTextField();
         btnAdiciona = new javax.swing.JButton();
         btnEdita = new javax.swing.JButton();
         labelSalario = new javax.swing.JLabel();
@@ -97,6 +99,8 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         fieldNascimento = new javax.swing.JFormattedTextField();
         btnMasculino = new javax.swing.JRadioButton();
         btnFeminino = new javax.swing.JRadioButton();
+        fieldCPF = new javax.swing.JFormattedTextField();
+        fieldTelefone = new javax.swing.JFormattedTextField();
         labelTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -168,6 +172,18 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         buttonGroup1.add(btnFeminino);
         btnFeminino.setText("F");
 
+        try {
+            fieldCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter(" ### . ### . ### - ##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            fieldTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("( ## ) ##### - ####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -197,11 +213,9 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(fieldNome, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(fieldTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                                                    .addComponent(fieldCPF))
+                                            .addComponent(fieldNome)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(19, 19, 19)
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,7 +230,9 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                                                         .addGap(0, 0, Short.MAX_VALUE))))))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
-                                        .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(fieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 3, Short.MAX_VALUE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(labelCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,15 +262,15 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCPF)
                     .addComponent(labelData)
-                    .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fieldNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTelefone)
                     .addComponent(labelSexo)
-                    .addComponent(fieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMasculino)
-                    .addComponent(btnFeminino))
+                    .addComponent(btnFeminino)
+                    .addComponent(fieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -352,7 +368,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         String CPF = fieldCPF.getText();
         
         String[] dataNasc = (fieldNascimento.getText().replace(" ", "")).split("/");
-        LocalDate nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
+        LocalDate nascimento = LocalDate.now();
         
         String telefone = fieldTelefone.getText();
         // verifica qual radio button referente ao sexo esta ativo
@@ -370,9 +386,26 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         String cargo = fieldCargo.getText();
         String salario = fieldSalario.getText();
         
-        if(!nome.isEmpty() && !CPF.isEmpty() && !telefone.isEmpty()
-                && !sexo.isEmpty() && !email.isEmpty() && !endereco.isEmpty() && !senha.isEmpty()
-                && !cargo.isEmpty() && !salario.isEmpty()){
+        //validação
+        boolean correto = true;
+        try {
+            this.valida.validaNome(nome);
+            this.valida.validaEmail(email);
+            this.valida.validaSalario(salario);
+            if(dataNasc.length == 3){
+                nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
+            }else {
+                throw new Exception("Data incorreta");
+            }
+            if(senha.isEmpty()){
+                throw new Exception("Campo senha não pode ficar em branco");
+            }
+        }catch(Exception e){
+            // menssage de erro
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Dados invalidos!", JOptionPane.ERROR_MESSAGE);
+            correto = false;
+        }
+        if(correto){
             // salva dados
             Funcionario funcionario = new Funcionario();
             funcionario.setNome(nome);
@@ -412,19 +445,17 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             
             // fecha tela
             dispose();
-        }else {
-            // menssage de erro
-            JOptionPane.showMessageDialog(null, "Dados invalidos!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAdicionaActionPerformed
 
     private void btnEditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditaActionPerformed
+        
         // entrada de dados
         String nome = fieldNome.getText();
         String CPF = fieldCPF.getText();
         
         String[] dataNasc = (fieldNascimento.getText().replace(" ", "")).split("/");
-        LocalDate nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
+        LocalDate nascimento = LocalDate.now();
         
         String telefone = fieldTelefone.getText();
         // verifica qual radio button referente ao sexo esta ativo
@@ -442,9 +473,26 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         String cargo = fieldCargo.getText();
         String salario = fieldSalario.getText();
         
-        if(!nome.isEmpty() && !CPF.isEmpty() && !telefone.isEmpty() && !sexo.isEmpty() 
-                && !email.isEmpty() && !endereco.isEmpty() && !senha.isEmpty()
-                && !cargo.isEmpty() && !salario.isEmpty()){
+        //validação
+        boolean correto = true;
+        try {
+            this.valida.validaNome(nome);
+            this.valida.validaEmail(email);
+            this.valida.validaSalario(salario);
+            if(dataNasc.length == 3){
+                nascimento = LocalDate.parse(dataNasc[2]+"-"+dataNasc[1]+"-"+dataNasc[0]);
+            }else {
+                throw new Exception("Data incorreta");
+            }
+            if(senha.isEmpty()){
+                throw new Exception("Campo senha não pode ficar em branco");
+            }
+        }catch(Exception e){
+            // menssage de erro
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Dados invalidos!", JOptionPane.ERROR_MESSAGE);
+            correto = false;
+        }
+        if(correto){
             
             // salva os dados editados do usuario
             this.func.setNome(nome);
@@ -460,9 +508,6 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             
             // fecha tela
             dispose();
-        }else {
-            // menssage de erro
-            JOptionPane.showMessageDialog(null, "Dados invalidos!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEditaActionPerformed
 
@@ -521,7 +566,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton btnGerar;
     private javax.swing.JRadioButton btnMasculino;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JTextField fieldCPF;
+    private javax.swing.JFormattedTextField fieldCPF;
     private javax.swing.JTextField fieldCargo;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldEndereco;
@@ -529,7 +574,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
     private javax.swing.JTextField fieldNome;
     private javax.swing.JTextField fieldSalario;
     private javax.swing.JTextField fieldSenha;
-    private javax.swing.JTextField fieldTelefone;
+    private javax.swing.JFormattedTextField fieldTelefone;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelCPF;
     private javax.swing.JLabel labelCargo;
