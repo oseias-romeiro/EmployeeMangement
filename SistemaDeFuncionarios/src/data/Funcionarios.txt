@@ -1,0 +1,2 @@
+teste@email.com,teste,teste,000.000.000-00,2000-12-25,(99)99999-9999, ,UnB,,500,3561
+teste2@email.com,teste2,teste2,000.000.000-00,2000-12-25,(99)99999-9999, ,UnB,programador,500.0,5820

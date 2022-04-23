@@ -347,7 +347,7 @@ public class PerfilGestor extends javax.swing.JFrame {
             // edita o arquivo "gestores"
             try {
                 // escrever os dados no arquivo
-                FileWriter escrever = new FileWriter(path+"/src/data/gestores.txt");
+                FileWriter escrever = new FileWriter(path+"/src/data/Gestores.txt");
                 escrever.write(email+","+senha+","+nome+","+CPF.replace(" ", "")+","+nascimento+","+telefone.replace(" ", "")+","+sexo+","+endereco);
                 escrever.close();
                 

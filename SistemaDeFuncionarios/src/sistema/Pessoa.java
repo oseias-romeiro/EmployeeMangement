@@ -8,7 +8,7 @@ public class Pessoa {
     private String cpf;
     private String nome;
     private String telefone;
-    private String sexo;
+    private String sexo = " "; // default
     private String email;
     private String enderço;
     private LocalDate dataNascimento;

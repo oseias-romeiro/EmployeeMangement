@@ -14,6 +14,13 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
+// manipulação de arquivos
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.util.Scanner;
+
 /**
  *
  * @author win
@@ -23,6 +30,9 @@ public class PontoEletronico extends javax.swing.JFrame {
     private String id;
     private Funcionario func = new Funcionario();
     private ZoneId zona = ZoneId.of("America/Sao_Paulo");
+    
+    String path = new File("").getAbsolutePath();
+    
     /**
      * Creates new form PontoEletronico
      */
@@ -264,8 +274,38 @@ public class PontoEletronico extends javax.swing.JFrame {
                 // verificação de horario
                 if(correto){
                     // edita o ultimo registro
-                    this.func.getPontos().get(this.func.getPontos().size()-1).setLogedIn(entrada);
                     this.func.getPontos().get(this.func.getPontos().size()-1).setLogedOut(saida);
+                    
+                    // edita o log do ultimo ponto que está pendente => padrao: data,entrada,saida
+                    try {
+                        // id do ultimo ponto
+                        int id = this.func.getPontos().size()-1;
+                        Ponto ultPonto = this.func.getPontos().get(id);
+                        String novoPonto = ultPonto.getDate().toString()+","+ultPonto.getLogedIn().toString()+","+saida.toString()+"\n";
+                        
+                        // ler o arquivo
+                        String dados = "";
+                        File arquivo = new File(this.path+"/src/data/pontos/"+this.func.getEmail()+".txt");
+                        Scanner letior = new Scanner(arquivo);
+                        int i = 0;
+                        while (letior.hasNextLine()) {
+                            if(i != id){
+                                dados += (letior.nextLine()+"\n");
+                            }else {
+                                // edita os dados do novo func
+                                dados += novoPonto;
+                                letior.nextLine();
+                            }
+                            i++;
+                        }
+                        // sobrescreve todo o arquivo
+                        FileWriter escreve = new FileWriter(this.path+"/src/data/pontos/"+this.func.getEmail()+".txt", false);
+                        escreve.write(dados);
+                        escreve.close();
+                    } catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    }
                     
                     // alerta para o MenuFuncionario que não tem ponto pendente
                     MenuFuncionario.pendente = false;
@@ -287,6 +327,22 @@ public class PontoEletronico extends javax.swing.JFrame {
                 
                 // salva o registro
                 this.func.addPonto(ponto);
+                
+                // salva no arquivo de log de pontos do funcionario
+                try {
+                    // o arquivo de log de ponto do funcionario recebe o seu email que é unico!
+                    FileWriter escreve = new FileWriter(this.path+"/src/data/pontos/"+this.func.getEmail()+".txt", true);
+                    BufferedWriter buffer = new BufferedWriter(escreve);
+                    
+                    // escreve a data e a entrada do ponto na ultima linha e faz uma quebra de linha
+                    buffer.write(data.toString()+","+entrada.toString()+",\n");
+                    
+                    buffer.close();
+                    escreve.close();
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
                 
                 // alerta para o MenuFuncionario que agora ha um ponto pendente
                 MenuFuncionario.pendente = true;

@@ -11,7 +11,11 @@ import sistema.Gestor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
+
+import sistema.Funcionario;
+import sistema.Ponto;
 
 /**
  *
@@ -30,12 +34,13 @@ public class Main extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         
+        // pega o caminho do diretorio
+        String path = new File("").getAbsolutePath();
+        
+        /* carrega dados do gestor*/
         try {
-            // pega o caminho do diretorio
-            String path = new File("").getAbsolutePath();
-            
             // ler arquivo de email e senha de gestores
-            File gestores = new File(path+"/src/data/gestores.txt");
+            File gestores = new File(path+"/src/data/Gestores.txt");
             Scanner dados = new Scanner(gestores);
             
             // cada linha segue: email,senha,nome,CPF,nascimento,telefone,sexo,endereco
@@ -53,10 +58,65 @@ public class Main extends javax.swing.JFrame {
                 this.gestor.setSexo(gestorInfo[6]);
                 this.gestor.setEnderço(gestorInfo[7]);
             }
+            dados.close();
         }
         catch (FileNotFoundException ex){
             // menssage de erro
             JOptionPane.showMessageDialog(null, "Falha ao carregar dados do gestor!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        /* carrega dados dos funcionarios e seus pontos*/
+        try {
+            // ler arquivo de funcionarios
+            File funcionarios = new File(path+"/src/data/Funcionarios.txt");
+            Scanner dadosF = new Scanner(funcionarios);
+            
+            while(dadosF.hasNextLine()){
+                // padrao: email,senha,nome,CPF,nascimento,telefone,sexo,endereco,cargo,salario
+                String[] funcInfo = dadosF.nextLine().split(",");
+                
+                Funcionario func = new Funcionario();
+                func.setEmail(funcInfo[0]);
+                func.setSenha(funcInfo[1]);
+                func.setNome(funcInfo[2]);
+                func.setCpf(funcInfo[3]);
+                func.setDataNascimento(LocalDate.parse(funcInfo[4]));
+                func.setTelefone(funcInfo[5]);
+                func.setSexo(funcInfo[6]);
+                func.setEnderço(funcInfo[7]);
+                func.setCargo(funcInfo[8]);
+                func.setSalario(Float.parseFloat(funcInfo[9]));
+                func.setCodigo(Integer.parseInt(funcInfo[10]));
+                
+                // carrega os pontos
+                File pontos = new File(path+"/src/data/pontos/"+funcInfo[0]+".txt");
+                Scanner dadosP = new Scanner(pontos);
+                while(dadosP.hasNextLine()){
+                    // padrao: data,entrada,saida
+                    String[] pontoInfo = dadosP.nextLine().split(",");
+                    
+                    if(pontoInfo.length == 0){
+                        break;
+                    }
+                    
+                    // inicializa os pontos
+                    Ponto novoPonto = new Ponto();
+                    novoPonto.setDate(LocalDate.parse(pontoInfo[0]));
+                    novoPonto.setLogedIn(LocalTime.parse(pontoInfo[1]));
+                    novoPonto.setLogedOut(LocalTime.parse(pontoInfo[2]));
+                    
+                    // adiciona ponto
+                    func.addPonto(novoPonto);
+                }
+                dadosP.close();
+                
+                this.gestor.addFuncionario(func);
+            }
+            dadosF.close();
+        }
+        catch (FileNotFoundException ex){
+            // menssage de erro
+            JOptionPane.showMessageDialog(null, "Falha ao carregar dados dos funcionarios!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

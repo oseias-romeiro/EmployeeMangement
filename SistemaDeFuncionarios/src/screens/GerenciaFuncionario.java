@@ -11,7 +11,11 @@ import java.util.Random;
 import java.util.UUID;
 
 import help.FieldsValidation;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.util.Scanner;
 /**
  *
  * @author oseia
@@ -21,6 +25,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
     private Funcionario func = new Funcionario();
     private String id;
     private FieldsValidation valida = new FieldsValidation();
+    String path;
 
     /**
      * Creates new form cadastraFuncionario
@@ -29,6 +34,9 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         initComponents();
         
         setLocationRelativeTo(null);
+        
+        // pega o caminho do diretorio
+        this.path = new File("").getAbsolutePath();
         
         this.id = id;
         
@@ -203,31 +211,28 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(labelEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(4, 4, 4)))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(fieldNome)
+                                        .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(99, 99, 99)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelSexo))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fieldNascimento)
                                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(19, 19, 19)
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(labelSexo))
+                                                .addComponent(btnMasculino)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(fieldNascimento)
-                                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                                        .addComponent(btnMasculino)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(btnFeminino)
-                                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                                                .addComponent(btnFeminino)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(fieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 3, Short.MAX_VALUE))))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(fieldNome)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(labelCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -321,25 +326,25 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                 .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(painelMainLayout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(54, 54, 54)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         painelMainLayout.setVerticalGroup(
             painelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMainLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(labelTitulo)
-                .addGap(38, 38, 38)
+                .addGap(29, 29, 29)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,6 +453,30 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             // adciona funcionario ao gestor
             Main.gestor.addFuncionario(funcionario);
             
+            // adiciona o funcionario no arquivo TXT
+            try {
+                // padrao: email,senha,nome,CPF,nascimento,telefone,sexo,endereco,cargo,salario,codigo
+                String novoFunc = funcionario.getEmail()+","+funcionario.getSenha()+","+funcionario.getNome()+","+
+                    funcionario.getCpf().replace(" ", "")+","+funcionario.getDataNascimento()+","+funcionario.getTelefone().replace(" ", "")+","+
+                    funcionario.getSexo()+","+funcionario.getEnderço()+","+funcionario.getCargo()+","+funcionario.getSalario()+","+
+                    funcionario.getCodigo()+"\n"
+                ;
+                // adiciona os dados do novo funcionario em uma nova inha
+                FileWriter escreve = new FileWriter(path+"/src/data/Funcionarios.txt", true);
+                BufferedWriter buffer = new BufferedWriter(escreve);
+                buffer.write(novoFunc);
+                buffer.close();
+                escreve.close();
+                
+                // adiciona o arquivo de log de pontos do funcionario
+                File logPontos = new File(path+"/src/data/pontos/"+funcionario.getEmail()+".txt");
+                logPontos.createNewFile();
+                
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+            
             // fecha tela
             dispose();
         }
@@ -510,6 +539,38 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             this.func.setSenha(senha);
             this.func.setCargo(cargo);
             this.func.setSalario(Float.parseFloat(salario));
+            
+            // edita o funcionario no arquivo TXT
+            try {
+                int id = Integer.parseInt(this.id);
+                // padrao: email,senha,nome,CPF,nascimento,telefone,sexo,endereco,cargo,salario,codigo
+                String novoFunc = email+","+senha+","+nome+","+
+                    CPF.replace(" ", "")+","+nascimento+","+telefone.replace(" ", "")+","+
+                    sexo+","+endereco+","+cargo+","+salario+","+Main.gestor.getFuncionarios().get(id).getCodigo()+"\n"
+                ;
+                // ler o arquivo
+                String dados = "";
+                File arquivo = new File(path+"/src/data/Funcionarios.txt");
+                Scanner letior = new Scanner(arquivo);
+                int i = 0;
+                while (letior.hasNextLine()) {
+                    if(i != id){
+                        dados += (letior.nextLine()+"\n");
+                    }else {
+                        // edita os dados do novo func
+                        dados += novoFunc;
+                        letior.nextLine();
+                    }
+                    i++;
+                }
+                // sobrescreve todo o arquivo
+                FileWriter escreve = new FileWriter(path+"/src/data/Funcionarios.txt", false);
+                escreve.write(dados);
+                escreve.close();
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
             
             // fecha tela
             dispose();
