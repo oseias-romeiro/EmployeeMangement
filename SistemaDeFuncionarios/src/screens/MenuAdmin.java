@@ -4,6 +4,10 @@
  */
 package screens;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MenuAdmin extends javax.swing.JFrame {
     
+    String path = new File("").getAbsolutePath();
     /**
      * Creates new form Controle
      */
@@ -337,6 +342,37 @@ public class MenuAdmin extends javax.swing.JFrame {
         int escolha = JOptionPane.showConfirmDialog(null, ("Tem certeza que deseja remover o funcionario '"+nome+"'?"), "Deletar", JOptionPane.YES_NO_OPTION);
 
         if(escolha == JOptionPane.YES_OPTION){
+            // apaga os dados do funcionario do arquivo de funcionarios
+            try {
+                // ler o arquivo
+                String dados = "";
+                File arquivo = new File(this.path+"/src/data/Funcionarios.txt");
+                Scanner letior = new Scanner(arquivo);
+                int i = 0;
+                while (letior.hasNextLine()) {
+                    
+                    // copia dos dados
+                    if(i != id){
+                        dados += (letior.nextLine()+"\n");
+                    }else {
+                        // não copia os dados do funcionario deletado
+                        letior.nextLine();
+                    }
+                    i++;
+                }
+                // sobrescreve todo o arquivo (agora se os dados do funcionario)
+                FileWriter escreve = new FileWriter(this.path+"/src/data/Funcionarios.txt", false);
+                escreve.write(dados);
+                escreve.close();
+                
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+            // deleta o arquivo de log pontos do funcionario 
+            File logPonto = new File(this.path+"/src/data/pontos/"+Main.gestor.getFuncionarios().get(id).getEmail()+".txt"); 
+            logPonto.delete();
+            
             // deleta funcionario
             Main.gestor.getFuncionarios().remove(id);
             
