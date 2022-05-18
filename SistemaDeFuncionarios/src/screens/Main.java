@@ -17,6 +17,8 @@ import java.util.Scanner;
 import sistema.Funcionario;
 import sistema.Ponto;
 
+import database.PostgreSQLJDBC;
+
 /**
  *
  * @author oseia
@@ -36,6 +38,9 @@ public class Main extends javax.swing.JFrame {
         
         // pega o caminho do diretorio
         String path = new File("").getAbsolutePath();
+        
+        // banco de dados
+        PostgreSQLJDBC teste = new PostgreSQLJDBC();
         
         /* carrega dados do gestor*/
         try {

@@ -337,7 +337,7 @@ public class PerfilFuncionario extends javax.swing.JFrame {
             this.func.setEmail(email);
             this.func.setEnderço(endereco);
             this.func.setSenha(senha);
-
+            
             // fecha tela
             dispose();
         }
