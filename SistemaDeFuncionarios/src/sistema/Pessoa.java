@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 
 public class Pessoa {
+    private int id;
     private String cpf;
     private String nome;
     private String telefone;
@@ -16,6 +17,14 @@ public class Pessoa {
     public Pessoa(){
         
     }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getCpf() {
         return cpf;
     }

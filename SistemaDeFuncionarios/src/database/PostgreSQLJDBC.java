@@ -14,37 +14,49 @@ import java.sql.ResultSet;
  * @author oseia
  */
 public class PostgreSQLJDBC {
-    public PostgreSQLJDBC(){
+    Connection con = null;
+    Statement stmt = null;
+    ResultSet rs = null;
     
-        Connection con = null;
-        Statement stmt = null;
         
+    public PostgreSQLJDBC(){
+        // inicializa conexao
         try {
             Class.forName("org.postgresql.Driver");
-            con = DriverManager
+            this.con = DriverManager
                     .getConnection("jdbc:postgresql://localhost:5432/sisfunc",
             "postgres", "qwer1234");
             
             con.setAutoCommit(false);
-            
-            System.out.println("Opened database successfully");
-        
             stmt = con.createStatement();
-            String sql = "SELECT * FROM gestores;";
-            ResultSet rs = stmt.executeQuery(sql);
             
-            while (rs.next()) {
-                System.out.println(rs.getString("Nome"));
-            }
+            System.out.println("Banco de dados acessado com sucesso!");
             
-            rs.close();
-            stmt.close();
-            con.close();
-        
         }catch (Exception e){
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+": "+e.getMessage());
-            System.exit(0);
+            System.err.println("Erro na conexão com o banco de dados: "+e.getMessage());
+        }
+    }
+    
+    public ResultSet queryCon(String sql){
+        // exemplo sql = "SELECT * FROM gestores;";
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            return rs;
+        }catch (Exception e){
+            e.printStackTrace();
+            System.err.println("Erro ao fazer query ao DB: "+e.getMessage());
+        }
+        return rs;
+    }
+    
+    public void closeCon() throws Exception {
+        try {
+            //rs.close();
+            stmt.close();
+            con.close();
+        }catch (Exception e){
+            throw new Exception("Erro ao fechar conexão: ", e);
         }
     }
 }
