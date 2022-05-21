@@ -77,7 +77,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         btMenu_Pesquisar = new javax.swing.JButton();
         btGestor = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SGF");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
         setResizable(false);
@@ -113,7 +113,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false
@@ -145,9 +145,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblMenu_Func);
         if (tblMenu_Func.getColumnModel().getColumnCount() > 0) {
             tblMenu_Func.getColumnModel().getColumn(0).setPreferredWidth(5);
-            tblMenu_Func.getColumnModel().getColumn(1).setResizable(false);
             tblMenu_Func.getColumnModel().getColumn(1).setPreferredWidth(250);
-            tblMenu_Func.getColumnModel().getColumn(2).setResizable(false);
             tblMenu_Func.getColumnModel().getColumn(2).setPreferredWidth(200);
         }
 
@@ -409,15 +407,15 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     private void btMenu_PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenu_PesquisarActionPerformed
         String nome = fieldNome.getText();
-        int codigo = 0;
+        String codigo = nome;
         boolean achou = false;
-        boolean porNome;
+        boolean porNome = false;
         
         // verifica se o campo esta vazio
         if(!nome.isEmpty()){
             // verifica se foi passado o código ou o nome
             try {
-                codigo = Integer.parseInt(nome);
+                Integer.parseInt(codigo);
                 porNome = false;
             }catch(Exception e) {
                 porNome = true;
@@ -446,13 +444,13 @@ public class MenuAdmin extends javax.swing.JFrame {
                     }
                 }
             }else { // pesquisa por codigo
-                // verifica se o código é valido (4 digitos)
-                if(codigo < 1000){
-                    JOptionPane.showMessageDialog(null, "O codigo deve conter 4 digitos!", "Não encontrado", JOptionPane.ERROR_MESSAGE);
+                // verifica se o código é valido (5 digitos)
+                if(codigo.length() != 5){
+                    JOptionPane.showMessageDialog(null, "O codigo deve conter 5 digitos!", "Não encontrado", JOptionPane.ERROR_MESSAGE);
                 }else {
                     // pesuisa pelo código
                     for(int i=0; i<Main.gestor.getFuncionarios().size(); i++){
-                        if(Main.gestor.getFuncionarios().get(i).getCodigo() == codigo){
+                        if(Main.gestor.getFuncionarios().get(i).getCodigo().equals(codigo)){
                             
                             // limpa o campo
                             fieldNome.setText("");

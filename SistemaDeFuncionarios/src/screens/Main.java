@@ -40,93 +40,6 @@ public class Main extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         
-        // pega o caminho do diretorio
-        String path = new File("").getAbsolutePath();
-        
-        // pega os dados do gestor
-        
-        /* carrega dados do gestor
-        try {
-            // ler arquivo de email e senha de gestores
-            File gestores = new File(path+"/src/data/Gestores.txt");
-            Scanner dados = new Scanner(gestores);
-            
-            // cada linha segue: email,senha,nome,CPF,nascimento,telefone,sexo,endereco
-            while(dados.hasNextLine()){
-                String[] gestorInfo = dados.nextLine().split(",");
-                
-                // inicializando os gestores cadastrados
-                this.gestor = new Gestor();
-                this.gestor.setEmail(gestorInfo[0]);
-                this.gestor.setSenha(gestorInfo[1]);
-                this.gestor.setNome(gestorInfo[2]);
-                this.gestor.setCpf(gestorInfo[3]);
-                this.gestor.setDataNascimento(LocalDate.parse(gestorInfo[4]));
-                this.gestor.setTelefone(gestorInfo[5]);
-                this.gestor.setSexo(gestorInfo[6]);
-                this.gestor.setEnderço(gestorInfo[7]);
-            }
-            dados.close();
-        }
-        catch (FileNotFoundException ex){
-            // menssage de erro
-            JOptionPane.showMessageDialog(null, "Falha ao carregar dados do gestor!", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        */
-        
-        /* carrega dados dos funcionarios e seus pontos
-        try {
-            // ler arquivo de funcionarios
-            File funcionarios = new File(path+"/src/data/Funcionarios.txt");
-            Scanner dadosF = new Scanner(funcionarios);
-            
-            while(dadosF.hasNextLine()){
-                // padrao: email,senha,nome,CPF,nascimento,telefone,sexo,endereco,cargo,salario
-                String[] funcInfo = dadosF.nextLine().split(",");
-                
-                Funcionario func = new Funcionario();
-                func.setEmail(funcInfo[0]);
-                func.setSenha(funcInfo[1]);
-                func.setNome(funcInfo[2]);
-                func.setCpf(funcInfo[3]);
-                func.setDataNascimento(LocalDate.parse(funcInfo[4]));
-                func.setTelefone(funcInfo[5]);
-                func.setSexo(funcInfo[6]);
-                func.setEnderço(funcInfo[7]);
-                func.setCargo(funcInfo[8]);
-                func.setSalario(Float.parseFloat(funcInfo[9]));
-                func.setCodigo(Integer.parseInt(funcInfo[10]));
-                
-                // carrega os pontos
-                File pontos = new File(path+"/src/data/pontos/"+funcInfo[0]+".txt");
-                Scanner dadosP = new Scanner(pontos);
-                while(dadosP.hasNextLine()){
-                    // padrao: data,entrada,saida
-                    String[] pontoInfo = dadosP.nextLine().split(",");
-                    
-                    if(pontoInfo.length == 0){
-                        break;
-                    }
-                    
-                    // inicializa os pontos
-                    Ponto novoPonto = new Ponto();
-                    novoPonto.setDate(LocalDate.parse(pontoInfo[0]));
-                    novoPonto.setLogedIn(LocalTime.parse(pontoInfo[1]));
-                    novoPonto.setLogedOut(LocalTime.parse(pontoInfo[2]));
-                    
-                    // adiciona ponto
-                    func.addPonto(novoPonto);
-                }
-                dadosP.close();
-                
-                this.gestor.addFuncionario(func);
-            }
-            dadosF.close();
-        }
-        catch (FileNotFoundException ex){
-            // menssage de erro
-            JOptionPane.showMessageDialog(null, "Falha ao carregar dados dos funcionarios!", "Erro", JOptionPane.ERROR_MESSAGE);
-        }*/
     }
 
     /**
@@ -250,79 +163,153 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private boolean carregaGestor(String email, String senha, int id){
+        String sql = "";
+        ResultSet result2 = null;
+        ResultSet result3 = null;
+        boolean achou = false;
+        
+        try {
+            // procura gestores no banco de dados
+            if(id == 0){
+                sql = "SELECT * FROM gestores WHERE (email = '"+email+"' AND senha = '"+senha+"');";
+            }else {
+                sql = "SELECT * FROM gestores WHERE (id_autor = '"+id+"');";
+            }
+            
+            this.result = psql.queryCon(sql);
+
+            while(result.next()){
+
+                // inicializa os gestor informado
+                this.gestor = new Gestor();
+                this.gestor.setId(result.getInt("id_autor"));
+                this.gestor.setEmail(result.getString("email"));
+                this.gestor.setSenha(result.getString("senha"));
+                this.gestor.setNome(result.getString("nome"));
+                this.gestor.setCpf(result.getString("cpf"));
+                this.gestor.setDataNascimento(LocalDate.parse(result.getString("nascimento")));
+                this.gestor.setTelefone(result.getString("telefone"));
+                this.gestor.setSexo(result.getString("sexo"));
+                this.gestor.setEnderço(result.getString("endereco"));
+
+                // adiciona os funcionarios do gestor
+                sql = "SELECT * FROM funcionarios WHERE (id_gestor = '"+this.gestor.getId()+"');";
+                result2 = psql.queryCon(sql);
+                
+                int qtd = result2.getFetchSize();
+                while(result2.next()){
+                    // inicializa o funcionario
+                    Funcionario func = new Funcionario();
+                    func.setId(result2.getInt("id"));
+                    func.setEmail(result2.getString("email"));
+                    func.setSenha(result2.getString("senha"));
+                    func.setNome(result2.getString("nome"));
+                    func.setCpf(result2.getString("cpf"));
+                    func.setDataNascimento(LocalDate.parse(result2.getString("nascimento")));
+                    func.setTelefone(result2.getString("telefone"));
+                    func.setSexo(result2.getString("sexo"));
+                    func.setEnderço(result2.getString("endereco"));
+                    func.setCargo(result2.getString("cargo"));
+                    func.setSalario(Float.parseFloat(result2.getString("salario")));
+                    func.setCodigo(result2.getString("codigo"));
+
+                    // adiciona os pontos
+                    sql = "SELECT * FROM pontos WHERE (id_func = '"+ func.getId() +"');";
+                    result3 = psql.queryCon(sql);
+                    while(result3.next()){
+                        // inicializa os pontos
+                        Ponto ponto = new Ponto();
+                        ponto.setDate(LocalDate.parse(result3.getString("logdate")));
+                        ponto.setLogedIn(LocalTime.parse(result3.getString("logedin")));
+                        ponto.setLogedOut(LocalTime.parse(result3.getString("logedout")));
+                        // adiciona os pontos ao funcionario
+                        func.addPonto(ponto);
+                        
+                        if(result3.isLast()){
+                            break;
+                        }
+                    }
+
+                    // adiciona o funcionario no gestor
+                    this.gestor.addFuncionario(func);
+                    
+                    if(qtd == 0){
+                        break;
+                    }
+                    qtd--;
+                }
+
+                achou = true;
+                break;
+            }
+        }catch(Exception e){
+            System.out.println("Erro ao carregar gestores: " + e);
+            // menssage de erro
+            JOptionPane.showMessageDialog(null, "Erro ao carregar gestores!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return achou;
+    }
+    
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String email = fieldEmail.getText();
         String senha = fieldSenha.getText();
+        String sql = "";
+        ResultSet result2 = null;
         
         boolean achou = false;
 
         // verifica se é Gestor
         if(checkBoxGestor.isSelected()){
             
-            // procura gestor no banco de dados
-            String sql = "SELECT * FROM gestores WHERE (email = '"+email+"' AND senha = '"+senha+"');";
-            System.out.println(sql);            
-            
             try {
-                this.result = psql.queryCon(sql);
-                System.out.println(result);
-                while(result.next()){
-
-                    // inicializa os gestor informado
-                    this.gestor = new Gestor();
-                    this.gestor.setId(Integer.parseInt(result.getString("id_autor")));
-                    this.gestor.setEmail(result.getString("email"));
-                    this.gestor.setSenha(result.getString("senha"));
-                    this.gestor.setNome(result.getString("nome"));
-                    this.gestor.setCpf(result.getString("cpf"));
-                    this.gestor.setDataNascimento(LocalDate.parse(result.getString("nascimento")));
-                    this.gestor.setTelefone(result.getString("telefone"));
-                    this.gestor.setSexo(result.getString("sexo"));
-                    this.gestor.setEnderço(result.getString("endereco"));
-                    
-                    // adiciona os funcionarios do gestor
-                    sql = "SELECT * FROM funcionarios WHERE (id_gestor = '"+this.gestor.getId()+"');";
-                    ResultSet result2 = psql.queryCon(sql);
-                    while(result2.next()){
-                        // inicializa o funcionario
-                        Funcionario func = new Funcionario();
-                        func.setId(Integer.parseInt(result2.getString("id")));
-                        func.setEmail(result2.getString("email"));
-                        func.setSenha(result2.getString("senha"));
-                        func.setNome(result2.getString("nome"));
-                        func.setCpf(result2.getString("cpf"));
-                        func.setDataNascimento(LocalDate.parse(result2.getString("nascimento")));
-                        func.setTelefone(result2.getString("telefone"));
-                        func.setSexo(result2.getString("sexo"));
-                        func.setEnderço(result2.getString("endereco"));
-                        func.setCargo(result2.getString("cargo"));
-                        func.setSalario(Float.parseFloat(result2.getString("salario")));
-                        func.setCodigo(Integer.parseInt(result2.getString("codigo")));
-                        // adiciona o funcionario no gestor
-                        this.gestor.addFuncionario(func);
-                    }
-                    
-                    
-                    achou = true;
+                // carrega gestor e seus funcionarios com seus pontos
+                achou = this.carregaGestor(email, senha, 0);
+                if(achou){
+                    psql.closeCon();
                     new MenuAdmin().setVisible(true);
-                    break;
+                    setVisible(false);
                 }
+                
             }catch(Exception e){
-                System.out.println("Erro ao carRegar gestores: " + e);
+                System.out.println("Erro ao logar como gestor: " + e);
+                // menssage de erro
+                JOptionPane.showMessageDialog(null, "Erro ao logar como gestor!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
             
         }else {
             // usuario comum
-            /*
-            for(int i=0; i<this.gestor.getFuncionarios().size(); i++){
-                if(this.gestor.getFuncionarios().get(i).getEmail().equals(email) && 
-                    Arrays.equals((this.gestor.getFuncionarios().get(i).getSenha()).toCharArray(), senha)
-                ){
-                    // usuario encontrado
-                    new MenuFuncionario(i+"").setVisible(true);
-                    achou = true;
+            try {
+                // procura funcionario no banco de dados
+                sql = "SELECT * FROM funcionarios WHERE (email = '"+email+"' AND senha = '"+senha+"');";
+                result2 = psql.queryCon(sql);
+                
+                int id = 0;
+                
+                while(result2.next()){
+                    // id do funcionario
+                    id = result2.getInt("id");
+                    
+                    // carrega gestor e seus funcionarios com seus pontos
+                    achou = this.carregaGestor(email, senha, id);
+
+                    break;
                 }
-            }*/
+
+                if(achou){
+                    psql.closeCon();
+                    // abre a tela pra funcionaionarios e passa o id do usuario encontrado
+                    new MenuFuncionario(id-1+"").setVisible(true);
+                    setVisible(false);
+                }
+            }
+            catch(Exception e){
+                System.out.println("Erro ao carregar funcionarios: " + e);
+                // menssage de erro
+                JOptionPane.showMessageDialog(null, "Erro ao carregar funcionarios!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
         
         if(!achou) {

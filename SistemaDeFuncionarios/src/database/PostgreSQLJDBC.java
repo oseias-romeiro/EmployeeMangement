@@ -50,6 +50,18 @@ public class PostgreSQLJDBC {
         return rs;
     }
     
+    public boolean exec(String sql){
+        try {
+            stmt.executeUpdate(sql);
+            con.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            System.err.println("Erro ao executar codigo SQL: "+e.getMessage());
+            return false;
+        }
+        return true;
+    }
+    
     public void closeCon() throws Exception {
         try {
             //rs.close();

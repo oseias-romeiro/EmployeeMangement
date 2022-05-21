@@ -356,18 +356,14 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public int geraCodigo(){
-        int codigo;
+    public String geraCodigo(){
+        String codigo;
         Random random = new Random();
-        codigo = random.nextInt(10000);
-        if(Integer.toString(codigo).length() == 1){
-            codigo = Integer.parseInt(Integer.toString(codigo)+"000");
-        }else if(Integer.toString(codigo).length() == 2){
-            codigo = Integer.parseInt(Integer.toString(codigo)+"00");
-        }else if(Integer.toString(codigo).length() == 3){
-            codigo = Integer.parseInt(Integer.toString(codigo)+"0");
+        codigo = random.nextInt(99999)+"";
+        while(codigo.length() < 5){
+            codigo = codigo+"0";
         }
-        return (int) codigo;
+        return codigo;
     }
     
     
@@ -431,7 +427,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             
             
             // gerandor de codigo unico
-            int codigo;
+            String codigo;
             while(true){
                 boolean jaExiste = false;
                 // gera codigo

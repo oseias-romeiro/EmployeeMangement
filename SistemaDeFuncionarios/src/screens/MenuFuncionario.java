@@ -91,7 +91,7 @@ public class MenuFuncionario extends javax.swing.JFrame {
         btnAtualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SGF");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
         setResizable(false);

@@ -12,6 +12,9 @@ import javax.swing.JOptionPane;
 import java.time.LocalDate;
 import help.FieldsValidation;
 
+import database.PostgreSQLJDBC;
+import java.sql.ResultSet;
+
 /**
  *
  * @author oseia
@@ -20,12 +23,16 @@ public class PerfilGestor extends javax.swing.JFrame {
 
     String path;
     private FieldsValidation valida = new FieldsValidation();
+    
+    // banco de dados
+    PostgreSQLJDBC psql = new PostgreSQLJDBC();
+    ResultSet result = null;
+    
     /**
      * Creates new form PerfilGestor
      */
     public PerfilGestor() {
         initComponents();
-        setLocationRelativeTo(null);
         
         setLocationRelativeTo(null);
         
@@ -43,10 +50,12 @@ public class PerfilGestor extends javax.swing.JFrame {
         
         fieldTelefone.setText(Main.gestor.getTelefone());
         // ativa o radio button do sexo
-        if(Main.gestor.getSexo().equals("M")){
-            btnMasculino.setSelected(true);
-        }else if(Main.gestor.getSexo().equals("F")) {
-            btnFeminino.setSelected(true);
+        if(Main.gestor.getSexo() != null){
+            if(Main.gestor.getSexo().equals("M")){
+                btnMasculino.setSelected(true);
+            }else if(Main.gestor.getSexo().equals("F")) {
+                btnFeminino.setSelected(true);
+            }
         }
         fieldEndereco.setText(Main.gestor.getEnderço());
     }
@@ -100,6 +109,7 @@ public class PerfilGestor extends javax.swing.JFrame {
 
         labelSenha.setText("Senha");
 
+        fieldEmail.setEditable(false);
         fieldEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldEmailActionPerformed(evt);
@@ -296,7 +306,6 @@ public class PerfilGestor extends javax.swing.JFrame {
         String nome = fieldNome.getText();
         String CPF = fieldCPF.getText();
         
-        
         String[] dataNasc = (fieldNascimento.getText().replace(" ", "")).split("/");
         LocalDate nascimento = LocalDate.now();
         
@@ -308,7 +317,7 @@ public class PerfilGestor extends javax.swing.JFrame {
         }else if(btnFeminino.isSelected()){
             sexo = "F";
         }else {
-            sexo = " "; // não selecionado
+            sexo = "None"; // não selecionado
         }
         String endereco = fieldEndereco.getText();
 
@@ -344,16 +353,25 @@ public class PerfilGestor extends javax.swing.JFrame {
             Main.gestor.setSexo(sexo);
             Main.gestor.setEnderço(endereco);
             
-            // edita o arquivo "gestores"
+            // edita no banco de dados
             try {
+                String sql = "UPDATE gestores SET nome = '"+nome+"', cpf = '"+CPF.replace(" ", "")+"', nascimento = '"+nascimento
+                    +"', telefone = '"+telefone.replace(" ", "")+"', endereco = '"+endereco+"', senha = '"+senha+"', sexo = '"+sexo+"'";
+                
+                System.out.println(sql);
+                
+                this.psql.exec(sql);
+                
+                this.psql.closeCon();
+                /*
                 // escrever os dados no arquivo
                 FileWriter escrever = new FileWriter(path+"/src/data/Gestores.txt");
                 escrever.write(email+","+senha+","+nome+","+CPF.replace(" ", "")+","+nascimento+","+telefone.replace(" ", "")+","+sexo+","+endereco);
-                escrever.close();
+                escrever.close();*/
                 
                 // fecha a tela
                 dispose();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 // menssage de erro
                 JOptionPane.showMessageDialog(null, "Falha ao editar dados do gestor!", "Erro", JOptionPane.ERROR_MESSAGE);
             }

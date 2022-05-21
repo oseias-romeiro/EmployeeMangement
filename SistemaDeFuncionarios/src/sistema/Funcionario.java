@@ -8,7 +8,7 @@ public class Funcionario extends Pessoa{
    private String cargo;
    private float salario;
    private String senha;
-   private int codigo;
+   private String codigo;
    private ArrayList<Ponto> pontos = new ArrayList<Ponto>();
 
    public Funcionario(){
@@ -38,11 +38,11 @@ public class Funcionario extends Pessoa{
         this.senha = senha;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
     
