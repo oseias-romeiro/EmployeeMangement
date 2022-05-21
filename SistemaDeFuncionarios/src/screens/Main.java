@@ -28,6 +28,7 @@ public class Main extends javax.swing.JFrame {
     
     // gestor
     public static Gestor gestor;
+    
     // banco de dados
     PostgreSQLJDBC psql = new PostgreSQLJDBC();
     ResultSet result = null;
@@ -198,7 +199,7 @@ public class Main extends javax.swing.JFrame {
                 sql = "SELECT * FROM funcionarios WHERE (id_gestor = '"+this.gestor.getId()+"');";
                 result2 = psql.queryCon(sql);
                 
-                int qtd = result2.getFetchSize();
+                int count = 0;
                 while(result2.next()){
                     // inicializa o funcionario
                     Funcionario func = new Funcionario();
@@ -215,30 +216,36 @@ public class Main extends javax.swing.JFrame {
                     func.setSalario(Float.parseFloat(result2.getString("salario")));
                     func.setCodigo(result2.getString("codigo"));
 
-                    // adiciona os pontos
-                    sql = "SELECT * FROM pontos WHERE (id_func = '"+ func.getId() +"');";
-                    result3 = psql.queryCon(sql);
-                    while(result3.next()){
-                        // inicializa os pontos
-                        Ponto ponto = new Ponto();
-                        ponto.setDate(LocalDate.parse(result3.getString("logdate")));
-                        ponto.setLogedIn(LocalTime.parse(result3.getString("logedin")));
-                        ponto.setLogedOut(LocalTime.parse(result3.getString("logedout")));
-                        // adiciona os pontos ao funcionario
-                        func.addPonto(ponto);
-                        
-                        if(result3.isLast()){
-                            break;
-                        }
-                    }
-
                     // adiciona o funcionario no gestor
                     this.gestor.addFuncionario(func);
                     
-                    if(qtd == 0){
+                    if(result2.isLast()){
                         break;
                     }
-                    qtd--;
+                    count++;
+                }
+                int count2 = 0;
+                while(count2 != count){
+                    // adiciona os pontos
+                    sql = "SELECT * FROM pontos WHERE (id_func = '"+ this.gestor.getFuncionarios().get(count2).getId() +"');";
+                    result3 = psql.queryCon(sql);
+                    
+                    if(result3 != null){
+                        while(result3.next()){
+                            // inicializa os pontos
+                            Ponto ponto = new Ponto();
+                            ponto.setDate(LocalDate.parse(result3.getString("logdate")));
+                            ponto.setLogedIn(LocalTime.parse(result3.getString("logedin")));
+                            ponto.setLogedOut(LocalTime.parse(result3.getString("logedout")));
+                            // adiciona os pontos ao funcionario
+                            this.gestor.getFuncionarios().get(count2).addPonto(ponto);
+
+                            if(result3.isLast()){
+                                break;
+                            }
+                        }
+                    }
+                    count2++;
                 }
 
                 achou = true;

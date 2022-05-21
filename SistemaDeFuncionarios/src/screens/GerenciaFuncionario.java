@@ -458,8 +458,26 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             // adciona funcionario ao gestor
             Main.gestor.addFuncionario(funcionario);
             
-            // adiciona o funcionario no arquivo TXT
+            // adiciona o funcionario no banco de dados
             try {
+                String sql = "SELECT MAX(id)+1 FROM funcionarios;";
+                ResultSet rs = this.psql.queryCon(sql);
+                
+                int idSelect = 0;
+                while(rs.next()){
+                    idSelect = rs.getInt("?column?");
+                    System.out.println(idSelect);
+                    break;
+                }
+                sql = "INSERT INTO funcionarios VALUES("+idSelect+", '"+nome+"', '"+CPF.replace(" ", "")+"', '"+
+                    nascimento+"', '"+telefone.replace(" ", "")+"', '"+sexo+"', '"+email+"', '"+endereco+"', '"+senha
+                    +"', '"+ cargo +"', '"+salario+"', "+ Main.gestor.getId() +", '"+codigo+"')";
+                
+                this.psql.exec(sql);
+                
+                this.psql.closeCon();
+                
+                /*
                 // padrao: email,senha,nome,CPF,nascimento,telefone,sexo,endereco,cargo,salario,codigo
                 String novoFunc = funcionario.getEmail()+","+funcionario.getSenha()+","+funcionario.getNome()+","+
                     funcionario.getCpf().replace(" ", "")+","+funcionario.getDataNascimento()+","+funcionario.getTelefone().replace(" ", "")+","+
@@ -475,11 +493,10 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                 
                 // adiciona o arquivo de log de pontos do funcionario
                 File logPontos = new File(path+"/src/data/pontos/"+funcionario.getEmail()+".txt");
-                logPontos.createNewFile();
+                logPontos.createNewFile();*/
                 
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Erro ao adicionar funcionario: " + e);
             }
             
             // fecha tela
