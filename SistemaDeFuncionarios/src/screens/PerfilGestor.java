@@ -356,9 +356,8 @@ public class PerfilGestor extends javax.swing.JFrame {
             // edita no banco de dados
             try {
                 String sql = "UPDATE gestores SET nome = '"+nome+"', cpf = '"+CPF.replace(" ", "")+"', nascimento = '"+nascimento
-                    +"', telefone = '"+telefone.replace(" ", "")+"', endereco = '"+endereco+"', senha = '"+senha+"', sexo = '"+sexo+"'";
-                
-                System.out.println(sql);
+                    +"', telefone = '"+telefone.replace(" ", "")+"', endereco = '"+endereco+"', senha = '"+senha+"', sexo = '"+sexo
+                    +"' WHERE email = '"+ email +"'";
                 
                 this.psql.exec(sql);
                 

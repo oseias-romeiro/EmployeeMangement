@@ -16,6 +16,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.util.Scanner;
+
+import database.PostgreSQLJDBC;
+import java.sql.ResultSet;
+
 /**
  *
  * @author oseia
@@ -26,7 +30,11 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
     private String id;
     private FieldsValidation valida = new FieldsValidation();
     String path;
-
+    
+    // banco de dados
+    PostgreSQLJDBC psql = new PostgreSQLJDBC();
+    ResultSet result = null;
+    
     /**
      * Creates new form cadastraFuncionario
      */
@@ -60,6 +68,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                 btnFeminino.setSelected(true);
             }
             fieldEmail.setText(func.getEmail());
+            fieldEmail.setEditable(false);
             fieldEndereco.setText(func.getEnderço());
             fieldSenha.setText(func.getSenha());
             fieldCargo.setText(func.getCargo());
@@ -495,7 +504,7 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         }else if(btnFeminino.isSelected()){
             sexo = "F";
         }else {
-            sexo = " ";
+            sexo = "";
         }
         String email = fieldEmail.getText();
         String endereco = fieldEndereco.getText();
@@ -536,36 +545,19 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             this.func.setCargo(cargo);
             this.func.setSalario(Float.parseFloat(salario));
             
-            // edita o funcionario no arquivo TXT
+            // edita o funcionario no banco de dados
             try {
-                int id = Integer.parseInt(this.id);
-                // padrao: email,senha,nome,CPF,nascimento,telefone,sexo,endereco,cargo,salario,codigo
-                String novoFunc = email+","+senha+","+nome+","+
-                    CPF.replace(" ", "")+","+nascimento+","+telefone.replace(" ", "")+","+
-                    sexo+","+endereco+","+cargo+","+salario+","+Main.gestor.getFuncionarios().get(id).getCodigo()+"\n"
-                ;
-                // ler o arquivo
-                String dados = "";
-                File arquivo = new File(path+"/src/data/Funcionarios.txt");
-                Scanner letior = new Scanner(arquivo);
-                int i = 0;
-                while (letior.hasNextLine()) {
-                    if(i != id){
-                        dados += (letior.nextLine()+"\n");
-                    }else {
-                        // edita os dados do novo func
-                        dados += novoFunc;
-                        letior.nextLine();
-                    }
-                    i++;
-                }
-                // sobrescreve todo o arquivo
-                FileWriter escreve = new FileWriter(path+"/src/data/Funcionarios.txt", false);
-                escreve.write(dados);
-                escreve.close();
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
+                String sql = "UPDATE funcionarios SET nome = '"+nome+"', cpf = '"+CPF.replace(" ", "")+"', nascimento = '"+nascimento
+                    +"', telefone = '"+telefone.replace(" ", "")+"', sexo = '"+sexo+"', endereco = '"+endereco+"', senha = '"+senha
+                    +"', cargo = '"+ cargo +"', salario = '"+salario+"', id_gestor = '"+ Main.gestor.getId() +"', codigo = '"+this.func.getCodigo()
+                    +"' WHERE id = "+ (this.id+1) +"";
+                
+                this.psql.exec(sql);
+                
+                this.psql.closeCon();
+                
+            } catch (Exception e) {
+                System.out.println("Erro ao editar funcionario: " + e);
             }
             
             // fecha tela
