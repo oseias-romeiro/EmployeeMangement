@@ -29,6 +29,8 @@ public class Main extends javax.swing.JFrame {
     // gestor
     public static Gestor gestor;
     
+    private int id_func = 0;
+    
     // banco de dados
     PostgreSQLJDBC psql = new PostgreSQLJDBC();
     ResultSet result = null;
@@ -215,6 +217,13 @@ public class Main extends javax.swing.JFrame {
                     func.setCargo(result2.getString("cargo"));
                     func.setSalario(Float.parseFloat(result2.getString("salario")));
                     func.setCodigo(result2.getString("codigo"));
+                    
+                    // pega o id do funcionario que ira logar no array do gestor
+                    if(id != 0){
+                        if(email.equals(func.getEmail())){
+                            this.id_func = count;
+                        }
+                    }
 
                     // adiciona o funcionario no gestor
                     this.gestor.addFuncionario(func);
@@ -293,13 +302,11 @@ public class Main extends javax.swing.JFrame {
                 sql = "SELECT * FROM funcionarios WHERE (email = '"+email+"' AND senha = '"+senha+"');";
                 result2 = psql.queryCon(sql);
                 
-                int id_func = 0;
                 int id_gestor = 0;
                 
                 while(result2.next()){
                     // id do funcionario
                     id_gestor = result2.getInt("id_gestor");
-                    id_func = result2.getInt("id");
                     
                     // carrega gestor e seus funcionarios com seus pontos
                     achou = this.carregaGestor(email, senha, id_gestor);
@@ -310,7 +317,7 @@ public class Main extends javax.swing.JFrame {
                 if(achou){
                     psql.closeCon();
                     // abre a tela pra funcionaionarios e passa o id do usuario encontrado
-                    new MenuFuncionario(id_func-1+"").setVisible(true);
+                    new MenuFuncionario(this.id_func+"").setVisible(true);
                     setVisible(false);
                 }
             }
