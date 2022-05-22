@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import database.PostgreSQLJDBC;
+import java.sql.ResultSet;
 
 /**
  *
@@ -20,9 +21,6 @@ import database.PostgreSQLJDBC;
 public class MenuAdmin extends javax.swing.JFrame {
     
     String path = new File("").getAbsolutePath();
-    
-    // banco de dados
-    PostgreSQLJDBC psql = new PostgreSQLJDBC();
     
     /**
      * Creates new form Controle
@@ -349,13 +347,27 @@ public class MenuAdmin extends javax.swing.JFrame {
         if(escolha == JOptionPane.YES_OPTION){
             // apaga os dados do funcionario do arquivo de funcionarios
             try {
+                PostgreSQLJDBC psql = new PostgreSQLJDBC();
+                ResultSet result = null;
+                
+                // pega o id do funcionario
+                String sql = "SELECT * FROM funcionarios WHERE (email = '"+email+"')";
+                result = psql.queryCon(sql);
+                int id2 = 0;
+                while(result.next()){
+                    id2 = result.getInt("id");
+                    break;
+                }
+                result.close();
                 // apaga os dados no banco de dados
-                String sql = "DELETE FROM funcionarios WHERE (email = '"+email+"')";
-                this.psql.exec(sql);
-                this.psql.closeCon();
-                
-                
-            } catch (Exception e) {
+                sql = "DELETE FROM funcionarios WHERE (id = '"+id2+"')";
+                psql.exec(sql);
+                // apaga os pontos do funcionario
+                sql = "DELETE FROM pontos WHERE (id_func = '"+id2+"')";
+                psql.exec(sql);
+                psql.closeCon();
+            }
+            catch (Exception e) {
                 System.out.println("Erro ao remove o funcionario do banco! "+ e);
             }
             

@@ -24,8 +24,8 @@ public class PostgreSQLJDBC {
         try {
             Class.forName("org.postgresql.Driver");
             this.con = DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/sisfunc",
-            "postgres", "qwer1234");
+                .getConnection("jdbc:postgresql://localhost:5432/sisfunc",
+                "postgres", "qwer1234");
             
             con.setAutoCommit(false);
             stmt = con.createStatement();
