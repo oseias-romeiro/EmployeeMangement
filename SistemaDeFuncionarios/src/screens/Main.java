@@ -5,14 +5,10 @@
 package screens;
 
 import javax.swing.JOptionPane;
-import java.util.Arrays;
 import sistema.Gestor;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Scanner;
 
 import sistema.Funcionario;
 import sistema.Ponto;

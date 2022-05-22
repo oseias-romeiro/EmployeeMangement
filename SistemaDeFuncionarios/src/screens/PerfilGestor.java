@@ -4,9 +4,6 @@
  */
 package screens;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import java.time.LocalDate;
@@ -35,9 +32,6 @@ public class PerfilGestor extends javax.swing.JFrame {
         initComponents();
         
         setLocationRelativeTo(null);
-        
-        // pega o caminho do diretorio
-        this.path = new File("").getAbsolutePath();
         
         // passa os dados do gestor para os campos
         fieldEmail.setText(Main.gestor.getEmail());

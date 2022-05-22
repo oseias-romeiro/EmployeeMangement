@@ -11,11 +11,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import help.FieldsValidation;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.BufferedWriter;
-import java.util.Scanner;
 
 import database.PostgreSQLJDBC;
 import java.sql.ResultSet;
@@ -42,9 +37,6 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
         initComponents();
         
         setLocationRelativeTo(null);
-        
-        // pega o caminho do diretorio
-        this.path = new File("").getAbsolutePath();
         
         this.id = id;
         
