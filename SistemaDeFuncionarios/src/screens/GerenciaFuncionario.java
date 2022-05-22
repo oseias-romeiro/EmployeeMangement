@@ -466,7 +466,6 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                 int idSelect = 0;
                 while(rs.next()){
                     idSelect = rs.getInt("?column?");
-                    System.out.println(idSelect);
                     break;
                 }
                 sql = "INSERT INTO funcionarios VALUES("+idSelect+", '"+nome+"', '"+CPF.replace(" ", "")+"', '"+
