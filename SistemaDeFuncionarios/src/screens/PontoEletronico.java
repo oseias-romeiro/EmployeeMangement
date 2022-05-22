@@ -17,6 +17,9 @@ import javax.swing.JOptionPane;
 import database.PostgreSQLJDBC;
 import java.sql.ResultSet;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.HOURS;
+
 /**
  *
  * @author win
@@ -265,7 +268,7 @@ public class PontoEletronico extends javax.swing.JFrame {
                 saida = LocalTime.parse(out);
                 
                 // calcula hora trabalhada
-                correto = calculaHora(in, out);
+                correto = calculaHora(entrada, saida);
                 
                 // verificação de horario
                 if(correto){
@@ -347,31 +350,15 @@ public class PontoEletronico extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
     
    //calcula o total de horas trabalhadas
-    public boolean calculaHora(String horaInic, String horaFinal){
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        long resultadoFinal;
-        
+    public boolean calculaHora(LocalTime horaInic, LocalTime horaFinal){
         boolean correto = true;
-
         try{
-            Date horaIni = sdf.parse(horaInic);
-        
-            Date horaFim = sdf.parse(horaFinal);
-
-
-            long horaI = horaIni.getTime();
-            long horaF = horaFim.getTime(); 
-
-            long diferencaHoras = horaF - horaI;
+            long minutesBetween = MINUTES.between(horaInic,horaFinal);
+            long hoursBetween = HOURS.between(horaInic,horaFinal);
             
-            resultadoFinal = diferencaHoras/100/10/60/60;//converte milisedundos em horas
+            String horasCalculadas = hoursBetween +":"+minutesBetween;
             
-            //muda pra numero positivo
-            if(resultadoFinal < 0){
-                throw new Exception("Valor calculado foi negativo!");
-                //resultadoFinal *= -1;
-            }
-            JOptionPane.showMessageDialog(null, ("Total de horas: "+resultadoFinal+" horas" ),"Jornada de trablho salva" ,JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, ("Total de horas: "+horasCalculadas+" horas" ),"Jornada de trablho salva" ,JOptionPane.INFORMATION_MESSAGE);
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro ao calcular as Horas Trabalhadas!", "Atenção", JOptionPane.ERROR_MESSAGE);
             correto = false;
