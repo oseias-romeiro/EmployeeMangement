@@ -468,31 +468,14 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
                     idSelect = rs.getInt("?column?");
                     break;
                 }
+                rs.close();
                 sql = "INSERT INTO funcionarios VALUES("+idSelect+", '"+nome+"', '"+CPF.replace(" ", "")+"', '"+
                     nascimento+"', '"+telefone.replace(" ", "")+"', '"+sexo+"', '"+email+"', '"+endereco+"', '"+senha
-                    +"', '"+ cargo +"', '"+salario+"', "+ Main.gestor.getId() +", '"+codigo+"')";
+                    +"', '"+ cargo +"', '"+salario+"', "+ Main.gestor.getId() +", '"+codigo+"');";
                 
                 this.psql.exec(sql);
                 
                 this.psql.closeCon();
-                
-                /*
-                // padrao: email,senha,nome,CPF,nascimento,telefone,sexo,endereco,cargo,salario,codigo
-                String novoFunc = funcionario.getEmail()+","+funcionario.getSenha()+","+funcionario.getNome()+","+
-                    funcionario.getCpf().replace(" ", "")+","+funcionario.getDataNascimento()+","+funcionario.getTelefone().replace(" ", "")+","+
-                    funcionario.getSexo()+","+funcionario.getEnderço()+","+funcionario.getCargo()+","+funcionario.getSalario()+","+
-                    funcionario.getCodigo()+"\n"
-                ;
-                // adiciona os dados do novo funcionario em uma nova inha
-                FileWriter escreve = new FileWriter(path+"/src/data/Funcionarios.txt", true);
-                BufferedWriter buffer = new BufferedWriter(escreve);
-                buffer.write(novoFunc);
-                buffer.close();
-                escreve.close();
-                
-                // adiciona o arquivo de log de pontos do funcionario
-                File logPontos = new File(path+"/src/data/pontos/"+funcionario.getEmail()+".txt");
-                logPontos.createNewFile();*/
                 
             } catch (Exception e) {
                 System.out.println("Erro ao adicionar funcionario: " + e);
@@ -565,14 +548,12 @@ public class GerenciaFuncionario extends javax.swing.JFrame {
             try {
                 String sql = "UPDATE funcionarios SET nome = '"+nome+"', cpf = '"+CPF.replace(" ", "")+"', nascimento = '"+nascimento
                     +"', telefone = '"+telefone.replace(" ", "")+"', sexo = '"+sexo+"', endereco = '"+endereco+"', senha = '"+senha
-                    +"', cargo = '"+ cargo +"', salario = '"+salario+"', id_gestor = '"+ Main.gestor.getId() +"', codigo = '"+this.func.getCodigo()
-                    +"' WHERE id = "+ (this.id+1) +"";
-                
+                    +"', cargo = '"+cargo+"', salario = '"+salario+"', id_gestor = '"+Main.gestor.getId()+"' WHERE id = "+this.func.getId()+";"
+                ;
                 this.psql.exec(sql);
-                
                 this.psql.closeCon();
-                
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 System.out.println("Erro ao editar funcionario: " + e);
             }
             

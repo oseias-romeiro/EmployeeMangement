@@ -9,6 +9,7 @@ import sistema.Funcionario;
 import javax.swing.JOptionPane;
 
 import help.FieldsValidation;
+
 import database.PostgreSQLJDBC;
 
 /**
@@ -358,8 +359,8 @@ public class PerfilFuncionario extends javax.swing.JFrame {
                 
                 String sql = "UPDATE funcionarios SET nome = '"+nome+"', cpf = '"+CPF.replace(" ", "")+"', nascimento = '"+nascimento
                     +"', telefone = '"+telefone.replace(" ", "")+"', sexo = '"+sexo+"', endereco = '"+endereco+"', senha = '"+senha
-                    +"' WHERE id = "+this.func.getId()+"";
-                
+                    +"' WHERE id = "+this.func.getId()+""
+                ;
                 psql.exec(sql);
                 
                 psql.closeCon();

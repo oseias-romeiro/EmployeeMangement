@@ -10,6 +10,7 @@ public class Ponto{
     private LocalTime logedIn;
     private LocalTime logedOut;
     private LocalDate date;
+    private int id;
     
 
     public Ponto(){
@@ -39,6 +40,11 @@ public class Ponto{
         this.date = date;
     }
     
-    
-    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

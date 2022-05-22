@@ -14,12 +14,9 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
-// manipulação de arquivos
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.BufferedWriter;
-import java.util.Scanner;
+
+import database.PostgreSQLJDBC;
+import java.sql.ResultSet;
 
 /**
  *
@@ -30,8 +27,6 @@ public class PontoEletronico extends javax.swing.JFrame {
     private String id;
     private Funcionario func = new Funcionario();
     private ZoneId zona = ZoneId.of("America/Sao_Paulo");
-    
-    String path = new File("").getAbsolutePath();
     
     /**
      * Creates new form PontoEletronico
@@ -45,6 +40,8 @@ public class PontoEletronico extends javax.swing.JFrame {
         if(!id.isEmpty()){
             this.func = Main.gestor.getFuncionarios().get(Integer.parseInt(id));
         }
+        
+        System.out.println(MenuFuncionario.pendente);
         
         /* preenche os campos */
         
@@ -276,35 +273,19 @@ public class PontoEletronico extends javax.swing.JFrame {
                     // edita o ultimo registro
                     this.func.getPontos().get(this.func.getPontos().size()-1).setLogedOut(saida);
                     
-                    // edita o log do ultimo ponto que está pendente => padrao: data,entrada,saida
+                    // edita o ultimo ponto do funcionario no DB
                     try {
-                        // id do ultimo ponto
-                        int id = this.func.getPontos().size()-1;
-                        Ponto ultPonto = this.func.getPontos().get(id);
-                        String novoPonto = ultPonto.getDate().toString()+","+ultPonto.getLogedIn().toString()+","+saida.toString()+"\n";
-                        
-                        // ler o arquivo
-                        String dados = "";
-                        File arquivo = new File(this.path+"/src/data/pontos/"+this.func.getEmail()+".txt");
-                        Scanner letior = new Scanner(arquivo);
-                        int i = 0;
-                        while (letior.hasNextLine()) {
-                            if(i != id){
-                                dados += (letior.nextLine()+"\n");
-                            }else {
-                                // edita os dados do novo func
-                                dados += novoPonto;
-                                letior.nextLine();
-                            }
-                            i++;
-                        }
-                        // sobrescreve todo o arquivo
-                        FileWriter escreve = new FileWriter(this.path+"/src/data/pontos/"+this.func.getEmail()+".txt", false);
-                        escreve.write(dados);
-                        escreve.close();
-                    } catch (IOException e) {
-                        System.out.println("An error occurred.");
-                        e.printStackTrace();
+                        PostgreSQLJDBC psql = new PostgreSQLJDBC();
+
+                        String sql = "UPDATE pontos SET logedout = '"+saida+"' WHERE id = "+
+                            this.func.getPontos().get(this.func.getPontos().size()-1).getId()+";"
+                        ;
+                        psql.exec(sql);
+
+                        psql.closeCon();
+                    }
+                    catch (Exception e) {
+                        System.out.println("Erro ao editar ponto pendente! "+ e);
                     }
                     
                     // alerta para o MenuFuncionario que não tem ponto pendente
@@ -328,20 +309,29 @@ public class PontoEletronico extends javax.swing.JFrame {
                 // salva o registro
                 this.func.addPonto(ponto);
                 
-                // salva no arquivo de log de pontos do funcionario
+                // salva ponto pendente no DB
                 try {
-                    // o arquivo de log de ponto do funcionario recebe o seu email que é unico!
-                    FileWriter escreve = new FileWriter(this.path+"/src/data/pontos/"+this.func.getEmail()+".txt", true);
-                    BufferedWriter buffer = new BufferedWriter(escreve);
+                    PostgreSQLJDBC psql = new PostgreSQLJDBC();
                     
-                    // escreve a data e a entrada do ponto na ultima linha e faz uma quebra de linha
-                    buffer.write(data.toString()+","+entrada.toString()+",\n");
+                    String sql = "SELECT MAX(id)+1 FROM pontos;";
+                    ResultSet rs = psql.queryCon(sql);
+
+                    int idSelect = 0;
+                    while(rs.next()){
+                        idSelect = rs.getInt("?column?");
+                        break;
+                    }
+                    rs.close();
                     
-                    buffer.close();
-                    escreve.close();
-                } catch (IOException e) {
-                    System.out.println("An error occurred.");
-                    e.printStackTrace();
+                    sql = "INSERT INTO pontos (id, logedin, logdate, id_func) VALUES ("+idSelect+", '"+entrada+"', '"+data+"', '"+
+                        this.func.getId()+"');"
+                    ;
+                    psql.exec(sql);
+                    
+                    psql.closeCon();
+                }
+                catch (Exception e) {
+                    System.out.println("Erro ao salvar o ponto no DB! "+e);
                 }
                 
                 // alerta para o MenuFuncionario que agora ha um ponto pendente

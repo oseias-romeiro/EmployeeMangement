@@ -57,6 +57,7 @@ public class MenuFuncionario extends javax.swing.JFrame {
             // aviso de pendente no ultimo ponto
             if(Main.gestor.getFuncionarios().get(id2).getPontos().get(i).getLogedOut() == null){
                 saida = "PENDENTE";
+                pendente = true;
             }else {
                 saida = Main.gestor.getFuncionarios().get(id2).getPontos().get(i).getLogedOut().toString();
             }

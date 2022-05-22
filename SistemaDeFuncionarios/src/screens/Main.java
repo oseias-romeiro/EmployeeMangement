@@ -234,34 +234,36 @@ public class Main extends javax.swing.JFrame {
                     count++;
                 }
                 int count2 = 0;
-                while(count2 != count){
+                while(count2 <= count){
                     // adiciona os pontos
-                    sql = "SELECT * FROM pontos WHERE (id_func = '"+ this.gestor.getFuncionarios().get(count2).getId() +"');";
+                    sql = "SELECT * FROM pontos WHERE (id_func = '"+this.gestor.getFuncionarios().get(count2).getId()+"');";
                     result3 = psql.queryCon(sql);
                     
-                    if(result3 != null){
-                        while(result3.next()){
-                            // inicializa os pontos
-                            Ponto ponto = new Ponto();
-                            ponto.setDate(LocalDate.parse(result3.getString("logdate")));
-                            ponto.setLogedIn(LocalTime.parse(result3.getString("logedin")));
+                    while(result3.next()){
+                        // inicializa os pontos
+                        Ponto ponto = new Ponto();
+                        ponto.setId(result3.getInt("id"));
+                        ponto.setDate(LocalDate.parse(result3.getString("logdate")));
+                        ponto.setLogedIn(LocalTime.parse(result3.getString("logedin")));
+                        try {
                             ponto.setLogedOut(LocalTime.parse(result3.getString("logedout")));
-                            // adiciona os pontos ao funcionario
-                            this.gestor.getFuncionarios().get(count2).addPonto(ponto);
+                        }
+                        catch(Exception e){}
+                        
+                        // adiciona os pontos ao funcionario
+                        this.gestor.getFuncionarios().get(count2).addPonto(ponto);
 
-                            if(result3.isLast()){
-                                break;
-                            }
+                        if(result3.isLast()){
+                            break;
                         }
                     }
                     count2++;
                 }
-
                 achou = true;
                 break;
             }
         }catch(Exception e){
-            System.out.println("Erro ao carregar gestores: " + e);
+            System.out.println("Erro ao carregar gestores!");
             // menssage de erro
             JOptionPane.showMessageDialog(null, "Erro ao carregar gestores!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -272,8 +274,8 @@ public class Main extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String email = fieldEmail.getText();
         String senha = fieldSenha.getText();
-        String sql = "";
-        ResultSet result2 = null;
+        String sql;
+        ResultSet result2;
         
         boolean achou = false;
 
