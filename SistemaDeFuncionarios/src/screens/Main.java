@@ -293,14 +293,16 @@ public class Main extends javax.swing.JFrame {
                 sql = "SELECT * FROM funcionarios WHERE (email = '"+email+"' AND senha = '"+senha+"');";
                 result2 = psql.queryCon(sql);
                 
-                int id = 0;
+                int id_func = 0;
+                int id_gestor = 0;
                 
                 while(result2.next()){
                     // id do funcionario
-                    id = result2.getInt("id");
+                    id_gestor = result2.getInt("id_gestor");
+                    id_func = result2.getInt("id");
                     
                     // carrega gestor e seus funcionarios com seus pontos
-                    achou = this.carregaGestor(email, senha, id);
+                    achou = this.carregaGestor(email, senha, id_gestor);
 
                     break;
                 }
@@ -308,7 +310,7 @@ public class Main extends javax.swing.JFrame {
                 if(achou){
                     psql.closeCon();
                     // abre a tela pra funcionaionarios e passa o id do usuario encontrado
-                    new MenuFuncionario(id-1+"").setVisible(true);
+                    new MenuFuncionario(id_func-1+"").setVisible(true);
                     setVisible(false);
                 }
             }
