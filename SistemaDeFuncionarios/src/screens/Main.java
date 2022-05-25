@@ -69,7 +69,7 @@ public class Main extends javax.swing.JFrame {
 
         painelMain.setBackground(new java.awt.Color(0, 153, 204));
 
-        painelLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 3, true));
+        painelLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         painelLogin.setForeground(new java.awt.Color(255, 255, 255));
 
         labelEmail.setText("Email");
